@@ -3,11 +3,11 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 
 
 @Component({
-  selector: 'app-sign-up-form',
-  templateUrl: './sign-up-form.component.html',
-  styleUrls: ['./sign-up-form.component.scss'],
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpForm implements OnInit {
+export class SignUp implements OnInit {
 
   constructor() { }
 
