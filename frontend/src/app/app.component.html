@@ -2,49 +2,11 @@
     <ion-header>
         <ion-toolbar>
             <ion-title>
-            SignUp-Form
+            <h1>Test</h1>
           </ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-        <form onsubmit="processForm(event)">
-            <ion-list>
-                <ion-item>
-                    <ion-label position="stacked">First Name <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input type="text" required></ion-input>
-                    <ion-label position="stacked">Last Name <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input type="text" required></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label position="stacked">Address</ion-label>
-                    <ion-input placeholder="Address Line 1"></ion-input>
-                    <ion-input placeholder="City"></ion-input>
-                    <ion-input placeholder="State"></ion-input>
-                    <ion-input placeholder="Zip Code"></ion-input>
-                 </ion-item>
-
-                <ion-item>
-                    <ion-label position="stacked">E-Mail <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input type="email" required></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label position="stacked">Enter Password <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input type="password" required="true"></ion-input>
-                    <ion-label position="stacked">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input type="password" required="true"></ion-input>
-                </ion-item>
-
-
-                  <ion-item>
-                    <ion-label position="stacked">Notes</ion-label>
-                    <ion-textarea></ion-textarea>
-                  </ion-item>
-
-                <ion-button type="submit" expand="block">Sign Up</ion-button>
-            </ion-list>
-            <ion-text color="danger">*</ion-text><ion-text size="6">Required Fields</ion-text>
-        </form>
+        <app-sign-up-form></app-sign-up-form>
   </ion-content>
 </ion-app>

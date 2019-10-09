@@ -1,0 +1,51 @@
+<ion-app>
+    <ion-header>
+        <ion-toolbar>
+            <ion-title>
+            Sign Up
+          </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <form (ngSubmit)="processForm(event)">
+            <ion-list lines="full">
+                <ion-item>
+                    <ion-label position="stacked">First Name <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="firstName" type="text" required [(ngModel)]="user.firstName"></ion-input>
+                    <ion-label position="stacked">Last Name <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="lastName" type="text" required [(ngModel)]="user.lastName"></ion-input>
+                </ion-item>
+
+                <!-- <ion-item>
+                    <ion-label position="stacked">Address</ion-label>
+                    <ion-input placeholder="Address Line 1"></ion-input>
+                    <ion-input placeholder="City"></ion-input>
+                    <ion-input placeholder="State"></ion-input>
+                    <ion-input placeholder="Zip Code"></ion-input>
+                 </ion-item> -->
+
+                <ion-item>
+                    <ion-label position="stacked">E-Mail <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="email" type="email" required [(ngModel)]="user.email"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="stacked">Enter Password <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="password1" type="password" required="true" [(ngModel)]="user.password1"></ion-input>
+                    <ion-label position="stacked">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="password2" type="password" required="true" [(ngModel)]="user.password2"></ion-input>
+                </ion-item>
+
+
+                  <!-- <ion-item>
+                    <ion-label position="stacked">Notes</ion-label>
+                    <ion-textarea></ion-textarea>
+                  </ion-item> -->
+
+                <ion-button type="submit" expand="block" class="ion-no-margin" >Sign Up</ion-button>
+
+            </ion-list>
+            <ion-text color="danger">*</ion-text><ion-text size="6">Required Fields</ion-text>
+        </form>
+  </ion-content>
+</ion-app>
