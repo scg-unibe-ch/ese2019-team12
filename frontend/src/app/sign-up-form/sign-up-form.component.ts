@@ -15,14 +15,13 @@ export class SignUpForm implements OnInit {
 
   user = {}
 
-  // this.user = new FormGroup({
-  //     firstName: new FormControl()
-  // })
 
 
+// Processes the given Inputs to be stored in the Back-End. Also gives a quick welcome-message
   processForm(event) {
-      //event.preventDefault();
+      // event.preventDefault();
       console.log(this.user)
+      // this.user.firstName = new FormControl('text')
       alert('Thank you '+this.user.firstName+' '+this.user.lastName+' for signing up on \"ExWi-Tinder\"')
   }
 }
