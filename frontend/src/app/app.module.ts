@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { Registration } from './registration/registration.component';
 
 import { LoginComponent } from './login/login.component';
+import { UserComponent } from './user/user.component';
+
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -19,6 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     Registration, // Rename to RegistrationComponent
     LoginComponent,
+    UserComponent
   ],
   entryComponents: [],
   imports: [
