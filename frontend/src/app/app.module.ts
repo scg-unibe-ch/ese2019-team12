@@ -11,17 +11,22 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { Registration } from './registration/registration.component';
 
+import { LoginComponent } from './login/login.component';
+import { AppRoutingModule } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
-    Registration,
+    Registration, // Rename to RegistrationComponent
+    LoginComponent,
   ],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [
     StatusBar,

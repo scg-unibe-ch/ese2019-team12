@@ -1,7 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 import { Platform } from '@ionic/angular';
-import {HttpClient} from '@angular/common/http';
+
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +26,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.get('http://localhost:3000/').subscribe((instances: any) => {
     });
   }
 }
