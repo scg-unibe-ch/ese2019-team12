@@ -9,12 +9,12 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import { SignUpForm } from './sign-up-form/sign-up-form.component';
+import { Registration } from './registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpForm,
+    Registration,
   ],
   entryComponents: [],
   imports: [
