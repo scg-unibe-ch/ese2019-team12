@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/user', UserController);
+app.use('/users', UserController);
 
 sequelize.sync().then(() => {
 // start serving the application on the given port

@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { Registration } from './registration/registration.component';
 
 import { LoginComponent } from './login/login.component';
-import { UserComponent } from './user/user.component';
+import { RegisterComponent } from './register/register.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,7 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     Registration, // Rename to RegistrationComponent
     LoginComponent,
-    UserComponent
+    RegisterComponent
   ],
   entryComponents: [],
   imports: [
