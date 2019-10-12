@@ -15,23 +15,29 @@ export class UserService {
   ) { }
 
   getUsers(): Observable<User[]> {
-    return this.httpClient.get('http://localhost:3000/users');
+    return this.httpClient.get<User[]>('http://localhost:3000/users');
   }
-  getUser(user: number): Observable<User> {
-    return this.httpClient.get('http://localhost:3000/users/' + id);
+  getUser(id: number): Observable<User> {
+    return this.httpClient.get<User>('http://localhost:3000/users/' + id);
   }
 
-  create(user: User) Observable<User> {
-    return this.httpClient.post('http://localhost:3000/users/', {
+  create(user: User): Observable<User> {
+    return this.httpClient.post<User>('http://localhost:3000/users/', {
       firstname: user.firstname,
       lastname: user.lastname,
-      email: user.email
+      email: user.email,
+      password: user.password
     });
   }
-  update(id: number): Observable<any> {
-    return this.httpClient.put('http://localhost:3000/users/' + id).subscribe();
+  update(user: User): Observable<any> {
+    return this.httpClient.put('http://localhost:3000/users/' + user.id, {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+      password: user.password
+    });
   }
-  delete(id: number): Observable<Hero> {
-    return this.httpClient.delete('http://localhost:3000/users' + id).subscribe();
+  delete(id: number): Observable<any> {
+    return this.httpClient.delete('http://localhost:3000/users' + id);
   }
 }

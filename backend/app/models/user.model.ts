@@ -11,12 +11,16 @@ export class User extends Model<User> {
   @Column
   email!: string;
 
+  @Column
+  password!: string;
+
   toSimplification(): any {
     return {
       'id': this.id,
       'firstname': this.firstname,
       'lastname': this.lastname,
-      'email': this.email
+      'email': this.email,
+      'password': this.password
     }
   }
 
@@ -24,5 +28,6 @@ export class User extends Model<User> {
     this.firstname = simplification['firstname'];
     this.lastname = simplification['lastname'];
     this.email = simplification['email'];
+    this.password = simplification['password'];
   }
 }
