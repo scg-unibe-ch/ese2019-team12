@@ -9,19 +9,17 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
-import { Registration } from './registration/registration.component';
 
+import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Registration, // Rename to RegistrationComponent
+    RegistrationComponent, // Rename to RegistrationComponent
     LoginComponent,
-    RegisterComponent
   ],
   entryComponents: [],
   imports: [
