@@ -12,14 +12,16 @@ import { AppComponent } from './app.component';
 
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent, // Rename to RegistrationComponent
+    RegistrationComponent, 
     LoginComponent,
+    HomeComponent
   ],
   entryComponents: [],
   imports: [
