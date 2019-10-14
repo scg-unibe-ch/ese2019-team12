@@ -2,10 +2,19 @@
   <ion-card>
     <ion-grid>
       <ion-row>
-        <ion-button routerLink="/login">Login</ion-button>
+        <ion-col size=2>
+          <ion-button size="default" expand="block" routerLink="/login">Login</ion-button>
+        </ion-col>
       </ion-row>
       <ion-row>
-        <ion-button routerLink="/registration">Register</ion-button>
+        <ion-col size=2>
+          <ion-button size="default" expand="block" routerLink="/registration">Register</ion-button>
+        </ion-col>
+        <ion-col size=1>
+          <ion-button size="default" expand="block" color="light">
+            <ion-icon name="cog"></ion-icon>
+          </ion-button>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
