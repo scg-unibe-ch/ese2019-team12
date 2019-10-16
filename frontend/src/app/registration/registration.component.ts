@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-// // import custom validator to validate that password and confirm password fields match
-// import { MustMatch } from '../_services/must-match.validator';
+// import custom validator to validate that password and confirm password fields match
+import { MustMatch } from '../_services/must-match.validator';
 
 @Component({
   selector: 'app-registration',
@@ -25,7 +25,9 @@ export class RegistrationComponent implements OnInit {
              email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)]),
              password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
              confirmPassword: new FormControl ('', [Validators.required])
-         });
+         },{
+            validator: MustMatch('password', 'confirmPassword')
+        });
     }
 
 

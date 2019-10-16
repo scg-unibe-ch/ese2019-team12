@@ -74,7 +74,7 @@
                    </div>
                </ion-item>
                     <ion-label position="stacked">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input name="confirmPassword" type="password" required="true" [(ngModel)]="user.confirmPassword"  formControlName="confirmPassword" [class.error1]="!registrationForm.controls.password.valid && registrationForm.controls.password.dirty"></ion-input>
+                    <ion-input name="confirmPassword" type="password" required="true" [(ngModel)]="user.confirmPassword"  formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
                 <ion-item no-lines *ngIf="( registrationForm.get('password').hasError('minlength') || registrationForm.get('password').hasError('maxlength') ||registrationForm.get('password').hasError('required') ) && registrationForm.get('password').touched">
                    <div class="error" *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
                      Please confirm your password
@@ -89,10 +89,10 @@
                 </ion-item>
 
 
-                  <ion-item>
+                  <!-- <ion-item>
                     <ion-label position="stacked">Notes</ion-label>
                     <ion-textarea></ion-textarea>
-                  </ion-item>
+                  </ion-item> -->
 
                 <ion-button type="submit" expand="block" class="ion-no-margin" [disabled]="registrationForm.invalid" >Sign Up</ion-button>
 
