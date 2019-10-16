@@ -62,12 +62,12 @@
                 <ion-item>
                     <ion-label position="stacked">Enter Password <ion-text color="danger">*</ion-text></ion-label>
                     <ion-input name="password" type="password" required="true" [(ngModel)]="user.password" formControlName="password" [class.error1]="!registrationForm.controls.password.valid && registrationForm.controls.password.dirty"></ion-input>
-                <ion-item no-lines *ngIf="( registrationForm.get('password').hasError('minlength') || registrationForm.get('password').hasError('maxlength') ||registrationForm.get('password').hasError('required') ) && registrationForm.get('password').touched">
+                <ion-item no-lines *ngIf="( registrationForm.get('password').hasError('minlength') || registrationForm.get('password').hasError('maxlength') || registrationForm.get('password').hasError('pattern') ||registrationForm.get('password').hasError('required') ) && registrationForm.get('password').touched">
                    <div class="error" *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
                      Please enter a password
                    </div>
                    <div class="error" *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').touched">
-                     Password has to be at least 6 characters
+                     Password has to be at least 8 characters
                    </div>
                    <div class="error" *ngIf="registrationForm.get('password').hasError('maxlength') && registrationForm.get('password').touched">
                      Password can be no more than 12 characters
@@ -80,7 +80,7 @@
                      Please confirm your password
                    </div>
                    <div class="error" *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').touched">
-                     Minimum 6 characters
+                     Minimum 8 characters
                    </div>
                    <div class="error" *ngIf="registrationForm.get('password').hasError('maxlength') && registrationForm.get('password').touched">
                      Maximum 12 characters

@@ -19,11 +19,18 @@ export class RegistrationComponent implements OnInit {
 
     ngOnInit() {
         let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+        let STRONGPASSWORDPATTERN = ".*"  //Needed (ngPattern surrounds with ^ and $)
+          + "(?=^.{8,}$)"       //At least 6 Characters
+          + "(?=[^\\d]*\\d)"    //At least one digit
+          + "(?=[^\\W]*\\W)"    //At least one special character
+          + "(?=[^a-z]*[a-z])"  //At least one lowercase character
+          + ".*";    //Needed (ngPattern surrounds with ^ and $)
+
         this.registrationForm = new FormGroup({
              firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
              lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
              email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)]),
-             password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
+             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(STRONGPASSWORDPATTERN)]),
              confirmPassword: new FormControl ('', [Validators.required])
          },{
             validator: MustMatch('password', 'confirmPassword')
