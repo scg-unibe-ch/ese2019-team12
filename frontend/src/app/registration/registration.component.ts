@@ -12,6 +12,7 @@ import { MustMatch } from '../_services/must-match.validator';
 })
 export class RegistrationComponent implements OnInit {
     registrationForm: FormGroup;
+    passwordForm: FormGroup;
     user = new User(null, '', '', '', '');
     password = '';
 
@@ -19,8 +20,8 @@ export class RegistrationComponent implements OnInit {
 
     ngOnInit() {
         let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-        let STRONGPASSWORDPATTERN = ".*"  //Needed (ngPattern surrounds with ^ and $)
-          + "(?=^.{8,}$)"       //At least 6 Characters
+        let STRGPWPATTERN = ".*"  //Needed (ngPattern surrounds with ^ and $)
+          + "(?=^.{8,}$)"       //At least 8 Characters
           + "(?=[^\\d]*\\d)"    //At least one digit
           + "(?=[^\\W]*\\W)"    //At least one special character
           + "(?=[^a-z]*[a-z])"  //At least one lowercase character
@@ -30,11 +31,10 @@ export class RegistrationComponent implements OnInit {
              firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
              lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
              email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)]),
-             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(STRONGPASSWORDPATTERN)]),
+             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
              confirmPassword: new FormControl ('', [Validators.required])
-         },{
-            validator: MustMatch('password', 'confirmPassword')
-        });
+     // },{validator: this.MustMatch
+     });
     }
 
 
@@ -47,4 +47,12 @@ export class RegistrationComponent implements OnInit {
         alert('Thank you '+this.user.firstname+' '+this.user.lastname+' for signing up on \"ExWi-Tinder\"');
         console.log(this.userService.create(this.user).subscribe());
     }
+   //  MustMatch(group: FormGroup) { // here we have the 'passwords' group
+   //     let pass = group.get('password').value;
+   //     let confirmPass = group.get('confirmPass').value;
+   //
+   //     return pass === confirmPass ? null : { notSame: true }
+   // }
+
+
   }

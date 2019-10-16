@@ -72,6 +72,9 @@
                    <div class="error" *ngIf="registrationForm.get('password').hasError('maxlength') && registrationForm.get('password').touched">
                      Password can be no more than 12 characters
                    </div>
+                   <div class="error" *ngIf="registrationForm.get('password').hasError('pattern') && registrationForm.get('password').touched">
+                     Password needs at least one capital letter, one number and one special character
+                   </div>
                </ion-item>
                     <ion-label position="stacked">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
                     <ion-input name="confirmPassword" type="password" required="true" [(ngModel)]="user.confirmPassword"  formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
