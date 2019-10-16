@@ -40,7 +40,7 @@
 
                 <!-- <ion-item>
                     <ion-label position="stacked">Address</ion-label>
-                    <ion-input placeholder="Address Line 1"></ion-input>
+                    <ion-input placeholder="Address"></ion-input>
                     <ion-input placeholder="City"></ion-input>
                     <ion-input placeholder="State"></ion-input>
                     <ion-input placeholder="Zip Code"></ion-input>
@@ -58,35 +58,32 @@
                           Email address is invalid
                         </div>
                 </ion-item>
-
+            </ion-list>
+        </form>
+        <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="passwordForm">
+            <ion-list lines="full">
                 <ion-item>
                     <ion-label position="stacked">Enter Password <ion-text color="danger">*</ion-text></ion-label>
-                    <ion-input name="password" type="password" required="true" [(ngModel)]="user.password" formControlName="password" [class.error1]="!registrationForm.controls.password.valid && registrationForm.controls.password.dirty"></ion-input>
-                <ion-item no-lines *ngIf="( registrationForm.get('password').hasError('minlength') || registrationForm.get('password').hasError('maxlength') || registrationForm.get('password').hasError('pattern') ||registrationForm.get('password').hasError('required') ) && registrationForm.get('password').touched">
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
+                    <ion-input name="password" type="password" required="true" [(ngModel)]="user.password" formControlName="password" [class.error1]="!passwordForm.controls.password.valid && passwordForm.controls.password.dirty"></ion-input>
+                <ion-item no-lines *ngIf="( passwordForm.get('password').hasError('minlength') || passwordForm.get('password').hasError('maxlength') || passwordForm.get('password').hasError('pattern') ||passwordForm.get('password').hasError('required') ) && passwordForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('required') && passwordForm.get('password').touched">
                      Please enter a password
                    </div>
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('minlength') && passwordForm.get('password').touched">
                      Password has to be at least 8 characters
                    </div>
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('maxlength') && registrationForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('maxlength') && passwordForm.get('password').touched">
                      Password can be no more than 12 characters
                    </div>
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('pattern') && registrationForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('pattern') && passwordForm.get('password').touched">
                      Password needs at least one capital letter, one number and one special character
                    </div>
                </ion-item>
                     <ion-label position="stacked">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
                     <ion-input name="confirmPassword" type="password" required="true" [(ngModel)]="user.confirmPassword"  formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
-                <ion-item no-lines *ngIf="( registrationForm.get('password').hasError('minlength') || registrationForm.get('password').hasError('maxlength') ||registrationForm.get('password').hasError('required') ) && registrationForm.get('password').touched">
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('required') && registrationForm.get('password').touched">
+                <ion-item no-lines *ngIf="( passwordForm.get('password').hasError('minlength') || passwordForm.get('password').hasError('maxlength') ||passwordForm.get('password').hasError('required') ) && passwordForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('required') && passwordForm.get('password').touched">
                      Please confirm your password
-                   </div>
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('minlength') && registrationForm.get('password').touched">
-                     Minimum 8 characters
-                   </div>
-                   <div class="error" *ngIf="registrationForm.get('password').hasError('maxlength') && registrationForm.get('password').touched">
-                     Maximum 12 characters
                    </div>
                 </ion-item>
                 </ion-item>
@@ -97,7 +94,7 @@
                     <ion-textarea></ion-textarea>
                   </ion-item> -->
 
-                <ion-button type="submit" expand="block" class="ion-no-margin" [disabled]="registrationForm.invalid" >Sign Up</ion-button>
+                <ion-button type="submit" expand="block" class="ion-no-margin" [disabled]="passwordForm.invalid || registrationForm.invalid" >Sign Up</ion-button>
 
             </ion-list>
             <ion-text color="danger">*</ion-text><ion-text size="6">Required Fields</ion-text>

@@ -3,7 +3,7 @@ import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 // import custom validator to validate that password and confirm password fields match
-import { MustMatch } from '../_services/must-match.validator';
+import { Passwordvalidator } from '../_services/passwordvalidator';
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
     constructor(private userService: UserService) { }
 
     ngOnInit() {
-        let EMAILPATTERN = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+        let EMAILPATTERN = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let STRGPWPATTERN = ".*"  //Needed (ngPattern surrounds with ^ and $)
           + "(?=^.{8,}$)"       //At least 8 Characters
           + "(?=[^\\d]*\\d)"    //At least one digit
@@ -30,11 +30,15 @@ export class RegistrationComponent implements OnInit {
         this.registrationForm = new FormGroup({
              firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
              lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-             email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)]),
+             email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)])
+        });
+        this.passwordForm = new FormGroup({
              password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
              confirmPassword: new FormControl ('', [Validators.required])
      // },{validator: this.MustMatch
-     });
+     }, (formGroup: FormGroup) => {
+	 return Passwordvalidator.areEqual(formGroup);
+    });
     }
 
 
