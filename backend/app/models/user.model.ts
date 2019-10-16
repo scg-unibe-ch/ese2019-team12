@@ -3,6 +3,9 @@ import {Table, Column, Model, HasMany, BelongsTo, ForeignKey} from 'sequelize-ty
 @Table
 export class User extends Model<User> {
   @Column
+  username!: string;
+
+  @Column
   firstname!: string;
 
   @Column
@@ -17,6 +20,7 @@ export class User extends Model<User> {
   toSimplification(): any {
     return {
       'id': this.id,
+      'username': this.username,
       'firstname': this.firstname,
       'lastname': this.lastname,
       'email': this.email,
@@ -25,6 +29,7 @@ export class User extends Model<User> {
   }
 
   fromSimplification(simplification: any): void {
+    this.username = simplification['username'];
     this.firstname = simplification['firstname'];
     this.lastname = simplification['lastname'];
     this.email = simplification['email'];
