@@ -7,3 +7,16 @@
   color: rgb(75, 75, 75);
   border-bottom: 1px solid #ff0000;
 }
+.content{
+    display: grid;
+    justify-content: center;
+}
+ion-item{
+    width: 500px;
+}
+.showPassword{
+    align-self: flex-end;
+    position: relative;
+    top: -50px;
+    z-index: 1;
+}
