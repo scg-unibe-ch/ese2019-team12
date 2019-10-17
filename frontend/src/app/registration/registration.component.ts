@@ -50,13 +50,24 @@ export class RegistrationComponent implements OnInit {
         // this.user.firstName = new FormControl('text')
         alert('Thank you '+this.user.firstname+' '+this.user.lastname+' for signing up on \"ExWi-Tinder\"');
         console.log(this.userService.create(this.user).subscribe());
-    }
-   //  MustMatch(group: FormGroup) { // here we have the 'passwords' group
-   //     let pass = group.get('password').value;
-   //     let confirmPass = group.get('confirmPass').value;
-   //
-   //     return pass === confirmPass ? null : { notSame: true }
-   // }
+    };
+    showPw(){
+        let pw= <HTMLInputElement>document.getElementById("password");
+        let confpw= <HTMLInputElement>document.getElementById("confirmpassword");
+        let eye= <HTMLInputElement>document.getElementById("eye");
+        if (pw.type==="password" ){
+            pw.type="text";
+            confpw.type="text";
+            eye.name="eye";
+        }
+        else{
+            pw.type="password";
+            confpw.type="password";
+            eye.name="eye-off";
+        }
+        };
+
+
 
 
   }
