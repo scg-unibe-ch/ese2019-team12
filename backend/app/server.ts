@@ -2,9 +2,10 @@
 import express from 'express';
 
 // import all the controllers. If you add a new controller, make sure to import it here as well.
-import {UserController} from './controllers';
-import {Sequelize} from 'sequelize-typescript';
-import {User} from './models/user.model';
+import { UserController } from './controllers';
+import { SessionController } from './controllers';
+import { Sequelize } from 'sequelize-typescript';
+import { User } from './models/user.model';
 
 const sequelize =  new Sequelize({
   database: 'development',
@@ -33,6 +34,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/users', UserController);
+app.use('/session', SessionController);
 
 sequelize.sync().then(() => {
 // start serving the application on the given port

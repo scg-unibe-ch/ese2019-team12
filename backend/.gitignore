@@ -1,3 +1,3 @@
 /build/
 *.sqlite
-*id_rsa*
+*.pem
