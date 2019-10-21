@@ -7,7 +7,7 @@ const regSessionId = new RegExp('SESSIONID=');
 
 console.log(regSessionId.test("SESSIONID=21324"));
 
-router.get('/authenticate', async (req: Request, res: Response) => {
+router.get('/create', async (req: Request, res: Response) => {
   const login = req.params.login;
   const password = req.params.password;
 
