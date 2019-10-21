@@ -26,7 +26,8 @@ export class UserService {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
-      password: user.password
+      password: user.password,
+      role: user.role
     });
   }
   update(user: User): Observable<any> {
@@ -34,7 +35,8 @@ export class UserService {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
-      password: user.password
+      password: user.password,
+      role: user.role
     });
   }
   delete(id: number): Observable<any> {

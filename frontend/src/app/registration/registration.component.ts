@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
+import { Role } from '../_models/role';
+
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 // import custom validator to validate that password and confirm password fields match
 import { Passwordvalidator } from '../_services/passwordvalidator';
 
@@ -26,6 +29,8 @@ export class RegistrationComponent implements OnInit {
           + '(?=[^\\W]*\\W)'    // At least one special character
           + '(?=[^a-z]*[a-z])'  // At least one lowercase character
           + '.*';    // Needed (ngPattern surrounds with ^ and $)
+        user = new User(null, '', '', '', '', Role.User);
+        password = '';
 
         this.registrationForm = new FormGroup({
              firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
