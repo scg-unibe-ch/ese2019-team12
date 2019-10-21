@@ -1,6 +1,9 @@
 // import everything from express and assign it to the express variable
 import express from 'express';
 
+// import auth check function
+import { checkIfAuthenticated } from './helpers/session.helper';
+
 // import all the controllers. If you add a new controller, make sure to import it here as well.
 import { UserController } from './controllers';
 import { SessionController } from './controllers';
@@ -33,7 +36,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/users', UserController);
+app.use('/users', checkIfAuthenticated, UserController); // Check first if a valid token is present
 app.use('/session', SessionController);
 
 sequelize.sync().then(() => {
