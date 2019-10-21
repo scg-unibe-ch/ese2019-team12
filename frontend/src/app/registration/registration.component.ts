@@ -19,13 +19,13 @@ export class RegistrationComponent implements OnInit {
     constructor(private userService: UserService) { }
 
     ngOnInit() {
-        let EMAILPATTERN = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let STRGPWPATTERN = ".*"  //Needed (ngPattern surrounds with ^ and $)
-          + "(?=^.{8,}$)"       //At least 8 Characters
-          + "(?=[^\\d]*\\d)"    //At least one digit
-          + "(?=[^\\W]*\\W)"    //At least one special character
-          + "(?=[^a-z]*[a-z])"  //At least one lowercase character
-          + ".*";    //Needed (ngPattern surrounds with ^ and $)
+        const EMAILPATTERN = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const STRGPWPATTERN = '.*'  // Needed (ngPattern surrounds with ^ and $)
+          + '(?=^.{8,}$)'       // At least 8 Characters
+          + '(?=[^\\d]*\\d)'    // At least one digit
+          + '(?=[^\\W]*\\W)'    // At least one special character
+          + '(?=[^a-z]*[a-z])'  // At least one lowercase character
+          + '.*';    // Needed (ngPattern surrounds with ^ and $)
 
         this.registrationForm = new FormGroup({
              firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
@@ -35,39 +35,32 @@ export class RegistrationComponent implements OnInit {
         this.passwordForm = new FormGroup({
              password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
              confirmPassword: new FormControl ('', [Validators.required])
-     // },{validator: this.MustMatch
-     }, (formGroup: FormGroup) => {
-	 return Passwordvalidator.areEqual(formGroup);
-    });
+        }, (formGroup: FormGroup) => {
+            return Passwordvalidator.areEqual(formGroup);
+        });
     }
 
-
-
-  // Processes the given Inputs to be stored in the Back-End. Also gives a quick welcome-message
+    // Processes the given Inputs to be stored in the Back-End. Also gives a quick welcome-message
     processForm(event) {
         // event.preventDefault();
-        console.log(this.user)
+        console.log(this.user);
         // this.user.firstName = new FormControl('text')
-        alert('Thank you '+this.user.firstname+' '+this.user.lastname+' for signing up on \"ExWi-Tinder\"');
+        alert('Thank you ' + this.user.firstname + ' ' + this.user.lastname + ' for signing up');
         console.log(this.userService.create(this.user).subscribe());
-    };
-    showPw(){
-        let pw= <HTMLInputElement>document.getElementById("password");
-        let confpw= <HTMLInputElement>document.getElementById("confirmpassword");
-        let eye= <HTMLInputElement>document.getElementById("eye");
-        if (pw.type==="password" ){
-            pw.type="text";
-            confpw.type="text";
-            eye.name="eye";
+    }
+
+    showPw() {
+        const pw = document.getElementById('password') as HTMLInputElement;
+        const confpw = document.getElementById('confirmpassword') as HTMLInputElement;
+        const eye = document.getElementById('eye') as HTMLInputElement;
+        if (pw.type === 'password') {
+            pw.type = 'text';
+            confpw.type = 'text';
+            eye.name = 'eye';
+        } else {
+            pw.type = 'password';
+            confpw.type = 'password';
+            eye.name = 'eye-off';
         }
-        else{
-            pw.type="password";
-            confpw.type="password";
-            eye.name="eye-off";
-        }
-        };
-
-
-
-
+    }
   }
