@@ -23,7 +23,7 @@ export class Passwordvalidator {
             return null;
         }
         return {
-            areEqual: true;
+            areEqual: true
         };
     }
 }
