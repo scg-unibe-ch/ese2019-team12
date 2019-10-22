@@ -9,7 +9,7 @@ export const cert_pub = fs.readFileSync(path.join(process.cwd() + '/app/.conf', 
 export function getSessionToken(userId: string) {
   return jwt.sign({}, cert_priv, {
     algorithm: 'RS256',
-    expiresIn: 120,
+    expiresIn: 604800,
     subject: userId
   });
 }

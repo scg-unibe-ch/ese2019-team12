@@ -18,7 +18,7 @@ router.get('/create', async (req: Request, res: Response) => {
   } else {
     res.sendStatus(401);
   }
-  res.status(200);
+  res.sendStatus(200);
 });
 
 export const SessionController: Router = router;
