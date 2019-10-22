@@ -16,7 +16,7 @@ import { Passwordvalidator } from '../_services/passwordvalidator';
 export class RegistrationComponent implements OnInit {
     registrationForm: FormGroup;
     passwordForm: FormGroup;
-    user = new User(null, '', '', '', '');
+    user = new User(null, '', '', '', '', Role.User);
     password = '';
 
     constructor(private userService: UserService) { }
@@ -29,8 +29,6 @@ export class RegistrationComponent implements OnInit {
           + '(?=[^\\W]*\\W)'    // At least one special character
           + '(?=[^a-z]*[a-z])'  // At least one lowercase character
           + '.*';    // Needed (ngPattern surrounds with ^ and $)
-        user = new User(null, '', '', '', '', Role.User);
-        password = '';
 
         this.registrationForm = new FormGroup({
              firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
