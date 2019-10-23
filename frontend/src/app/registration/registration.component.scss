@@ -7,10 +7,14 @@
   color: rgb(75, 75, 75);
 }
 ion-input{
-    border-bottom: dotted 1px grey;
+    border-bottom: solid 2px darkgrey;
 }
 ion-grid{
     width: 500px;
     align-self:center;
     align-items: center;
+}
+.submitButton{
+    margin: 10px;
+    margin-bottom: 20px;
 }
