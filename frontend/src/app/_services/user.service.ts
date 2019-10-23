@@ -10,21 +10,21 @@ import { User } from '../_models/user';
 })
 export class UserService {
 
-  const apiUrl = 'http://localhost:3000';
+  apiUrl = 'http://localhost:3000';
 
   constructor(
     private httpClient: HttpClient
   ) { }
 
   getUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(apiUrl + '/users');
+    return this.httpClient.get<User[]>(this.apiUrl + '/users');
   }
   getUser(id: number): Observable<User> {
-    return this.httpClient.get<User>(apiUrl + '/users/' + id);
+    return this.httpClient.get<User>(this.apiUrl + '/users/' + id);
   }
 
   create(user: User): Observable<User> {
-    return this.httpClient.post<User>(apiUrl + '/users/', {
+    return this.httpClient.post<User>(this.apiUrl + '/users/', {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
@@ -33,7 +33,7 @@ export class UserService {
   }
 
   update(user: User): Observable<any> {
-    return this.httpClient.put(apiUrl + '/users/' + user.id, {
+    return this.httpClient.put(this.apiUrl + '/users/' + user.id, {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
@@ -42,6 +42,6 @@ export class UserService {
   }
 
   delete(id: number): Observable<any> {
-    return this.httpClient.delete(apiUrl + '/users' + id);
+    return this.httpClient.delete(this.apiUrl + '/users' + id);
   }
 }
