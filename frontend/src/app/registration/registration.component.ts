@@ -16,7 +16,7 @@ import { Passwordvalidator } from '../_services/passwordvalidator';
 export class RegistrationComponent implements OnInit {
     registrationForm: FormGroup;
     passwordForm: FormGroup;
-    user = new User(null, '', '', '', '', Role.User);
+    user = new User(null, '', '', '', '', '', Role.User);
     password = '';
 
     constructor(private userService: UserService) { }
