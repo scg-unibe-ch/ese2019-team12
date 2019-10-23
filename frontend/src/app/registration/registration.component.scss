@@ -5,18 +5,12 @@
 
 .error1 {
   color: rgb(75, 75, 75);
-  border-bottom: 1px solid #ff0000;
 }
-.content{
-    display: grid;
-    justify-content: center;
+ion-input{
+    border-bottom: dotted 1px grey;
 }
-ion-item{
+ion-grid{
     width: 500px;
-}
-.showPassword{
-    align-self: flex-end;
-    position: relative;
-    top: -50px;
-    z-index: 1;
+    align-self:center;
+    align-items: center;
 }
