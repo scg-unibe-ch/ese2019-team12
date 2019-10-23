@@ -40,13 +40,11 @@ export class RegistrationComponent implements OnInit {
         });
     }
 
-    // Processes the given Inputs to be stored in the Back-End. Also gives a quick welcome-message
+    // Processes the given Inputs to be stored in the Back-End.
     processForm(event) {
-        // event.preventDefault();
+        // how do we create a unique id?
         console.log(this.user);
-        // this.user.firstName = new FormControl('text')
-        alert('Thank you ' + this.user.firstname + ' ' + this.user.lastname + ' for signing up');
-        console.log(this.userService.create(this.user).subscribe());
+        //this.userService.create(this.user).subscribe();
     }
 
     showPw() {
