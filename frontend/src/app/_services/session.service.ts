@@ -10,7 +10,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class SessionService {
-  private currentUser: User;
+  currentUser: User;
 
   constructor(
     private httpClient: HttpClient
