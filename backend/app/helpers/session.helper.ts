@@ -8,14 +8,14 @@ const regEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/');
 const regSessionId = new RegExp('SESSIONID=');
 
 export async function getUserDataOrNull(login: string, password: string){
-  let data = null;
+  let data = { user: {}, token: ""};
   let column = '';
-  column = regEmail.test(login) ? 'email' : 'username';
-  searchByColumn(column, login).then(instance => {
+  await User.findOne({ where: { 'email': login }}).then(instance => {
     if(instance){
       let userData = instance.toSimplification();
-      let userToken = getSessionToken(userData.id);
-      data = { user: userData, token: userToken };
+      let userToken = getSessionToken(String(userData.id));
+      data['user'] = userData;
+      data['token'] = userToken;
     }
   });
   return data;
@@ -33,7 +33,4 @@ function extractToken(req: Request){
       }
     }
   }
-}
-async function searchByColumn(column: string, login: string){
-  return await User.findOne({ where: { 'email': login }});
 }

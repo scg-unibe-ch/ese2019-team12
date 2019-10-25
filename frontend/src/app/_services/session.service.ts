@@ -14,24 +14,21 @@ export class SessionService {
 
   constructor(
     private httpClient: HttpClient
-  ) { this.loadUser(); }
+  ) { }
 
   loadUser() {
     let user = localStorage.getItem('currentUser');
-    if(user) {
+    if (user) {
       user = JSON.parse(user);
       this.currentUser = new User(user['id'], user['username'], user['firstname'], user['lastname'], user['email'], '', user['role']);
     }
   }
 
-  login(username: string, password: string) {
-    return this.httpClient.post<any>(`localhost:3000/session/create`, { username, password })
-      .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUser = new User(user['id'], user['username'], user['firstname'], user['lastname'], user['email'], '', user['role']);
-        return user;
-      }));
+  login(login: string, password: string) {
+    return this.httpClient.post<any>(`http://localhost:3000/session/`, {
+        login,
+        password
+      });
   }
 
   logout() {

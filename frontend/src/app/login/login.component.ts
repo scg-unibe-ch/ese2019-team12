@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../_services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -7,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor( private sessionService: SessionService) { }
 
   ngOnInit() {}
 
+  login(event) {
+    this.sessionService.login('mail@joghurt.yo', 'verysecure').subscribe();
+  }
 }

@@ -5,20 +5,21 @@ const router: Router = Router();
 
 const regSessionId = new RegExp('SESSIONID=');
 
-console.log(regSessionId.test("SESSIONID=21324"));
+router.post('/', async (req: Request, res: Response) => {
+  const login = req.body.login;
+  const password = req.body.password;
 
-router.put('/create', async (req: Request, res: Response) => {
-  const login = req.params.login;
-  const password = req.params.password;
-
-  const data = await getUserDataOrNull(login, password);
-
-  if(data && data['token'] && data['user']){
-    res.cookie('SESSIONID', data['token'], { httpOnly: true, /*secure: true*/});
-    res.send(data['user']);
-  } else {
-    res.sendStatus(401);
-  }
+  await getUserDataOrNull(login, password).then(data => {
+    if(data && data['token'] && data['user']){
+      res.cookie('SESSIONID', data['token'], { httpOnly: true, /*secure: true*/});
+      res.status(200);
+      res.send(data['user']);
+    } else {
+      res.sendStatus(401);
+    }
+  }).catch(err => {
+    console.log(err);
+  });
 });
 
 export const SessionController: Router = router;

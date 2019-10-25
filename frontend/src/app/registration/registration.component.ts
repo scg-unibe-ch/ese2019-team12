@@ -36,7 +36,8 @@ export class RegistrationComponent implements OnInit {
              email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)])
         });
         this.passwordForm = new FormGroup({
-             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
+             password: new FormControl('', [Validators.required, Validators.minLength(8),
+               Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
              confirmPassword: new FormControl ('', [Validators.required])
         }, (formGroup: FormGroup) => {
             return Passwordvalidator.areEqual(formGroup);
