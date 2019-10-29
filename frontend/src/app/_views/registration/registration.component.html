@@ -1,0 +1,100 @@
+<ion-content>
+    <div class="content">
+    <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="registrationForm">
+        <ion-list lines="full" >
+            <ion-item>please enter your personal data so we can sell it to google</ion-item>
+            <ion-item>
+                    <ion-label position="stacked">First Name <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="firstname" type="text" required [(ngModel)]="user.firstname" formControlName="firstname" [class.error1]="!registrationForm.controls.firstname.valid && registrationForm.controls.firstname.dirty"></ion-input>
+                <ion-item no-lines *ngIf="( registrationForm.get('firstname').hasError('minlength')  ||registrationForm.get('firstname').hasError('pattern') ||registrationForm.get('firstname').hasError('required') ) && registrationForm.get('firstname').touched">
+                   <div class="error" *ngIf="registrationForm.get('firstname').hasError('required') && registrationForm.get('firstname').touched">
+                     Please enter your first name
+                   </div>
+                   <div class="error" *ngIf="registrationForm.get('firstname').hasError('minlength') && registrationForm.get('firstname').touched">
+                     Please enter your first name
+                   </div>
+                   <div class="error" *ngIf="registrationForm.get('firstname').hasError('pattern') && registrationForm.get('firstname').touched">
+                     Please enter only alphabetical characters
+                   </div>
+                </ion-item>
+
+                    <ion-label position="stacked">Last Name <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="lastname" type="text" required [(ngModel)]="user.lastname" formControlName="lastname" [class.error1]="!registrationForm.controls.lastname.valid && registrationForm.controls.lastname.dirty"></ion-input>
+                <ion-item no-lines *ngIf="( registrationForm.get('lastname').hasError('minlength')  ||registrationForm.get('lastname').hasError('pattern') ||registrationForm.get('lastname').hasError('required') ) && registrationForm.get('lastname').touched">
+                   <div class="error" *ngIf="registrationForm.get('lastname').hasError('required') && registrationForm.get('lastname').touched">
+                     Please enter your last name
+                   </div>
+                   <div class="error" *ngIf="registrationForm.get('lastname').hasError('minlength') && registrationForm.get('lastname').touched">
+                     Please enter your last name
+                   </div>
+                   <div class="error" *ngIf="registrationForm.get('lastname').hasError('pattern') && registrationForm.get('lastname').touched">
+                     Please enter only alphabetical characters
+                   </div>
+                </ion-item>
+            </ion-item>
+
+            <!-- <ion-item>
+                <ion-label position="stacked">Address</ion-label>
+                <ion-input placeholder="Address"></ion-input>
+                <ion-input placeholder="City"></ion-input>
+                <ion-input placeholder="State"></ion-input>
+                <ion-input placeholder="Zip Code"></ion-input>
+             </ion-item> -->
+
+            <ion-item>
+                    <ion-label position="stacked">E-Mail <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="email" type="email" required [(ngModel)]="user.email"  formControlName="email" [class.error1]="!registrationForm.controls.email.valid && registrationForm.controls.email.dirty"></ion-input>
+                <ion-item no-lines *ngIf="( registrationForm.get('email').hasError('minlength') || registrationForm.get('email').hasError('pattern') ||registrationForm.get('email').hasError('required') ) && registrationForm.get('email').touched">
+                        <div class="error" *ngIf="registrationForm.get('email').hasError('required') && registrationForm.get('email').touched">
+                          Please enter your email address
+                        </div>
+                        <div class="error" *ngIf="registrationForm.get('email').hasError('pattern') && registrationForm.get('email').touched">
+                          Email address is invalid
+                        </div>
+                </ion-item>
+            </ion-item>
+        </ion-list>
+    </form>
+    <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="passwordForm">
+        <ion-list lines="full">
+            <ion-item>
+                    <ion-label position="stacked">Enter Password <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input id="password" name="password" type="password" required="true" [(ngModel)]="user.password" formControlName="password" [class.error1]="!passwordForm.controls.password.valid && passwordForm.controls.password.dirty"></ion-input>
+                    <ion-button class="showPassword" (click)="showPw()"><ion-icon name="eye-off" id="eye"></ion-icon></ion-button>
+                <ion-item no-lines *ngIf="( passwordForm.get('password').hasError('minlength') || passwordForm.get('password').hasError('maxlength') || passwordForm.get('password').hasError('pattern') ||passwordForm.get('password').hasError('required') ) && passwordForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('required') && passwordForm.get('password').touched">
+                     Please enter a password
+                   </div>
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('minlength') && passwordForm.get('password').touched">
+                     Password has to be at least 8 characters
+                   </div>
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('maxlength') && passwordForm.get('password').touched">
+                     Password can be no more than 12 characters
+                   </div>
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('pattern') && passwordForm.get('password').touched">
+                     Password needs at least one capital letter, one number and one special character
+                   </div>
+               </ion-item>
+
+                    <ion-label position="stacked">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
+                    <ion-input name="confirmPassword" id="confirmpassword" type="password" required="true" [(ngModel)]="user.confirmPassword"  formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
+                <ion-item no-lines *ngIf="( passwordForm.get('password').hasError('minlength') || passwordForm.get('password').hasError('maxlength') ||passwordForm.get('password').hasError('required') ) && passwordForm.get('password').touched">
+                   <div class="error" *ngIf="passwordForm.get('password').hasError('required') && passwordForm.get('password').touched">
+                     Please confirm your password
+                   </div>
+                </ion-item>
+            </ion-item>
+
+
+              <!-- <ion-item>
+                <ion-label position="stacked">Notes</ion-label>
+                <ion-textarea></ion-textarea>
+              </ion-item> -->
+
+            <ion-button type="submit" expand="block" class="ion-no-margin" [disabled]="passwordForm.invalid || registrationForm.invalid" >Sign Up</ion-button>
+
+        </ion-list>
+        <ion-text color="danger">*</ion-text><ion-text size="6">Required Fields</ion-text>
+    </form>
+    </div>
+</ion-content>
