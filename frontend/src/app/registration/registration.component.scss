@@ -5,18 +5,16 @@
 
 .error1 {
   color: rgb(75, 75, 75);
-  border-bottom: 1px solid #ff0000;
 }
-.content{
-    display: grid;
-    justify-content: center;
+ion-input{
+    border-bottom: solid 2px darkgrey;
 }
-ion-item{
+ion-grid{
     width: 500px;
+    align-self:center;
+    align-items: center;
 }
-.showPassword{
-    align-self: flex-end;
-    position: relative;
-    top: -50px;
-    z-index: 1;
+.submitButton{
+    margin: 10px;
+    margin-bottom: 20px;
 }

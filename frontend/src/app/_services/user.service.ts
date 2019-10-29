@@ -10,19 +10,21 @@ import { User } from '../_models/user';
 })
 export class UserService {
 
+  apiUrl = 'http://localhost:3000';
+
   constructor(
     private httpClient: HttpClient
   ) { }
 
   getUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>('http://localhost:3000/users');
+    return this.httpClient.get<User[]>(this.apiUrl + '/users');
   }
   getUser(id: number): Observable<User> {
-    return this.httpClient.get<User>('http://localhost:3000/users/' + id);
+    return this.httpClient.get<User>(this.apiUrl + '/users/' + id);
   }
 
   create(user: User): Observable<User> {
-    return this.httpClient.post<User>('http://localhost:3000/users/', {
+    return this.httpClient.post<User>(this.apiUrl + '/users/', {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
@@ -30,8 +32,9 @@ export class UserService {
       role: user.role
     });
   }
+
   update(user: User): Observable<any> {
-    return this.httpClient.put('http://localhost:3000/users/' + user.id, {
+    return this.httpClient.put(this.apiUrl + '/users/' + user.id, {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
@@ -39,7 +42,8 @@ export class UserService {
       role: user.role
     });
   }
+
   delete(id: number): Observable<any> {
-    return this.httpClient.delete('http://localhost:3000/users' + id);
+    return this.httpClient.delete(this.apiUrl + '/users' + id);
   }
 }
