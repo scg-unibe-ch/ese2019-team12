@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { StartComponent } from './start/start.component';
-
 const routes: Routes = [
-  { path: '', component: StartComponent },
-  { path: 'start', component: StartComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
-  { path: 'home', loadChildren: './home/home.module#HomePageModule' },
-
+  { path: '', loadChildren: './start/start.module#StartPageModule' },
+  { path: 'start', loadChildren: './start/start.module#StartPageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'registration', loadChildren: './registration/registration.module#RegistrationPageModule' },
+  { path: 'home', loadChildren: './home/home.module#HomePageModule' },  { path: 'explore', loadChildren: './explore/explore.module#ExplorePageModule' },
+  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' }
 
 ];
 @NgModule({

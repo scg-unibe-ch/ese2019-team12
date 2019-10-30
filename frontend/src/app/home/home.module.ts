@@ -9,7 +9,7 @@ import { HomePage } from './home.page';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: HomePage,
     children: [
       {
@@ -27,8 +27,36 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'explore',
+        children: [
+          {
+            path: '',
+            loadChildren: '../explore/explore.module#ExplorePageModule'
+          },
+          {
+            path: '',
+            redirectTo: '/home/explore',
+            pathMatch: 'full'
+          }
+        ]
+      },
+      {
+        path: 'settings',
+        children: [
+          {
+            path: '',
+            loadChildren: '../settings/settings.module#SettingsPageModule'
+          },
+          {
+            path: '',
+            redirectTo: '/home/settings',
+            pathMatch: 'full'
+          }
+        ]
+      },
+      {
         path: '',
-        redirectTo: '/home/profile',
+        redirectTo: '/home/explore',
         pathMatch: 'full'
       }
     ]

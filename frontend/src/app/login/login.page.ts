@@ -3,10 +3,10 @@ import { SessionService } from '../_services/session.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginPage implements OnInit {
 
   constructor( private sessionService: SessionService) { }
 

@@ -10,10 +10,10 @@ import { Passwordvalidator } from '../_services/passwordvalidator';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss'],
+  templateUrl: './registration.page.html',
+  styleUrls: ['./registration.page.scss'],
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationPage implements OnInit {
     registrationForm: FormGroup;
     passwordForm: FormGroup;
     user = new User(null, '', '', '', '', '', Role.User);
