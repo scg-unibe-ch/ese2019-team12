@@ -24,21 +24,21 @@ export class RegistrationPage implements OnInit {
     ngOnInit() {
         const EMAILPATTERN = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         const STRGPWPATTERN = '.*'  // Needed (ngPattern surrounds with ^ and $)
-          + '(?=^.{8,}$)'       // At least 8 Characters
-          + '(?=[^\\d]*\\d)'    // At least one digit
-          + '(?=[^\\W]*\\W)'    // At least one special character
-          + '(?=[^a-z]*[a-z])'  // At least one lowercase character
-          + '.*';    // Needed (ngPattern surrounds with ^ and $)
+            + '(?=^.{8,}$)'       // At least 8 Characters
+            + '(?=[^\\d]*\\d)'    // At least one digit
+            + '(?=[^\\W]*\\W)'    // At least one special character
+            + '(?=[^a-z]*[a-z])'  // At least one lowercase character
+            + '.*';    // Needed (ngPattern surrounds with ^ and $)
 
         this.registrationForm = new FormGroup({
-             firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-             lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-             email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)])
+            firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
+            lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
+            email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)])
         });
         this.passwordForm = new FormGroup({
-             password: new FormControl('', [Validators.required, Validators.minLength(8),
-               Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
-             confirmPassword: new FormControl ('', [Validators.required])
+            password: new FormControl('', [Validators.required, Validators.minLength(8),
+                Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
+            confirmPassword: new FormControl ('', [Validators.required])
         }, (formGroup: FormGroup) => {
             return Passwordvalidator.areEqual(formGroup);
         });
@@ -46,9 +46,9 @@ export class RegistrationPage implements OnInit {
 
     // Processes the given Inputs to be stored in the Back-End.
     processForm(event) {
-        // how do we create a unique id?
-        console.log(this.user);
-        //this.userService.create(this.user).subscribe();
+    // how do we create a unique id?
+    console.log(this.user);
+    // this.userService.create(this.user).subscribe();
     }
 
     showPw() {

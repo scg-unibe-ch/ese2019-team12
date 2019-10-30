@@ -1,10 +1,10 @@
 .error {
-  color: rgb(223, 62, 62);
-  font-size: 11px;
+    color: rgb(223, 62, 62);
+    font-size: 11px;
 }
 
 .error1 {
-  color: rgb(75, 75, 75);
+    color: rgb(75, 75, 75);
 }
 ion-input{
     border-bottom: solid 2px darkgrey;
@@ -17,18 +17,4 @@ ion-grid{
 .submitButton{
     margin: 10px;
     margin-bottom: 20px;
-}
-
-.content{
-    display: grid;
-    justify-content: center;
-}
-ion-item{
-    width: 500px;
-}
-.showPassword{
-    align-self: flex-end;
-    position: relative;
-    top: -50px;
-    z-index: 1;
 }

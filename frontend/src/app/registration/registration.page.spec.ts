@@ -12,7 +12,7 @@ describe('RegistrationPage', () => {
       declarations: [ RegistrationPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
-    .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {
@@ -25,3 +25,4 @@ describe('RegistrationPage', () => {
     expect(component).toBeTruthy();
   });
 });
+
