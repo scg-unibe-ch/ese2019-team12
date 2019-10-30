@@ -1,3 +1,11 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            event management app or something
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content>
     <div class="content">
     <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="registrationForm">
@@ -91,7 +99,7 @@
                 <ion-textarea></ion-textarea>
               </ion-item> -->
 
-            <ion-button type="submit" expand="block" class="ion-no-margin" [disabled]="passwordForm.invalid || registrationForm.invalid" >Sign Up</ion-button>
+            <ion-button type="submit" expand="block" class="ion-no-margin" [disabled]="passwordForm.invalid || registrationForm.invalid" routerLink="/home">Sign Up</ion-button>
 
         </ion-list>
         <ion-text color="danger">*</ion-text><ion-text size="6">Required Fields</ion-text>

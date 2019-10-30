@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../_services/user.service';
-import { User } from '../../_models/user';
-import { Role } from '../../_models/role';
+import { UserService } from '../_services/user.service';
+import { User } from '../_models/user';
+import { Role } from '../_models/role';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // import custom validator to validate that password and confirm password fields match
-import { Passwordvalidator } from '../../_services/passwordvalidator';
+import { Passwordvalidator } from '../_services/passwordvalidator';
 
 @Component({
   selector: 'app-registration',

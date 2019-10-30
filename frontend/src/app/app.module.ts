@@ -10,9 +10,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 
-import { RegistrationComponent } from './_views/registration/registration.component';
-import { LoginComponent } from './_views/login/login.component';
-import { HomeComponent } from './_views/home/home.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { LoginComponent } from './login/login.component';
+import { StartComponent } from './start/start.component';
+
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -21,7 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    HomeComponent
+    StartComponent,
   ],
   entryComponents: [],
   imports: [

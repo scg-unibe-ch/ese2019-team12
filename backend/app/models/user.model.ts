@@ -10,7 +10,7 @@ export class User extends Model<User> {
 
   @Column
   lastname!: string;
-  
+
   @Column
   email!: string;
 
