@@ -1,7 +1,11 @@
 import {Table, Column, Model, HasMany, BelongsTo, ForeignKey} from 'sequelize-typescript';
+import { Service } from './service.model';
 
 @Table
 export class User extends Model<User> {
+  @HasMany(() => Service)
+  services!: Service[];
+
   @Column
   username!: string;
 

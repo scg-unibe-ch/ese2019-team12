@@ -7,8 +7,10 @@ import { checkIfAuthenticated } from './helpers/session.helper';
 // import all the controllers. If you add a new controller, make sure to import it here as well.
 import { UserController } from './controllers';
 import { SessionController } from './controllers';
+import { ServiceController } from './controllers';
 import { Sequelize } from 'sequelize-typescript';
 import { User } from './models/user.model';
+import { Service } from './models/service.model';
 
 const sequelize =  new Sequelize({
   database: 'development',
@@ -17,7 +19,7 @@ const sequelize =  new Sequelize({
   password: '',
   storage: 'db.sqlite'
 });
-sequelize.addModels([User]);
+sequelize.addModels([User, Service]);
 
 // create a new express application instance
 const app: express.Application = express();
@@ -38,6 +40,7 @@ app.use(function (req, res, next) {
 
 app.use('/users', checkIfAuthenticated, UserController); // Check first if a valid token is present
 app.use('/session', SessionController);
+app.use('/service', ServiceController);
 
 sequelize.sync().then(() => {
 // start serving the application on the given port
