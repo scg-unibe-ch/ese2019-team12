@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 
 app.use('/users', checkIfAuthenticated, UserController); // Check first if a valid token is present
 app.use('/session', SessionController);
-app.use('/service', ServiceController);
+app.use('/service', checkIfAuthenticated,  ServiceController);
 
 sequelize.sync().then(() => {
 // start serving the application on the given port
