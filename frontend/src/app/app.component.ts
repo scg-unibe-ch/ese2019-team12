@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import { Platform } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -15,7 +15,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {
     this.initializeApp();
   }

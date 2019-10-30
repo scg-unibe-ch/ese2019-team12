@@ -1,0 +1,59 @@
+<<<<<<< HEAD:frontend/src/app/registration/registration.component.scss
+.error {
+  color: rgb(223, 62, 62);
+  font-size: 11px;
+}
+
+.error1 {
+  color: rgb(75, 75, 75);
+  border-bottom: 1px solid #ff0000;
+}
+.content{
+    display: grid;
+    justify-content: center;
+}
+ion-item{
+    width: 500px;
+}
+.showPassword{
+    align-self: flex-end;
+    position: relative;
+    top: -50px;
+    z-index: 1;
+}
+=======
+.error {
+  color: rgb(223, 62, 62);
+  font-size: 11px;
+}
+
+.error1 {
+  color: rgb(75, 75, 75);
+}
+ion-input{
+    border-bottom: solid 2px darkgrey;
+}
+ion-grid{
+    width: 500px;
+    align-self:center;
+    align-items: center;
+}
+.submitButton{
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+.content{
+    display: grid;
+    justify-content: center;
+}
+ion-item{
+    width: 500px;
+}
+.showPassword{
+    align-self: flex-end;
+    position: relative;
+    top: -50px;
+    z-index: 1;
+}
+>>>>>>> 3d5f8f133a08d6eb83fcf08bf619d1c7c9b224dd:frontend/src/app/registration/registration.page.scss
