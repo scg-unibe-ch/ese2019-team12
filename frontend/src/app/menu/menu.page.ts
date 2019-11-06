@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, RouterEvent} from "@angular/router";
+import {Router, RouterEvent} from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -9,6 +9,10 @@ import {Router, RouterEvent} from "@angular/router";
 export class MenuPage implements OnInit {
 
   pages = [
+    {
+      title: 'Explore',
+      url: '/explore'
+    },
     {
       title: 'Profile',
       url: '/profile'
