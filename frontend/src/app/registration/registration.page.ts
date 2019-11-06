@@ -3,10 +3,11 @@ import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
 import { Role } from '../_models/role';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 // import custom validator to validate that password and confirm password fields match
-import { Passwordvalidator } from '../_services/passwordvalidator';
+import { PasswordValidator } from '../_validators/password-validator';
+import { UsernameValidator } from '../_validators/username-validator';
 
 @Component({
   selector: 'app-registration',
@@ -16,13 +17,16 @@ import { Passwordvalidator } from '../_services/passwordvalidator';
 export class RegistrationPage implements OnInit {
     registrationForm: FormGroup;
     passwordForm: FormGroup;
+    usernameForm: FormGroup;
     user = new User(null, '', '', '', '', '', Role.User);
     password = '';
 
-    constructor(private userService: UserService) { }
+
+
+    constructor(private userService: UserService, public formBuilder: FormBuilder) { }
 
     ngOnInit() {
-        const EMAILPATTERN = /^(([^&lt;&gt;()\[\]\\.,;:\s@"]+(\.[^&lt;&gt;()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const EMAILPATTERN = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
         const STRGPWPATTERN = '.*'  // Needed (ngPattern surrounds with ^ and $)
             + '(?=^.{8,}$)'       // At least 8 Characters
             + '(?=[^\\d]*\\d)'    // At least one digit
@@ -31,8 +35,8 @@ export class RegistrationPage implements OnInit {
             + '.*';    // Needed (ngPattern surrounds with ^ and $)
 
         this.registrationForm = new FormGroup({
-            firstname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-            lastname: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
+            lastName: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
+            firstName: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
             email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)])
         });
         this.passwordForm = new FormGroup({
@@ -40,7 +44,10 @@ export class RegistrationPage implements OnInit {
                 Validators.maxLength(12), Validators.pattern(STRGPWPATTERN)]),
             confirmPassword: new FormControl ('', [Validators.required])
         }, (formGroup: FormGroup) => {
-            return Passwordvalidator.areEqual(formGroup);
+            return PasswordValidator.areEqual(formGroup);
+        });
+        this.usernameForm = new FormGroup({
+            username: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])
         });
     }
 
@@ -51,7 +58,7 @@ export class RegistrationPage implements OnInit {
     // this.userService.create(this.user).subscribe();
     }
 
-    showPw() {
+    showPassword() {
         const pw = document.getElementById('password') as HTMLInputElement;
         const confpw = document.getElementById('confirmpassword') as HTMLInputElement;
         const eye = document.getElementById('eye') as HTMLInputElement;

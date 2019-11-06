@@ -12,9 +12,7 @@ export class UserService {
 
   apiUrl = 'http://localhost:3000';
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+  constructor(private httpClient: HttpClient) { }
 
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.apiUrl + '/users');
@@ -25,8 +23,8 @@ export class UserService {
 
   create(user: User): Observable<User> {
     return this.httpClient.post<User>(this.apiUrl + '/users/', {
-      firstname: user.firstname,
-      lastname: user.lastname,
+      lastName: user.firstName,
+      firstName: user.lastName,
       email: user.email,
       password: user.password,
       role: user.role
@@ -35,8 +33,8 @@ export class UserService {
 
   update(user: User): Observable<any> {
     return this.httpClient.put(this.apiUrl + '/users/' + user.id, {
-      firstname: user.firstname,
-      lastname: user.lastname,
+      lastName: user.firstName,
+      firstName: user.lastName,
       email: user.email,
       password: user.password,
       role: user.role

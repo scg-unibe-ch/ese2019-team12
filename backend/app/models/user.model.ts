@@ -28,8 +28,8 @@ export class User extends Model<User> {
     return {
       'id': this.id,
       'username': this.username,
-      'firstname': this.firstname,
-      'lastname': this.lastname,
+      'lastName': this.lastName,
+      'firstName': this.firstName,
       'email': this.email,
       'password': this.password,
       'role': this.role

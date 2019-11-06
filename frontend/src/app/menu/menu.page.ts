@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, RouterEvent} from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
+import { User } from '../_models/user';
+import { Role } from '../_models/role';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +9,6 @@ import {Router, RouterEvent} from '@angular/router';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
-
   pages = [
     {
       title: 'Explore',
@@ -26,6 +27,8 @@ export class MenuPage implements OnInit {
       url: '/login'
     },
   ];
+
+  user: User = new User(0, '', '', '', '', '', Role.User);
 
   selectedPath = '';
   constructor(private router: Router) {

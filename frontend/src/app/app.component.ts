@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
     private menu: MenuController
   ) {
     this.initializeApp();
-    this.openMenu();
   }
 
   initializeApp() {
@@ -29,10 +28,5 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  openMenu() {
-    this.menu.enable(true, 'start');
-    this.menu.open('start');
   }
 }
