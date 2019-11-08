@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatStepperModule, MatInputModule, MatButtonModule} from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -27,8 +25,6 @@ import { AppRoutingModule } from './app-routing.module';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MatStepperModule, MatInputModule, MatButtonModule,
-    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,
