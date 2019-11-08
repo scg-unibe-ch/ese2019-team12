@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ServiceCreatorComponent } from './service-creator.component';
+import { ServiceCreatorPage } from './service-creator.page';
 
-describe('ServiceCreatorComponent', () => {
-  let component: ServiceCreatorComponent;
-  let fixture: ComponentFixture<ServiceCreatorComponent>;
+describe('ServiceCreatorPage', () => {
+  let component: ServiceCreatorPage;
+  let fixture: ComponentFixture<ServiceCreatorPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServiceCreatorComponent ],
+      declarations: [ ServiceCreatorPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ServiceCreatorComponent);
+    fixture = TestBed.createComponent(ServiceCreatorPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

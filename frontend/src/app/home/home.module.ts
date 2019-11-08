@@ -55,6 +55,20 @@ const routes: Routes = [
         ]
       },
       {
+          path: 'service-creator',
+          children: [
+            {
+              path: '',
+              loadChildren: '../service-creator/service-creator.module#ServiceCreatorPageModule'
+            },
+            {
+              path: '',
+              redirectTo: '/home/service-creator',
+              pathMatch: 'full'
+            }
+          ]
+        },
+        {
         path: '',
         redirectTo: '/home/explore',
         pathMatch: 'full'
