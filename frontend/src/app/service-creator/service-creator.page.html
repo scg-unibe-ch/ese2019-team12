@@ -1,34 +1,56 @@
 <ion-content fullscreen padding scroll-y="false">
-    <ion-slides direction='horizontal' centeredSlides="true" pager>
-	<ion-slide>
-				<ion-card class="cardHome">
-					<ion-card-header class="cardheader">
-						General
-					</ion-card-header>
-					<ion-card-content>
-						<ion-item class="itemName">
-                            <form>
-                                <ion-label color="primary">Name</ion-label>
-                                <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
-                                <textarea placeholder="Describe your Service in a few words" name="ServiceDescritption" rows="8" cols="80"></textarea>
-                            </form>
-						</ion-item>
-					</ion-card-content>
-				</ion-card>
-                <ion-card class="cardHome">
-					<ion-card-header class="cardheader">
-						General
-					</ion-card-header>
-					<ion-card-content>
-						<ion-item class="itemName">
-                            <form>
-                                <ion-label color="primary">Name</ion-label>
-                                <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
-                                <<textarea name="ServiceDescritption" rows="8" cols="80"></textarea>
-                            </form>
-						</ion-item>
-					</ion-card-content>
-				</ion-card>
-	</ion-slide>
+    <ion-slides pager="true"  [options]="slideOpts" autoplay="false" #slides>
+    	<ion-slide>
+    				<ion-card class="cardHome">
+    					<ion-card-header class="cardheader">
+    						General
+    					</ion-card-header>
+    					<ion-card-content>
+    						<ion-item class="itemName">
+                                <form>
+                                    <ion-label color="primary">Name</ion-label>
+                                    <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
+                                    <ion-label color="primary"></ion-label>
+                                    <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
+                                    <textarea placeholder="Describe your Service in a few words" name="ServiceDescritption" rows="8" cols="80" maxlength="200"></textarea>
+                                </form>
+    						</ion-item>
+    					</ion-card-content>
+    				</ion-card>
+        </ion-slide>
+        <ion-slide>
+                    <ion-card class="cardHome">
+    					<ion-card-header class="cardheader">
+    						General
+    					</ion-card-header>
+    					<ion-card-content>
+    						<ion-item class="itemName">
+                                <form>
+                                    <ion-label color="primary">Name</ion-label>
+                                    <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
+                                    <textarea name="ServiceDescritption" rows="8" cols="80"></textarea>
+                                </form>
+    						</ion-item>
+    					</ion-card-content>
+    				</ion-card>
+    	</ion-slide>
+        <ion-slide>
+                    <ion-card class="cardHome">
+    					<ion-card-header class="cardheader">
+    						General
+    					</ion-card-header>
+    					<ion-card-content>
+    						<ion-item class="itemName">
+                                <form>
+                                    <ion-label color="primary">Name</ion-label>
+                                    <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
+                                    <textarea name="ServiceDescritption" rows="8" cols="80"></textarea>
+                                </form>
+    						</ion-item>
+    					</ion-card-content>
+    				</ion-card>
+    	</ion-slide>
     </ion-slides>
+    <ion-button type="submit" color="primary" class="swiper-button-prev" (click)="prevSlide()"><</ion-button>
+    <ion-button type="submit"  color="primary" class="swiper-button-next" (click)="nextSlide()">></ion-button>
 </ion-content>

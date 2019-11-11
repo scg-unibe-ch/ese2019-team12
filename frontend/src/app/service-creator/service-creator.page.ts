@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IonSlides} from '@ionic/angular';
 
 
 
@@ -9,11 +10,18 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./service-creator.page.scss'],
 })
 export class ServiceCreatorPage implements OnInit {
+     @ViewChild('slides') slides: Slides;
 
 
   constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
   }
+  nextSlide(){
+       this.slides.slideNext();
+  }
+  prevSlide() {
+         this.slides.slidePrev();
+     }
 
 }
