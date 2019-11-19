@@ -17,6 +17,9 @@
           <div class="ion-text-center">
             <h3>Login</h3>
           </div>
+          <ion-row class="ion-justify-content-center red" *ngIf="loginFailed">
+              Incorrect email/username or password.
+          </ion-row>
           <div class="ion-padding">
             <ion-item>
               <ion-input name="login" type="email" placeholder="Email or username" [(ngModel)]="credentials.login" required></ion-input>

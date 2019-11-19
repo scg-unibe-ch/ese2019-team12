@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../_services/session.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,16 +9,27 @@ import { SessionService } from '../_services/session.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private sessionService: SessionService) { }
+  constructor(private sessionService : SessionService, private router : Router) { }
 
   credentials = {};
 
-  ngOnInit() {}
+  ngOnInit() {
+      this.loginFailed = false;
+  }
 
   login(event) {
     // this is a test user, form input is stored in this.credentials
-    this.sessionService.login('jony@jon.com', 'hello').subscribe(data => {
-        console.log(data);
-    });
+    this.sessionService.login('jony@jon.com', 'hello').subscribe(
+        data => {
+            console.log(data);
+            this.router.navigate(['/explore']);
+        },
+        (err: any) => {
+            if (err.status === 401) {
+                this.loginFailed = true;
+                console.log("Error message: " + err.message);
+            }
+        }
+    );
   }
 }
