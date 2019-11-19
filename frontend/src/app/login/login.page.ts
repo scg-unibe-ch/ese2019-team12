@@ -12,6 +12,7 @@ export class LoginPage implements OnInit {
   constructor(private sessionService : SessionService, private router : Router) { }
 
   credentials = {};
+  loginFailed : boolean;
 
   ngOnInit() {
       this.loginFailed = false;
