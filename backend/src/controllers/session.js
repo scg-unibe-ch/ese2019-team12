@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { getSessionToken } from '../helpers/session.helper';
 import { Sequelize } from 'sequelize';
+import { checkPassword } from '../helpers/crypt.helper';
+import { getSessionToken } from '../helpers/session.helper';
 const Op = Sequelize.Op
 
 const router = Router();
@@ -16,7 +17,7 @@ router.post('/login', async (req, res) => {
     }
   }).then(user => {
     console.log(user);
-    if(user && user.id){
+    if(user && user.id && checkPassword(password, user.password(), user.salt())){
       const token = getSessionToken(user.id.toString());
       res.cookie('SESSIONID', token, { httpOnly: true});
       res.statusCode = 200;
