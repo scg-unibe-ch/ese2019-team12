@@ -28,5 +28,5 @@ Erstellung der Businesslogik der verschieden Pages:
 
 ### Im Backend:
 | **Ziel** | **Status** | **Noch zu erledigen** |
-| -------------------------- | ---------- |
+| -------------------------- | ---------- | ---------- |
 | TBD | TBD | TBD |
