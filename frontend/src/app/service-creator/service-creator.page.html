@@ -8,10 +8,8 @@
     					<ion-card-content>
     						<ion-item class="itemName">
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm1">
-                                    <ion-label color="primary">Name</ion-label>
-                                    <ion-input name="name" type="text" required [(ngModel)]="user.name" formControlName="name" [class.error1]="!serviceForm1.controls.name.valid && serviceForm1.controls.name.dirty" placeholder="Entere the name of your Service"></ion-input>
-                                    <ion-label color="primary">Further Point</ion-label>
-                                    <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
+                                    <ion-label color="primary">Title</ion-label>
+                                    <ion-input name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm1.controls.title.valid && serviceForm1.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
                                     <textarea name="serviceDescription" type="text" required  formControlName="serviceDescription" [class.error1]="!serviceForm1.controls.serviceDescription.valid && serviceForm1.controls.serviceDescription.dirty"placeholder="Describe your Service in a few words" rows="8" cols="80" maxlength="200"></textarea>
                                 </form>
     						</ion-item>
@@ -26,8 +24,8 @@
     					<ion-card-content>
     						<ion-item class="itemName">
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm2">
-                                    <ion-label color="primary">Name</ion-label>
-                                    <ion-input name="name" type="text" required [(ngModel)]="user.name" formControlName="name" [class.error1]="!serviceForm2.controls.name.valid && serviceForm2.controls.name.dirty" placeholder="Entere the name of your Service"></ion-input>
+                                    <ion-label color="primary">Title</ion-label>
+                                    <ion-input name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm2.controls.title.valid && serviceForm2.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
                                     <textarea name="serviceDescription" rows="8" cols="80"></textarea>
                                 </form>
     						</ion-item>
@@ -42,9 +40,9 @@
     					<ion-card-content>
     						<ion-item class="itemName">
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm3">
-                                    <ion-label color="primary">Name</ion-label>
-                                    <ion-input type="text" placeholder="Entere the name of your Service"></ion-input>
-                                    <textarea name="serviceDescription" rows="8" cols="80"></textarea>
+                                    <ion-label color="primary">Title</ion-label>
+                                    <ion-input name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm3.controls.title.valid && serviceForm3.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
+                                    <textarea name="serviceDescription" type="text" required  formControlName="serviceDescription" [class.error1]="!serviceForm3.controls.serviceDescription.valid && serviceForm3.controls.serviceDescription.dirty"placeholder="Describe your Service in a few words" rows="8" cols="80" maxlength="200"></textarea>
                                     <ion-button type="submit" expand="block" class="submitButton" [disabled]="serviceForm1.invalid || serviceForm2.invalid || serviceForm3.invalid" >Create Service</ion-button>
                                 </form>
     						</ion-item>
