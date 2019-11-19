@@ -9,7 +9,7 @@
     						<ion-item class="itemName">
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm1">
                                     <ion-label color="primary">Title</ion-label>
-                                    <ion-input name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm1.controls.title.valid && serviceForm1.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
+                                    <ion-input expand="block" name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm1.controls.title.valid && serviceForm1.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
                                     <textarea name="serviceDescription" type="text" required  formControlName="serviceDescription" [class.error1]="!serviceForm1.controls.serviceDescription.valid && serviceForm1.controls.serviceDescription.dirty"placeholder="Describe your Service in a few words" rows="8" cols="80" maxlength="200"></textarea>
                                 </form>
     						</ion-item>
@@ -42,11 +42,11 @@
     						<ion-item class="itemName">
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm3">
                                     <ion-label color="primary">Price</ion-label>
-                                    <ion-input name="price" type="number" required [(ngModel)]="service.price" formControlName="price" [class.error1]="!serviceForm3.controls.price.valid && serviceForm3.controls.price.dirty" placeholder="Enter the price of your service"></ion-input>
+                                    <ion-input expand="block" name="price" type="number" required [(ngModel)]="service.price" formControlName="price" [class.error1]="!serviceForm3.controls.price.valid && serviceForm3.controls.price.dirty" placeholder="Enter the price of your service"></ion-input>
                                     <ion-label color="primary">Pricerange</ion-label>
                                     <p> Or enter a pricerange for your service </p>
-                                    <ion-input name="pricerangeMin" type="number" required [(ngModel)]="service.pricerangeMin" formControlName="pricerangeMin" [class.error1]="!serviceForm3.controls.pricerangeMin.valid && serviceForm3.controls.pricerangeMin.dirty" placeholder="Min-Value"></ion-input>
-                                    <ion-input name="pricerangeMax" type="number"  [(ngModel)]="service.pricerangeMax" formControlName="pricerangeMax" [class.error1]="!serviceForm3.controls.pricerangeMin.valid && serviceForm3.controls.pricerangeMin.dirty" placeholder="Max-Value"></ion-input>
+                                    <ion-input expand="block" name="pricerangeMin" type="number" required [(ngModel)]="service.pricerangeMin" formControlName="pricerangeMin" [class.error1]="!serviceForm3.controls.pricerangeMin.valid && serviceForm3.controls.pricerangeMin.dirty" placeholder="Min-Value"></ion-input>
+                                    <ion-input expand="block" name="pricerangeMax" type="number"  [(ngModel)]="service.pricerangeMax" formControlName="pricerangeMax" [class.error1]="!serviceForm3.controls.pricerangeMin.valid && serviceForm3.controls.pricerangeMin.dirty" placeholder="Max-Value"></ion-input>
                                 </form>
     						</ion-item>
     					</ion-card-content>
@@ -65,5 +65,5 @@
         </ion-slide>
     </ion-slides>
     <ion-button type="submit" color="primary" class="swiper-button-prev" (click)="prevSlide()"><</ion-button>
-    <ion-button type="submit"  color="primary" class="swiper-button-next" (click)="nextSlide()">></ion-button>
+    <ion-button type="submit" color="primary" class="swiper-button-next" (click)="nextSlide()">></ion-button>
 </ion-content>
