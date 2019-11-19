@@ -11,7 +11,6 @@
 
 <ion-content padding>
     <ion-searchbar></ion-searchbar>
-
     <ion-grid>
         <ion-row>
             <app-service-card></app-service-card>
@@ -19,6 +18,12 @@
         <ion-row>
             <app-service-card></app-service-card>
         </ion-row>
+        <ion-row>
+            <app-service-card></app-service-card>
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngFor="let s of services">
         <ion-row>
             <app-service-card></app-service-card>
         </ion-row>
