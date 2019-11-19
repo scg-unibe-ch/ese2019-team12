@@ -8,11 +8,16 @@ import { SessionService } from '../_services/session.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor( private sessionService: SessionService) { }
+  constructor(private sessionService: SessionService) { }
+
+  credentials = {};
 
   ngOnInit() {}
 
   login(event) {
-    this.sessionService.login('mail@joghurt.yo', 'verysecure').subscribe();
+    // this is a test user, form input is stored in this.credentials
+    this.sessionService.login('jony@jon.com', 'hello').subscribe(data => {
+        console.log(data);
+    });
   }
 }

@@ -25,9 +25,9 @@ export class SessionService {
   }
 
   login(login: string, password: string) {
-    return this.httpClient.post<any>(`http://localhost:3000/session/`, {
-        login,
-        password
+    return this.httpClient.post<any>(`http://localhost:3000/session/login`, {
+        "login": login,
+        "password": password
       });
   }
 
