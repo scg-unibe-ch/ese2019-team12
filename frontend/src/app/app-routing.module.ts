@@ -6,7 +6,8 @@ import {ExplorePageModule} from './explore/explore.module';
 import {ExplorePage} from './explore/explore.page';
 
 const routes: Routes = [
-  { path: '', loadChildren: './menu/menu.module#MenuPageModule' }
+  { path: '', loadChildren: './menu/menu.module#MenuPageModule' },  { path: 'service', loadChildren: './service/service.module#ServicePageModule' }
+
 ];
 @NgModule({
   declarations: [],

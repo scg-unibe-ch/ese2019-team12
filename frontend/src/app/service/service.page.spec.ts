@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventCardComponent } from './event-card.component';
+import { ServicePage } from './service.page';
 
-describe('EventCardComponent', () => {
-  let component: EventCardComponent;
-  let fixture: ComponentFixture<EventCardComponent>;
+describe('ServicePage', () => {
+  let component: ServicePage;
+  let fixture: ComponentFixture<ServicePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EventCardComponent ],
+      declarations: [ ServicePage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventCardComponent);
+    fixture = TestBed.createComponent(ServicePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
