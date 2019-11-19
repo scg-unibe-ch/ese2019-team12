@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
       const token = getSessionToken(user.id.toString());
       res.cookie('SESSIONID', token, { httpOnly: true});
       res.statusCode = 200;
-      res.send(token);
+      res.send(user);
     } else {
       res.sendStatus(401);
     }
