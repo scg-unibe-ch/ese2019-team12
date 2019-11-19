@@ -9,14 +9,14 @@ Wir haben unsere Ziele immer mündlich untereinander kommuniziert und schreiben 
 
 ### Im Frontend:
 | **Ziel** | **Status** | **Noch zu erledigen** |
-| -------------------------- | ---------- |
+| -------------------------- | ---------- | ---------- |
 | Erstellung der GUI mit allen verschiedenen Seiten und Containern, ohne interne Logik und Verbindung zum Backend  | Fast erledigt | - |
 | 1. Erstellung der Explore-Page mit angebotenen Service-Cards 2. Detailansicht der Services | Fast erledigt | - |
 | Routing unter den verschiedenen Seiten | Erledigt | - |
 
 ### Im Backend:
 | **Ziel** | **Status** | **Noch zu erledigen** |
-| -------------------------- | ---------- |
+| -------------------------- | ---------- | ---------- |
 | Einarbeitung in Node.js | Erledigt | - |
 | Session-Tokens, Cookies, Users und Services erstellen (in Node.js) | Erledigt | - |
 | Tests einführen | Erledigt | - |
