@@ -11,6 +11,7 @@ export class LoginPage implements OnInit {
 
   constructor(private sessionService : SessionService, private router : Router) { }
 
+  loginFailed: Boolean;
   credentials = {};
   loginFailed : boolean;
 

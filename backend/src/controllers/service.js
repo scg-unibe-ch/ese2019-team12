@@ -35,7 +35,6 @@ router.put('/:id', async (req, res) => {
     return;
   }
   toUpdate.name = req.body['name'];
-  console.log(toUpdate);
   await toUpdate.save();
   res.statusCode = 200;
   res.send(toUpdate);
