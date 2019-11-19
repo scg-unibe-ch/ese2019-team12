@@ -16,7 +16,7 @@ export class ServiceCreatorPage implements OnInit {
     serviceForm1: FormGroup;
     serviceForm2: FormGroup;
     serviceForm3: FormGroup;
-    service = new Service(null, '', '', Role.Service);
+    service = new Service(null, '', '',null,'', Role.Service);
 
     @ViewChild('slides') slides: Slides;
 
@@ -34,8 +34,9 @@ export class ServiceCreatorPage implements OnInit {
           serviceDescription: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
       });
       this.serviceForm3 = new FormGroup({
-          title: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-          serviceDescription: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
+          price: new FormControl('', [Validators.required]),
+          pricerangeMin: new FormControl('', [Validators.required]),
+          pricerangeMax: new FormControl('', [Validators.required]),
       });
   }
   nextSlide(){
