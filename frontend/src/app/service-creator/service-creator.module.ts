@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatStepperModule, MatInputModule, MatButtonModule} from '@angular/material';
-
 
 import { IonicModule } from '@ionic/angular';
 
@@ -22,8 +20,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    MatStepperModule, MatInputModule, MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     ],
   declarations: [ServiceCreatorPage]
 })

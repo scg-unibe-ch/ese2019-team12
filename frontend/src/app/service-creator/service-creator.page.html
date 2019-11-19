@@ -3,7 +3,7 @@
     	<ion-slide>
     				<ion-card class="cardHome">
     					<ion-card-header class="cardheader">
-    						General
+    						1.General
     					</ion-card-header>
     					<ion-card-content>
     						<ion-item class="itemName">
@@ -19,14 +19,15 @@
         <ion-slide>
                     <ion-card class="cardHome">
     					<ion-card-header class="cardheader">
-    						General
+    						2.Details
     					</ion-card-header>
     					<ion-card-content>
     						<ion-item class="itemName">
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm2">
-                                    <ion-label color="primary">Title</ion-label>
-                                    <ion-input name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm2.controls.title.valid && serviceForm2.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
-                                    <textarea name="serviceDescription" rows="8" cols="80"></textarea>
+                                    <ion-label color="primary">Add Tags</ion-label>
+                                    <ion-searchbar></ion-searchbar>
+                                    <ion-label color="primary">Add a picture</ion-label>
+                                    <ion-input name="file" type="file" required ></ion-input>
                                 </form>
     						</ion-item>
     					</ion-card-content>
@@ -35,7 +36,7 @@
         <ion-slide>
                     <ion-card class="cardHome">
     					<ion-card-header class="cardheader">
-    						General
+    						3.Extras
     					</ion-card-header>
     					<ion-card-content>
     						<ion-item class="itemName">
