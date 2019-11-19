@@ -15,11 +15,12 @@ router.post('/login', async (req, res) => {
      [Op.or]: [{'username': login}, {'email': login}]
     }
   }).then(user => {
+    console.log(user);
     if(user && user.id){
       const token = getSessionToken(user.id.toString());
       res.cookie('SESSIONID', token, { httpOnly: true});
       res.statusCode = 200;
-      res.send(user);
+      res.send(token);
     } else {
       res.sendStatus(401);
     }

@@ -3,7 +3,7 @@ import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize(
   {
-    database: process.env.DB,
+    database: "src/db.sqlite",
     dialect: process.env.DB_DIALECT, 
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
