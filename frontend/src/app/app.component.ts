@@ -29,6 +29,10 @@ export class AppComponent implements OnInit {
     {
       title: 'Login',
       url: '/login',
+    },
+    {
+      tile: 'AddService',
+      url: '/service-creator',
     }
   ];
 
