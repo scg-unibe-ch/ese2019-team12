@@ -9,29 +9,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <form #form="ngForm" (ngSubmit)="login(event)">
     <ion-grid>
-      <ion-row justify-content-center>
-        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          <div text-center>
+      <ion-row class="ion-justify-content-center">
+        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
             <h3>Login</h3>
           </div>
-          <div padding>
+          <ion-row class="ion-justify-content-center red" *ngIf="loginFailed">
+              Incorrect email/username or password.
+          </ion-row>
+          <div class="ion-padding">
             <ion-item>
-              <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+              <ion-input name="login" type="email" placeholder="Email or username" [(ngModel)]="credentials.login" required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="credentials.password" required></ion-input>
             </ion-item>
           </div>
-          <div padding>
-            <ion-button size="large" type="submit" [disabled]="form.invalid" routerLink='/home' expand="block">Login</ion-button>
+          <div class="ion-padding">
+            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
           </div>
         </ion-col>
       </ion-row>
-      <ion-row justify-content-center>
-          <div text-center>
+      <ion-row class="ion-justify-content-center">
+          <div class="ion-text-center">
         If you don't have an account, please <a routerLink='/registration'>
           register here</a> first!
           </div>

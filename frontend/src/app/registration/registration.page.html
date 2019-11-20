@@ -64,6 +64,11 @@
               <ion-textarea></ion-textarea>
             </ion-item> -->
             <ion-button type="submit" expand="block" class="submitButton" [disabled]="passwordForm.invalid || registrationForm.invalid" routerLink="/explore" (click)="save()">Sign Up</ion-button>
+            <ion-item class="ion-justify-content-center">
+                <div class="ion-text-center">
+                    If you already have an account, <a routerLink='/login'>log in here</a>.
+                </div>
+            </ion-item>
         </form>
     </ion-list>
 </ion-content>

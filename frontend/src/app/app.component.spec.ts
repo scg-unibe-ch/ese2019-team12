@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -20,6 +21,7 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule.withRoutes([]),
         HttpClientTestingModule,
     ],
       declarations: [AppComponent],
@@ -37,6 +39,30 @@ describe('AppComponent', () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
+
+    it('should have menu labels', async () => {
+      const fixture = await TestBed.createComponent(AppComponent);
+      await fixture.detectChanges();
+      const app = fixture.nativeElement;
+      const menuItems = app.querySelectorAll('ion-label');
+      expect(menuItems.length).toEqual(4);
+      expect(menuItems[0].textContent).toContain('Explore');
+      expect(menuItems[1].textContent).toContain('Profile');
+      expect(menuItems[2].textContent).toContain('Settings');
+      expect(menuItems[3].textContent).toContain('Login');
+    });
+
+    it('should have urls', async () => {
+      const fixture = await TestBed.createComponent(AppComponent);
+      await fixture.detectChanges();
+      const app = fixture.nativeElement;
+      const menuItems = app.querySelectorAll('ion-item');
+      expect(menuItems.length).toEqual(4);
+      expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/explore');
+      expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/profile');
+      expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/settings');
+      expect(menuItems[3].getAttribute('ng-reflect-router-link')).toEqual('/login');
+    });
 
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);

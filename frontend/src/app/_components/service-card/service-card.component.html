@@ -1,0 +1,12 @@
+<ion-col>
+  <ion-card href="#" class="activated">
+    <ion-card-header >
+      <ion-card-title routerLink="/service">{{ service.name }}</ion-card-title>
+      <ion-card-subtitle routerLink="/profile">by Provider with ID {{ service.user_id}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ service.description }}
+    </ion-card-content>
+  </ion-card>
+</ion-col>
