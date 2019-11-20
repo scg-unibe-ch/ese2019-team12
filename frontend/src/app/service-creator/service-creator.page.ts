@@ -18,7 +18,7 @@ export class ServiceCreatorPage implements OnInit {
     serviceForm3: FormGroup;
     service = new Service(null, '', '',null,'');
 
-    @ViewChild('slides') slides: Slides;
+    @ViewChild('slides', { read: true, static: false }) slides: IonSlides;
 
 
   constructor(private userService: UserService) { }

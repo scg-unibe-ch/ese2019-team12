@@ -62,4 +62,11 @@ export class SessionService {
     }
     return this.currentUser;
   }
+  getCurrentRole() {
+    let currentUser = this.getCurrentUser();
+    if(currentUser) {
+      return currentUser.role;
+    }
+    return 'None';
+  }
 }
