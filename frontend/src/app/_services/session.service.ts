@@ -56,4 +56,7 @@ export class SessionService {
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
   }
+  getCurrentUser() {
+    return this.currentUser;
+  }
 }
