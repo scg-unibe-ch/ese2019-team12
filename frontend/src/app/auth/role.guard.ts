@@ -13,7 +13,7 @@ export class RoleGuard {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const user = this._session.getCurrentUser();
 
-    if (user.role === next.data.role) {
+    if (user && user.role === next.data.role) {
       return true;
     }
 

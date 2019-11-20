@@ -14,7 +14,7 @@ export class AuthGuard {
     if (this._session.isLoggedIn()) {
       return true;
     }
-    this._router.navigate(['/login']);
+    this._router.navigate(['/explore']);
     return false;
   }
 }
