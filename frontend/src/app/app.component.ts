@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
       url: '/profile',
     },
     {
-      tile: 'Add Service',
+      title: 'Add Service',
       url: '/service-creator',
     }
   ];
