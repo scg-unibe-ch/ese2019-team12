@@ -25,6 +25,9 @@ This server uses an sqlite3 database. It is stored in the file `db.sqlite`
 Sequelize is being used as the object-relation-model. It is defined in src/models/index.js
 All models are defined in src/models.
 
+Creating a new database:
+
+`npm run db_init`
 
 ## Testing
 Execute `npm test` to run all tests.
