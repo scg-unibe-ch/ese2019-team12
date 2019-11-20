@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuardService } from './_services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -9,19 +10,22 @@ const routes: Routes = [
   },
   {
     path: 'explore',
-    loadChildren: () => import('./explore/explore.module').then(m => m.ExplorePageModule)
+    loadChildren: () => import('./explore/explore.module').then(m => m.ExplorePageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
+    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule),
+    canActivate: [AuthGuardService]
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
   },
   {
     path: 'registration',
