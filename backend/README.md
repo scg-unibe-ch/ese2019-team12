@@ -27,9 +27,7 @@ All models are defined in src/models.
 
 Creating a new database:
 
-`npx sequelize-cli db:migrate`
-`npx sequelize-cli db:seed`
-
+`npm run db_init`
 
 ## Testing
 Execute `npm test` to run all tests.
