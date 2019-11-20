@@ -10,8 +10,8 @@ Wir haben unsere Ziele immer mündlich untereinander kommuniziert und schreiben 
 ### Im Frontend:
 | **Ziel** | **Status** | **Noch zu erledigen** |
 | -------------------------- | ---------- | ---------- |
-| Erstellung der GUI mit allen verschiedenen Seiten und Containern, ohne interne Logik und Verbindung zum Backend  | Fast erledigt | - |
-| 1. Erstellung der Explore-Page mit angebotenen Service-Cards 2. Detailansicht der Services | Fast erledigt | - |
+| Erstellung der GUI mit allen verschiedenen Seiten und Containern, ohne interne Logik und Verbindung zum Backend  | Erledigt | - |
+| 1. Erstellung der Explore-Page mit angebotenen Service-Cards 2. Detailansicht der Services | Erledigt | - |
 | Routing unter den verschiedenen Seiten | Erledigt | - |
 
 ### Im Backend:
