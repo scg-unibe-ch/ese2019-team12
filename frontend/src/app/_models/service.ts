@@ -7,7 +7,7 @@ export class Service {
     public title: string,
     public description: string,
     public price: number,
-    public pricerange: string,
+    public tags: string,
     public role: Role
 ) {}
 }

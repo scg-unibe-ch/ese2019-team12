@@ -26,27 +26,23 @@ export class ServiceCreatorPage implements OnInit {
 
   ngOnInit() {
       this.serviceForm1 = new FormGroup({
-          title: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-          serviceDescription: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
+          title: new FormControl('', [Validators.required, Validators.minLength(1)]),
+          serviceDescription: new FormControl('', [Validators.required]),
       });
       this.serviceForm2 = new FormGroup({
-          title: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
-          serviceDescription: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(1)]),
       });
       this.serviceForm3 = new FormGroup({
           price: new FormControl('', [Validators.required]),
-          pricerangeMin: new FormControl('', [Validators.required]),
-          pricerangeMax: new FormControl('', [Validators.required]),
       });
   }
-  nextSlide(){
-       this.slides.slideNext();
-  }
-  prevSlide() {
-         this.slides.slidePrev();
-     }
-processForm(){
-    console.log(this.service.title)
-}
+      nextSlide(){
+           this.slides.slideNext();
+      }
+      prevSlide() {
+             this.slides.slidePrev();
+         }
+    processForm(){
+        alert(this.service.title+ "was created")
+    }
 
 }

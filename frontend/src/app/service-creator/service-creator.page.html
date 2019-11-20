@@ -27,7 +27,7 @@
                                     <ion-label color="primary">Add Tags</ion-label>
                                     <ion-searchbar></ion-searchbar>
                                     <ion-label color="primary">Add a picture</ion-label>
-                                    <ion-input name="file" type="file" required ></ion-input>
+                                    <ion-input name="file" type="file" accept="image/*" required ></ion-input>
                                 </form>
     						</ion-item>
     					</ion-card-content>
@@ -43,10 +43,7 @@
                                 <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm3">
                                     <ion-label color="primary">Price</ion-label>
                                     <ion-input expand="block" name="price" type="number" required [(ngModel)]="service.price" formControlName="price" [class.error1]="!serviceForm3.controls.price.valid && serviceForm3.controls.price.dirty" placeholder="Enter the price of your service"></ion-input>
-                                    <ion-label color="primary">Pricerange</ion-label>
-                                    <p> Or enter a pricerange for your service </p>
-                                    <ion-input expand="block" name="pricerangeMin" type="number" required [(ngModel)]="service.pricerangeMin" formControlName="pricerangeMin" [class.error1]="!serviceForm3.controls.pricerangeMin.valid && serviceForm3.controls.pricerangeMin.dirty" placeholder="Min-Value"></ion-input>
-                                    <ion-input expand="block" name="pricerangeMax" type="number"  [(ngModel)]="service.pricerangeMax" formControlName="pricerangeMax" [class.error1]="!serviceForm3.controls.pricerangeMin.valid && serviceForm3.controls.pricerangeMin.dirty" placeholder="Max-Value"></ion-input>
+
                                 </form>
     						</ion-item>
     					</ion-card-content>
@@ -58,7 +55,7 @@
                     Submit
                 </ion-card-header>
                 <ion-card-content>
-                    <p>Creat your new Service now </p>
+                    <p>Creat your new Service</p>
                     <ion-button type="submit" expand="block" class="submitButton" [disabled]="serviceForm1.invalid || serviceForm2.invalid || serviceForm3.invalid" >Create Service</ion-button>
                 </ion-card-content>
             </ion-card>
