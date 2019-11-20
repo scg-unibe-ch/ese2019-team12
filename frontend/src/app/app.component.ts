@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  public role = this.session.getCurrentRole();
+  public role: string;
 
   constructor(
     private platform: Platform,
@@ -76,6 +76,8 @@ export class AppComponent implements OnInit {
     private session: SessionService,
   ) {
     this.initializeApp();
+    this.role = session.getCurrentRole();
+    this.session.currentRole.subscribe(role => this.changeRole(role));
   }
 
   initializeApp() {
@@ -86,5 +88,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  
+  changeRole(role: string): void {
+    this.role = role;
   }
 }

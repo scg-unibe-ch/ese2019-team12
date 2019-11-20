@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,6 +10,9 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class SessionService {
+  @Output() 
+  currentRole: EventEmitter<any> = new EventEmitter();
+
   currentUser: User;
 
   constructor(
@@ -33,6 +36,7 @@ export class SessionService {
     localStorage.setItem('token', loginResult.token);
     localStorage.setItem('expires_at', loginResult.expiresAt);
     localStorage.setItem('user', JSON.stringify(loginResult.user));
+    this.currentRole.emit(loginResult.user.role);
   }
 
   public isLoggedIn() {
@@ -55,6 +59,7 @@ export class SessionService {
     // remove token as well
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
+    this.currentRole.emit('None');
   }
   getCurrentUser() {
     if(!this.currentUser){
