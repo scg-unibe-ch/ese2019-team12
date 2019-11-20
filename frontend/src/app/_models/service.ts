@@ -1,10 +1,12 @@
+import { Role } from './role';
+
 export class Service {
 
-    constructor(
-        public id: number,
-        public user_id: number,
-        public name: string,
-        public type: string,
-        public description: string
-    ) {}
+  constructor(
+    public id: number,
+    public title: string,
+    public description: string,
+    public price: number,
+    public tags: string
+) {}
 }

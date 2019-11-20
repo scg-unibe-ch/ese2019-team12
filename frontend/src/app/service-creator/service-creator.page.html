@@ -1,0 +1,66 @@
+<ion-content fullscreen padding scroll-y="false">
+    <ion-slides pager="true"  [options]="slideOpts" autoplay="false" #slides>
+    	<ion-slide>
+    				<ion-card class="cardGeneral">
+    					<ion-card-header class="cardheader">
+    						1.General
+    					</ion-card-header>
+    					<ion-card-content>
+    						<ion-item class="itemName">
+                                <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm1">
+                                    <ion-label color="primary">Title</ion-label>
+                                    <ion-input expand="block" name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm1.controls.title.valid && serviceForm1.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
+                                    <textarea name="serviceDescription" type="text" required  formControlName="serviceDescription" [class.error1]="!serviceForm1.controls.serviceDescription.valid && serviceForm1.controls.serviceDescription.dirty"placeholder="Describe your Service in a few words" rows="8" cols="80" maxlength="200"></textarea>
+                                </form>
+    						</ion-item>
+    					</ion-card-content>
+    				</ion-card>
+        </ion-slide>
+        <ion-slide>
+                    <ion-card class="cardDetails">
+    					<ion-card-header class="cardheader">
+    						2.Details
+    					</ion-card-header>
+    					<ion-card-content>
+    						<ion-item class="itemName">
+                                <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm2">
+                                    <ion-label color="primary">Add Tags</ion-label>
+                                    <ion-searchbar></ion-searchbar>
+                                    <ion-label color="primary">Add a picture</ion-label>
+                                    <ion-input name="file" type="file" accept="image/*" required ></ion-input>
+                                </form>
+    						</ion-item>
+    					</ion-card-content>
+    				</ion-card>
+    	</ion-slide>
+        <ion-slide>
+                    <ion-card class="cardPrice">
+    					<ion-card-header class="cardheader">
+    						3.Pricing
+    					</ion-card-header>
+    					<ion-card-content>
+    						<ion-item class="itemName">
+                                <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm3">
+                                    <ion-label color="primary">Price</ion-label>
+                                    <ion-input expand="block" name="price" type="number" required [(ngModel)]="service.price" formControlName="price" [class.error1]="!serviceForm3.controls.price.valid && serviceForm3.controls.price.dirty" placeholder="Enter the price of your service"></ion-input>
+
+                                </form>
+    						</ion-item>
+    					</ion-card-content>
+    				</ion-card>
+    	</ion-slide>
+        <ion-slide>
+            <ion-card class="cardSubmit">
+                <ion-card-header class="cardheader">
+                    Submit
+                </ion-card-header>
+                <ion-card-content>
+                    <p>Creat your new Service</p>
+                    <ion-button type="submit" expand="block" class="submitButton" [disabled]="serviceForm1.invalid || serviceForm2.invalid || serviceForm3.invalid" >Create Service</ion-button>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+    <ion-button type="submit" color="primary" class="swiper-button-prev" (click)="prevSlide()"><</ion-button>
+    <ion-button type="submit" color="primary" class="swiper-button-next" (click)="nextSlide()">></ion-button>
+</ion-content>

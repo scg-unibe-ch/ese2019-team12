@@ -9,7 +9,7 @@ import {Service} from "../../_models/service";
 
 export class ServiceCardComponent implements OnInit {
 
-  service = new Service(1, 1, 'john\'s failing business', 'Catering', 'yes this was a very good idea');
+  service = new Service(1, 'john\'s failing business', 'Catering',1000,'failing');
   constructor() { }
 
   ngOnInit() {}

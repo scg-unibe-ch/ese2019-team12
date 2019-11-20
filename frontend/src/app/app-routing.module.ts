@@ -15,10 +15,10 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule)
   },
-  {
-    path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
-  },
+  // {
+  //   path: 'settings',
+  //   loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
+  // },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
@@ -26,6 +26,9 @@ const routes: Routes = [
   {
     path: 'registration',
     loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationPageModule)
+   },
+  { path: 'service-creator',
+   loadChildren: () => import('./service-creator/service-creator.module').then(m => m.ServiceCreatorPageModule)
   }
 
 ];
