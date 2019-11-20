@@ -19,10 +19,13 @@ router.post('/login', async (req, res) => {
     }
   }).then(user => {
     if(user && user.id && checkPassword(password, user.password(), user.salt())){
+      let message = getSessionToken(user.id.toString());
+      message.user = user;
       res.statusCode = 200;
-      res.send(getSessionToken(user.id.toString()));
+      res.send(message);
     } else {
-      res.sendStatus(401);
+      res.statusCode = 401;
+      res.send("login failed");
     }
   });
 });

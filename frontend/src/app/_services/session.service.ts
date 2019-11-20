@@ -17,10 +17,9 @@ export class SessionService {
   ) { }
 
   loadUser() {
-    let user = localStorage.getItem('currentUser');
+    let user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      user = JSON.parse(user);
-      this.currentUser = new User(user['id'], user['username'], user['firstname'], user['lastname'], user['email'], '', user['role']);
+      this.currentUser = user;
     }
   }
   login(login: string, password: string) {
@@ -33,6 +32,7 @@ export class SessionService {
   setSession(loginResult) {
     localStorage.setItem('token', loginResult.token);
     localStorage.setItem('expires_at', loginResult.expiresAt);
+    localStorage.setItem('user', JSON.stringify(loginResult.user));
   }
 
   public isLoggedIn() {
@@ -55,5 +55,11 @@ export class SessionService {
     // remove token as well
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
+  }
+  getCurrentUser() {
+    if(!this.currentUser){
+      this.loadUser();
+    }
+    return this.currentUser;
   }
 }
