@@ -1,20 +1,31 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Service-Creator
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content fullscreen padding scroll-y="false">
     <ion-slides pager="true"  [options]="slideOpts" autoplay="false" #slides>
     	<ion-slide>
-    				<ion-card class="cardGeneral">
-    					<ion-card-header class="cardheader">
-    						1.General
-    					</ion-card-header>
-    					<ion-card-content>
-    						<ion-item class="itemName">
-                                <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm1">
-                                    <ion-label color="primary">Title</ion-label>
-                                    <ion-input expand="block" name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm1.controls.title.valid && serviceForm1.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
-                                    <textarea name="serviceDescription" type="text" required  formControlName="serviceDescription" [class.error1]="!serviceForm1.controls.serviceDescription.valid && serviceForm1.controls.serviceDescription.dirty"placeholder="Describe your Service in a few words" rows="8" cols="80" maxlength="200"></textarea>
-                                </form>
-    						</ion-item>
-    					</ion-card-content>
-    				</ion-card>
+            <ion-card class="cardGeneral">
+                <ion-card-header class="cardheader">
+                    1.General
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-item class="itemName">
+                        <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="serviceForm1">
+                            <ion-label color="primary">Title</ion-label>
+                            <ion-input expand="block" name="title" type="text" required [(ngModel)]="service.title" formControlName="title" [class.error1]="!serviceForm1.controls.title.valid && serviceForm1.controls.title.dirty" placeholder="Enter the title of your service"></ion-input>
+                            <textarea name="serviceDescription" type="text" required  formControlName="serviceDescription" [class.error1]="!serviceForm1.controls.serviceDescription.valid && serviceForm1.controls.serviceDescription.dirty"placeholder="Describe your Service in a few words" rows="8" cols="80" maxlength="200"></textarea>
+                        </form>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
         </ion-slide>
         <ion-slide>
                     <ion-card class="cardDetails">

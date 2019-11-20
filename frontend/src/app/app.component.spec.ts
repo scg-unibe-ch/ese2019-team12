@@ -45,11 +45,14 @@ describe('AppComponent', () => {
       await fixture.detectChanges();
       const app = fixture.nativeElement;
       const menuItems = app.querySelectorAll('ion-label');
-      expect(menuItems.length).toEqual(4);
-      expect(menuItems[0].textContent).toContain('Explore');
-      expect(menuItems[1].textContent).toContain('Profile');
-      expect(menuItems[2].textContent).toContain('Settings');
-      expect(menuItems[3].textContent).toContain('Login');
+      if (this.role == 'Admin') {
+        expect(menuItems.length).toEqual(5);
+        expect(menuItems[0].textContent).toContain('Admin');
+        expect(menuItems[1].textContent).toContain('Explore');
+        expect(menuItems[2].textContent).toContain('Profile');
+        expect(menuItems[3].textContent).toContain('Login');
+        expect(menuItems[4].textContent).toContain('Add Service');
+      }
     });
 
     it('should have urls', async () => {
@@ -57,11 +60,13 @@ describe('AppComponent', () => {
       await fixture.detectChanges();
       const app = fixture.nativeElement;
       const menuItems = app.querySelectorAll('ion-item');
-      expect(menuItems.length).toEqual(4);
+      expect(menuItems.length).toEqual(2);
       expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/explore');
-      expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/profile');
-      expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/settings');
-      expect(menuItems[3].getAttribute('ng-reflect-router-link')).toEqual('/login');
+      expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/login');
+      // expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/profile');
+      // expect(menuItems[3].getAttribute('ng-reflect-router-link')).toEqual('/settings');
+      // expect(menuItems[4].getAttribute('ng-reflect-router-link')).toEqual('/login');
+      // expect(menuItems[5].getAttribute('ng-reflect-router-link')).toEqual('/service-creator');
     });
 
   it('should initialize the app', async () => {

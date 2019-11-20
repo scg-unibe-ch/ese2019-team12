@@ -35,15 +35,15 @@ export class AppComponent implements OnInit {
       url: '/profile',
     },
     {
-      title: 'Settings',
-      url: '/settings',
-    },
-    {
-      tile: 'AddService',
+      title: 'Add Service',
       url: '/service-creator',
     }
   ];
   public adminPages = [
+    {
+      title: 'Admin',
+      url: '/admin'
+    },
     {
       title: 'Explore',
       url: '/explore',
@@ -53,16 +53,8 @@ export class AppComponent implements OnInit {
       url: '/profile',
     },
     {
-      title: 'Settings',
-      url: '/settings',
-    },
-    {
-      tile: 'AddService',
+      tile: 'Add Service',
       url: '/service-creator',
-    },
-    {
-      title: 'Admin',
-      url: '/admin'
     }
   ];
 

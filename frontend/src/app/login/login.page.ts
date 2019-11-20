@@ -20,7 +20,7 @@ export class LoginPage implements OnInit {
 
   login(event) {
     // this is a test user, form input is stored in this.credentials
-    this.sessionService.login('admin', 'hello').subscribe(
+    this.sessionService.login('Jony', 'hello').subscribe(
         data => {
             console.log(data);
             this.router.navigate(['/explore']);
