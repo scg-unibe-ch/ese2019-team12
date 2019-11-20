@@ -10,10 +10,10 @@ export class RoleGuard {
 
   constructor(private _session: SessionService, private _router: Router) { }
 
-  canActivate(next: ActivatedRouterSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const user = this._session.getCurrentUser();
 
-    if (user.Role === next.data.role) {
+    if (user.role === next.data.role) {
       return true;
     }
 
