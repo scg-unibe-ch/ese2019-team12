@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "test": "babel-node spec/support/run.js",
-    "db_init": "rm db.sqlite; npx sequelize-cli db:migrate; npx sequelize-cli db:seed:all"
+    "db_init": "rm db.sqlite; npx sequelize-cli db:migrate; npx sequelize-cli db:seed:all;"
   },
   "keywords": [],
   "author": "",
