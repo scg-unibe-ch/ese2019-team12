@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import { Sequelize } from 'sequelize';
+
+const Op = Sequelize.Op;
 
 const router = Router();
 
@@ -15,16 +18,19 @@ router.get('/', async (req, res) => {
   res.send(users);
 });
 
-router.get('/:userId', async (req, res) => {
-  let User = getUser(req);
-  const user = await User.findByPk(
-    req.params.userId,
-  );
-  if (!user) {
-    error404(res);
-    return;
+router.get('/:userId', async (req, res, next) => {
+  if(Object.keys(req.query).length === 0){
+    let User = getUser(req);
+    const user = await User.findByPk(
+      req.params.userId,
+    );
+    if (!user) {
+      error404(res);
+      return;
+    }
+    res.send(user);
   }
-  res.send(user);
+  next();
 });
 
 router.post('/', async (req, res) => {
@@ -49,9 +55,8 @@ router.put('/:id', async (req, res) => {
     error404(res);
     return;
   }
-  let keys = Object.keys(req.body);
-  console.log(keys);
-  keys.forEach((key) => {
+  let keys = Object.keys(req.body); // Find all transmitted attributes
+  keys.forEach((key) => {           // For each attribute name,
     if(toUpdate.key !== undefined) {
       toUpdate.key = req.body.key;
     }
@@ -72,6 +77,33 @@ router.delete('/:id', async (req, res) => {
   await toDelete.destroy();
   res.statusCode = 204;
   res.send();
+});
+
+router.get('/search/', async (req, res) => {
+  let User = getUser(req);
+  let criteria = '';
+  if(req.query.username !== undefined) {
+    criteria = req.query.username;
+  } else if (req.query.email !== undefined) {
+    criteria = req.query.email;
+  } else {
+    res.send('Please submit a proper search');
+  }
+  console.log(criteria);
+  await User.findOne({ where: {
+      [Op.or]: [{'username': criteria }, {'email': criteria}]
+    }
+  }).then((user) => {
+    console.log(user);
+    if(user) {
+      res.statusCode = 200;
+      res.send('Name/email already in use');
+    } else {
+      res.sendStatus(200);
+    }
+  }).catch((err) => {
+    console.log(err);
+  });
 });
 
 function getUser(req) {
