@@ -3,6 +3,7 @@ import express from 'express';
 
 import models, { sequelize } from './models';
 import controllers from './controllers';
+import { authFilter } from './controllers/user';
 import { checkIfAuthenticated } from './helpers/session.helper';
 
 const app = express();
@@ -25,8 +26,7 @@ app.use(async (req, res, next) => {
 app.get('/', (req, res) => {
   return res.send('Received GET HTTP method');
 });
-app.use('/users', checkIfAuthenticated, controllers.user);
-app.use('/publicUser', controllers.public_user);
+app.use('/users', checkIfAuthenticated.unless(authFilter),controllers.user);
 app.use('/services', checkIfAuthenticated, controllers.service);
 app.use('/session', controllers.session);
 
