@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Add a Service
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Add a Service
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -30,8 +30,18 @@
                         <ion-input name="file" type="file" accept="image/*" required ></ion-input>
                     </ion-item>
                     <ion-item>
+                        <ion-label>Help peope to find your service by adding tags:</ion-label>
+                    </ion-item>
+                    <ion-item>
                         <ion-label color="primary">Tags</ion-label>
-                        <ion-input placeholder="Add tags to help people find your service"></ion-input>
+                        <ion-input name="tags" placeholder="separate Tags with a comma ," formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Marked Tags:</ion-label>
+                        <ion-chip outline color="primary" *ngFor="let c of chips">
+                            <ion-label>{{c}}</ion-label>
+                            <ion-icon name="close-circle" (click)="deleteChip(event)"></ion-icon>
+                        </ion-chip>
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Price</ion-label>

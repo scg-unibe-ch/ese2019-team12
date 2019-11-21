@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {IonSlides} from '@ionic/angular';
 import { UserService } from '../_services/user.service';
 import { Service } from '../_models/service';
 import { Role } from '../_models/role';
@@ -11,22 +10,42 @@ import { Role } from '../_models/role';
     styleUrls: ['./service-creator.page.scss'],
 })
 export class ServiceCreatorPage implements OnInit {
-    serviceForm: FormGroup;
     service = new Service(null, '', '',null,'');
+    chips = [];
 
-    @ViewChild('slides', { read: true, static: false }) slides: IonSlides;
+    serviceForm = new FormGroup({
+        title: new FormControl('', [Validators.required, Validators.minLength(1)]),
+        serviceDescription: new FormControl('', [Validators.required]),
+        price: new FormControl('', [Validators.required]),
+        tagInput: new FormControl(''),
+    });
 
     constructor(private userService: UserService) { }
 
     ngOnInit() {
-        this.serviceForm = new FormGroup({
-            title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-            serviceDescription: new FormControl('', [Validators.required]),
-            price: new FormControl('', [Validators.required]),
-        });
     }
 
-    createService(){
-        alert(this.service.title+ "was created");
+    tagsParser() {
+        let input = this.serviceForm.get('tagInput').value;
+        if (input.slice(-1) === ",") {
+            this.createChip(input.slice(0, -1));
+            this.serviceForm.get('tagInput').setValue("");
+        }
+    }
+
+    createService() {
+        alert(this.service.title + " was created.");
+    }
+
+    createChip(chipToAdd) {
+        if (!this.chips.includes(chipToAdd)) {
+            this.chips.push(chipToAdd);
+        }
+    }
+
+    deleteChip(chipToDelete) {
+        this.chips = this.chips.filter(chip => {
+            return chip != chipToDelete;
+        })
     }
 }
