@@ -5,44 +5,28 @@ import { UserService } from '../_services/user.service';
 import { Service } from '../_models/service';
 import { Role } from '../_models/role';
 
-
-
 @Component({
-  selector: 'app-service-creator',
-  templateUrl: './service-creator.page.html',
-  styleUrls: ['./service-creator.page.scss'],
+    selector: 'app-service-creator',
+    templateUrl: './service-creator.page.html',
+    styleUrls: ['./service-creator.page.scss'],
 })
 export class ServiceCreatorPage implements OnInit {
-    serviceForm1: FormGroup;
-    serviceForm2: FormGroup;
-    serviceForm3: FormGroup;
+    serviceForm: FormGroup;
     service = new Service(null, '', '',null,'');
 
     @ViewChild('slides', { read: true, static: false }) slides: IonSlides;
 
+    constructor(private userService: UserService) { }
 
-  constructor(private userService: UserService) { }
-
-
-  ngOnInit() {
-      this.serviceForm1 = new FormGroup({
-          title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-          serviceDescription: new FormControl('', [Validators.required]),
-      });
-      this.serviceForm2 = new FormGroup({
-      });
-      this.serviceForm3 = new FormGroup({
-          price: new FormControl('', [Validators.required]),
-      });
-  }
-      nextSlide(){
-           this.slides.slideNext();
-      }
-      prevSlide() {
-             this.slides.slidePrev();
-         }
-    processForm(){
-        alert(this.service.title+ "was created")
+    ngOnInit() {
+        this.serviceForm = new FormGroup({
+            title: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            serviceDescription: new FormControl('', [Validators.required]),
+            price: new FormControl('', [Validators.required]),
+        });
     }
 
+    createService(){
+        alert(this.service.title+ "was created");
+    }
 }
