@@ -29,16 +29,12 @@ router.get('/:userId', async (req, res) => {
 
 router.post('/', async (req, res) => {
   let User = getUser(req);
-  let createdUser = await User.create({
-    username: "" + Math.random(),
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    password: req.body.password,
-    role: "User",
-    email: req.body.email,
-  }).then(user => {
+  var userData = req.body;
+  userData.username = "" + Math.random();
+  userData.role = "User";
+  await User.create(userData).then(user => {
     res.statusCode = 201;
-    res.send(createdUser);
+    res.send(user);
   }).catch( err => {
     console.log(err);
     res.statusCode = 500;
@@ -53,7 +49,14 @@ router.put('/:id', async (req, res) => {
     error404(res);
     return;
   }
-  toUpdate.username = req.body['username'];
+  let keys = Object.keys(req.body);
+  console.log(keys);
+  keys.forEach((key) => {
+    if(toUpdate.key !== undefined) {
+      toUpdate.key = req.body.key;
+    }
+  });
+
   await toUpdate.save();
   res.statusCode = 200;
   res.send(toUpdate);
