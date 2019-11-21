@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
       url: '/explore',
     },
     {
-      title: 'Login',
+      title: 'Login or Register',
       url: '/login',
     }
   ];
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   changeRole(role: string): void {
     this.role = role;
   }

@@ -17,12 +17,13 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.apiUrl + '/users');
   }
+  
   getUser(id: number): Observable<User> {
-    return this.httpClient.get<User>(this.apiUrl + '/users/' + id);
+    return this.httpClient.get<User>(this.apiUrl + '/publicUser/' + id);
   }
 
   create(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.apiUrl + '/users/', {
+    return this.httpClient.post<User>(this.apiUrl + '/publicUser/', {
       lastName: user.firstName,
       firstName: user.lastName,
       email: user.email,

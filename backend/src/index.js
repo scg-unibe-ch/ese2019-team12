@@ -26,12 +26,13 @@ app.get('/', (req, res) => {
   return res.send('Received GET HTTP method');
 });
 app.use('/users', checkIfAuthenticated, controllers.user);
+app.use('/publicUser', controllers.public_user);
 app.use('/services', checkIfAuthenticated, controllers.service);
 app.use('/session', controllers.session);
 
 var server = app.listen(process.env.PORT, () => {
   console.log(`Listening on Port ${process.env.PORT}`);
-}); 
+});
 sequelize.sync().then(() => {
   app.emit('ready');
 });

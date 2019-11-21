@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
+import { SessionService } from '../_services/session.service';
 import { User } from '../_models/user';
 import { Role } from '../_models/role';
 
@@ -21,9 +23,7 @@ export class RegistrationPage implements OnInit {
     user = new User(null, '', '', '', '', '', Role.User);
     password = '';
 
-
-
-    constructor(private userService: UserService, public formBuilder: FormBuilder) { }
+    constructor(private userService: UserService, public formBuilder: FormBuilder, public router: Router, public sessionService: SessionService) { }
 
     ngOnInit() {
         const EMAILPATTERN = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
@@ -53,9 +53,27 @@ export class RegistrationPage implements OnInit {
 
     // Processes the given Inputs to be stored in the Back-End.
     processForm(event) {
-    // how do we create a unique id?
-    console.log(this.user);
-    // this.userService.create(this.user).subscribe();
+
+        console.log(this.user);
+        this.userService.create(this.user).subscribe(
+            data => {
+                console.log(data);
+                this.sessionService.login(this.user.email, this.user.password).subscribe(
+                    data => {
+                        console.log(data);
+                        this.router.navigate(['/explore']);
+                    },
+                    (err: any) => {
+                        if (err.status === 401) {
+                            console.log("Error message: " + err.message);
+                        }
+                    }
+                );
+            },
+            (err: any) => {
+                console.log("Error message: " + err.message)
+            }
+        );
     }
 
     showPassword() {
