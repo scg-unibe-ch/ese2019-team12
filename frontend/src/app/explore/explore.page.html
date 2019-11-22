@@ -9,24 +9,12 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
     <ion-searchbar></ion-searchbar>
-    <ion-grid>
-        <ion-row>
-            <app-service-card></app-service-card>
-        </ion-row>
-        <ion-row>
-            <app-service-card></app-service-card>
-        </ion-row>
-        <ion-row>
-            <app-service-card></app-service-card>
-        </ion-row>
-    </ion-grid>
 
-
-    <ion-grid *ngFor="let s of services">
+    <ion-grid *ngFor="let service of services">
         <ion-row>
-            <app-service-card></app-service-card>
+            <app-service-card [service]="service"></app-service-card>
         </ion-row>
     </ion-grid>
 

@@ -37,6 +37,10 @@ export class AppComponent implements OnInit {
     {
       title: 'Add Service',
       url: '/service-creator',
+    },
+    {
+      title: 'Log Out',
+      url: '/explore',
     }
   ];
   public adminPages = [
@@ -55,6 +59,10 @@ export class AppComponent implements OnInit {
     {
       title: 'Add Service',
       url: '/service-creator',
+    },
+    {
+      title: 'Log Out',
+      url: '/explore',
     }
   ];
 

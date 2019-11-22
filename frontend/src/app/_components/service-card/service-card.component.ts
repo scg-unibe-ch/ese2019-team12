@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Service} from "../../_models/service";
 
 @Component({
@@ -8,9 +8,9 @@ import {Service} from "../../_models/service";
 })
 
 export class ServiceCardComponent implements OnInit {
+  @Input() service: Service;
 
-  service = new Service(1, 'john\'s failing business', 'Catering',1000,'failing');
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {}
 
