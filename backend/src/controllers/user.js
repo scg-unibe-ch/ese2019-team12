@@ -89,17 +89,16 @@ router.get('/search/', async (req, res) => {
   } else {
     res.send('Please submit a proper search');
   }
-  console.log(criteria);
   await User.findOne({ where: {
       [Op.or]: [{'username': criteria }, {'email': criteria}]
     }
   }).then((user) => {
     console.log(user);
+    res.statusCode = 200;
     if(user) {
-      res.statusCode = 200;
-      res.send('Name/email already in use');
+      res.send({ 'isUsed': true });
     } else {
-      res.sendStatus(200);
+      res.sendStatus({ 'isUsed': true});
     }
   }).catch((err) => {
     console.log(err);
