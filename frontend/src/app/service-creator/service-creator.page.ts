@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../_services/user.service';
+import { SessionService } from '../_services/session.service';
 import { Service } from '../_models/service';
 import { Role } from '../_models/role';
 
@@ -10,20 +10,19 @@ import { Role } from '../_models/role';
     styleUrls: ['./service-creator.page.scss'],
 })
 export class ServiceCreatorPage implements OnInit {
-    service = new Service(null, '', '',null,'');
+    service = new Service(null, '', '', '',null, []);
     chips = [];
 
     serviceForm = new FormGroup({
         title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-        serviceDescription: new FormControl('', [Validators.required]),
+        description: new FormControl('', [Validators.required]),
         price: new FormControl('', [Validators.required]),
         tagInput: new FormControl(''),
     });
 
-    constructor(private userService: UserService) { }
+    constructor(private sessionService: SessionService) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     tagsParser() {
         let input = this.serviceForm.get('tagInput').value;
@@ -34,7 +33,12 @@ export class ServiceCreatorPage implements OnInit {
     }
 
     createService() {
-        alert(this.service.title + " was created.");
+        this.service.title = this.serviceForm.get('title').value;
+        this.service.description = this.serviceForm.get('description').value;
+        this.service.price = this.serviceForm.get('price').value;
+        this.service.tags = this.chips;
+        this.service.user = this.sessionService.getCurrentUser().id;
+        console.log(this.service);
     }
 
     createChip(chipToAdd) {

@@ -8,6 +8,6 @@ export class Service {
     public title: string,
     public description: string,
     public price: number,
-    public tags: string
+    public tags: string[]
 ) {}
 }
