@@ -23,6 +23,8 @@ export class ExplorePage implements OnInit {
     }
 
 
+//filters our Array and then sets the services array to the services that are left matching the search
+// for now only compares on title
   filterData (){
     this.initializeItems();
     console.log(this.searchQuery);
