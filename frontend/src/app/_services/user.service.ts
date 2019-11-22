@@ -17,7 +17,7 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.apiUrl + '/users');
   }
-  
+
   getUser(id: number): Observable<User> {
     return this.httpClient.get<User>(this.apiUrl + '/users/' + id);
   }
@@ -30,6 +30,14 @@ export class UserService {
       password: user.password,
       role: user.role
     });
+  }
+
+  isUsernameTaken(username): Observable<any> {
+    return this.httpClient.get<any>(this.apiUrl + '/users/search/?username=' + username);
+  }
+
+  isEmailTaken(email): Observable<any> {
+    return this.httpClient.get<any>(this.apiUrl + '/users/search/?username=' + email);
   }
 
   update(user: User): Observable<any> {

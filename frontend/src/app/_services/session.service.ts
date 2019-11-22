@@ -10,7 +10,7 @@ import { User } from '../_models/user';
   providedIn: 'root'
 })
 export class SessionService {
-  @Output() 
+  @Output()
   currentRole: EventEmitter<any> = new EventEmitter();
 
   currentUser: User;
@@ -25,6 +25,7 @@ export class SessionService {
       this.currentUser = user;
     }
   }
+
   login(login: string, password: string) {
     return this.httpClient.post<any>(`http://localhost:3000/session/login`, {
         "login": login,
@@ -61,12 +62,14 @@ export class SessionService {
     localStorage.removeItem('expires_at');
     this.currentRole.emit('None');
   }
+
   getCurrentUser() {
     if(!this.currentUser){
       this.loadUser();
     }
     return this.currentUser;
   }
+
   getCurrentRole() {
     let currentUser = this.getCurrentUser();
     if(currentUser) {

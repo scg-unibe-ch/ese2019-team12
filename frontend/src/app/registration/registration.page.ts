@@ -53,27 +53,37 @@ export class RegistrationPage implements OnInit {
 
     // Processes the given Inputs to be stored in the Back-End.
     processForm(event) {
-
+        this.user.firstName = this.registrationForm.get('firstName').value;
+        this.user.lastName = this.registrationForm.get('lastName').value;
+        this.user.email = this.registrationForm.get('email').value;
+        this.user.password = this.passwordForm.get('password').value;
         console.log(this.user);
-        this.userService.create(this.user).subscribe(
+
+        this.userService.isEmailTaken(this.user.email).subscribe(
             data => {
                 console.log(data);
-                this.sessionService.login(this.user.email, this.user.password).subscribe(
-                    data => {
-                        console.log(data);
-                        this.router.navigate(['/explore']);
-                    },
-                    (err: any) => {
-                        if (err.status === 401) {
-                            console.log("Error message: " + err.message);
-                        }
-                    }
-                );
-            },
-            (err: any) => {
-                console.log("Error message: " + err.message)
             }
         );
+
+        // this.userService.create(this.user).subscribe(
+        //     data => {
+        //         console.log(data);
+        //         this.sessionService.login(this.user.email, this.user.password).subscribe(
+        //             data => {
+        //                 console.log(data);
+        //                 this.router.navigate(['/explore']);
+        //             },
+        //             (err: any) => {
+        //                 if (err.status === 401) {
+        //                     console.log("Error message: " + err.message);
+        //                 }
+        //             }
+        //         );
+        //     },
+        //     (err: any) => {
+        //         console.log("Error message: " + err.message)
+        //     }
+        // );
     }
 
     showPassword() {
