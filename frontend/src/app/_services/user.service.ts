@@ -37,7 +37,7 @@ export class UserService {
   }
 
   isEmailTaken(email): Observable<any> {
-    return this.httpClient.get<any>(this.apiUrl + '/users/search/?username=' + email);
+    return this.httpClient.get<any>(this.apiUrl + '/users/search/?email=' + email);
   }
 
   update(user: User): Observable<any> {

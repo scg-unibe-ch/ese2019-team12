@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../_services/user.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../_services/session.service';
+import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
 import { Role } from '../_models/role';
 
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 // import custom validator to validate that password and confirm password fields match
 import { PasswordValidator } from '../_validators/password-validator';
-import { UsernameValidator } from '../_validators/username-validator';
+import { AsyncValidators } from '../_validators/async-validators';
 
 @Component({
   selector: 'app-registration',
@@ -23,9 +23,12 @@ export class RegistrationPage implements OnInit {
     user = new User(null, '', '', '', '', '', Role.User);
     password = '';
 
-    constructor(private userService: UserService, public formBuilder: FormBuilder, public router: Router, public sessionService: SessionService) { }
-
-    ngOnInit() {
+    constructor(
+        public userService: UserService,
+        public formBuilder: FormBuilder,
+        public router: Router,
+        public sessionService: SessionService
+    ) {
         const EMAILPATTERN = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
         const STRGPWPATTERN = '.*'  // Needed (ngPattern surrounds with ^ and $)
             + '(?=^.{8,}$)'       // At least 8 Characters
@@ -37,7 +40,15 @@ export class RegistrationPage implements OnInit {
         this.registrationForm = new FormGroup({
             lastName: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
             firstName: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
-            email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)])
+            email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)], AsyncValidators.checkEmail(this.userService)),
+            username: new FormControl('',
+                [
+                    Validators.required,
+                    Validators.maxLength(30),
+                    Validators.pattern('[a-zA-Z ]*')
+                ],
+                    AsyncValidators.checkUsername(this.userService)
+            )
         });
         this.passwordForm = new FormGroup({
             password: new FormControl('', [Validators.required, Validators.minLength(8),
@@ -46,9 +57,9 @@ export class RegistrationPage implements OnInit {
         }, (formGroup: FormGroup) => {
             return PasswordValidator.areEqual(formGroup);
         });
-        this.usernameForm = new FormGroup({
-            username: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')])
-        });
+    }
+
+    ngOnInit() {
     }
 
     // Processes the given Inputs to be stored in the Back-End.
@@ -58,12 +69,6 @@ export class RegistrationPage implements OnInit {
         this.user.email = this.registrationForm.get('email').value;
         this.user.password = this.passwordForm.get('password').value;
         console.log(this.user);
-
-        this.userService.isEmailTaken(this.user.email).subscribe(
-            data => {
-                console.log(data);
-            }
-        );
 
         // this.userService.create(this.user).subscribe(
         //     data => {

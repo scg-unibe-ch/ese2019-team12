@@ -27,9 +27,13 @@
 
                     <ion-item>
                         <ion-label color="primary">E-Mail</ion-label>
-                        <ion-input name="email" formControlName="email" type="email" inputmode="email" required></ion-input>
+                        <ion-input name="email" formControlName="email" type="email" inputmode="email" required [ngClass]="{ 'is-invalid': submitted && f.email.errors }"></ion-input>
                     </ion-item>
 
+                    <ion-item>
+                        <ion-label color="primary">Choose a username</ion-label>
+                        <ion-input id="username" formControlName="username" name="username" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"></ion-input>
+                    </ion-item>
                         <!-- <ion-item>
                         <ion-label position="stacked">Address</ion-label>
                         <ion-input  placeholder="Address"></ion-input>
