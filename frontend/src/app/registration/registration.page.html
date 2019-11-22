@@ -9,66 +9,64 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-    <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
-    <ion-list>
-        <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="registrationForm">
-                <ion-item>
-                    <ion-label position="floating">First Name</ion-label>
-                    <ion-input name="firstName" formControlName="firstName" type="text" inputmode="text" required [(ngModel)]="user.firstName"></ion-input>
-                </ion-item>
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                <form (ngSubmit)="processForm(event)" novalidate [formGroup]="registrationForm">
+                    <h3 class="ion-text-center">Register a new account</h3>
+                    <ion-item>
+                        <ion-label color="primary">First Name</ion-label>
+                        <ion-input name="firstName" formControlName="firstName" type="text" inputmode="text" required [(ngModel)]="user.firstName"></ion-input>
+                    </ion-item>
 
-                <ion-item>
-                    <ion-label position="floating">Last Name</ion-label>
-                    <ion-input name="lastName" formControlName="lastName" type="text" inputmode="text" required [(ngModel)]="user.lastName"></ion-input>
-                </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Last Name</ion-label>
+                        <ion-input name="lastName" formControlName="lastName" type="text" inputmode="text" required [(ngModel)]="user.lastName"></ion-input>
+                    </ion-item>
 
-                <ion-item>
-                    <ion-label position="floating">E-Mail</ion-label>
-                    <ion-input name="email" formControlName="email" type="email" inputmode="email" required [(ngModel)]="user.email"></ion-input>
-                </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">E-Mail</ion-label>
+                        <ion-input name="email" formControlName="email" type="email" inputmode="email" required [(ngModel)]="user.email"></ion-input>
+                    </ion-item>
 
-                <!-- <ion-item>
-                    <ion-label position="stacked">Address</ion-label>
-                    <ion-input placeholder="Address"></ion-input>
-                    <ion-input placeholder="City"></ion-input>
-                    <ion-input placeholder="State"></ion-input>
-                    <ion-input placeholder="Zip Code"></ion-input>
-                 </ion-item> -->
-        </form>
-    </ion-list>
-    <ion-list>
-        <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="passwordForm">
-            <ion-item>
-                <ion-label position="floating">Enter Password</ion-label>
-                <ion-input id="password" formControlName="password" name="password" type="password" required="true" [(ngModel)]="user.password"></ion-input>
-            </ion-item>
+                        <!-- <ion-item>
+                        <ion-label position="stacked">Address</ion-label>
+                        <ion-input  placeholder="Address"></ion-input>
+                        <ion-input  placeholder="City"></ion-input>
+                        <ion-input  placeholder="State"></ion-input>
+                        <ion-input  placeholder="Zip Code"></ion-input>
+                    </ion-item> -->
+                </form>
+                <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="passwordForm">
+                    <ion-item>
+                        <ion-label color="primary">Enter Password</ion-label>
+                        <ion-input id="password" formControlName="password" name="password" type="password" required></ion-input>
+                        <ion-button class="showPassword" (click)="showPassword()" >
+                            <ion-icon name="eye-off" id="eye"></ion-icon>
+                        </ion-button>
+                    </ion-item>
 
-            <ion-item *ngIf="!passwordForm.controls.password.valid  && passwordForm.controls.password.dirty">
-                <p>Please enter a password between 8 and 12 characters, containing at least one number and one special character.</p>
-            </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Confirm Password</ion-label>
+                        <ion-input id="confirmpassword" formControlName="confirmPassword" name="confirmPassword" type="password" required="true" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
+                    </ion-item>
 
-            <ion-item>
-                <ion-label position="floating">Confirm Password</ion-label>
-                <ion-input id="confirmpassword" formControlName="confirmPassword" name="confirmPassword" type="password" required="true" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
-            </ion-item>
-
-            <ion-item>
-                <ion-button class="showPassword" (click)="showPassword()">
-                    <ion-icon name="eye-off" id="eye"></ion-icon>
-                </ion-button>
-            </ion-item>
-
-            <!-- <ion-item>
-              <ion-label position="stacked">Notes</ion-label>
-              <ion-textarea></ion-textarea>
-            </ion-item> -->
-            <ion-button type="submit" expand="block" class="submitButton" [disabled]="passwordForm.invalid || registrationForm.invalid">Sign Up</ion-button>
-            <ion-item class="ion-justify-content-center">
-                <div class="ion-text-center">
-                    If you already have an account, <a routerLink='/login'>log in here</a>.
-                </div>
-            </ion-item>
-        </form>
-    </ion-list>
+                    <div class="ion-text-center ion-padding">
+                        Enter a password between 8 and 12 characters, containing at least one number and one special character.
+                    </div>
+                    <!-- <ion-item>
+                    <ion-label position="stacked">Notes</ion-label>
+                    <ion-textarea></ion-textarea>
+                    </ion-item> -->
+                    <ion-button type="submit" expand="block" class="submitButton" [disabled]="passwordForm.invalid || registrationForm.invalid">Sign Up</ion-button>
+                </form>
+                <ion-row class="ion-justify-content-center">
+                    <p class="ion-text-center">
+                        If you already have an account, <a routerLink='/login'>log in here</a>.
+                    </p>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

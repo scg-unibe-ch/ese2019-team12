@@ -10,35 +10,31 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form #form="ngForm" (ngSubmit)="login(event)">
     <ion-grid>
-      <ion-row class="ion-justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <h3>Login</h3>
-          </div>
-          <ion-row class="ion-justify-content-center red" *ngIf="loginFailed">
-              Incorrect email/username or password.
-          </ion-row>
-          <div class="ion-padding">
-            <ion-item>
-              <ion-input name="login" type="email" placeholder="Email or username" [(ngModel)]="credentials.login" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" [(ngModel)]="credentials.password" required></ion-input>
-            </ion-item>
-          </div>
-          <div class="ion-padding">
-            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-justify-content-center">
-          <div class="ion-text-center">
-        If you don't have an account, please <a routerLink='/registration'>
-          register here</a> first!
-          </div>
-      </ion-row>
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                <h3 class="ion-text-center">Login</h3>
+                <form #form="ngForm" (ngSubmit)="login(event)">
+                    <ion-row class="ion-justify-content-center red" *ngIf="loginFailed">
+                        Incorrect email/username or password.
+                    </ion-row>
+                    <ion-item>
+                        <ion-label color="primary">Email or username</ion-label>
+                        <ion-input name="login" type="email" [(ngModel)]="credentials.login" required></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Password</ion-label>
+                        <ion-input name="password" type="password" [(ngModel)]="credentials.password" required></ion-input>
+                    </ion-item>
+                    <ion-button type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+                </form>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+            <p class="ion-text-center">
+                If you don't have an account, please <a routerLink='/registration'>
+                    register here</a> first!
+            </p>
+        </ion-row>
     </ion-grid>
-  </form>
 </ion-content>
