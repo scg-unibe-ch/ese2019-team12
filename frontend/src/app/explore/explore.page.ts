@@ -19,7 +19,7 @@ export class ExplorePage implements OnInit {
 
   //Function to load all our items so we can work localy (not meant for big lists!)
   initializeItems() {
-      this.goalList = this.services; //this.services to be replaced with call to backend
+      this.searchedList = this.services; //this.services to be replaced with call to backend
     }
 
 
@@ -28,13 +28,13 @@ export class ExplorePage implements OnInit {
   filterData (){
     this.initializeItems();
     console.log(this.searchQuery);
-    console.log(this.goalList);
+    console.log(this.searchedList);
     const searchTerm = this.searchQuery;
     if (!searchTerm) {
     return;
     }
 
-      this.goalList = this.goalList.filter(Service => {
+      this.searchedList = this.searchedList.filter(Service => {
     if (Service.title && searchTerm) {
       if (Service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
         return true;
@@ -42,8 +42,8 @@ export class ExplorePage implements OnInit {
       return false;
     }
   });
-  console.log(this.goalList);
-  this.services = this.goalList;
+  console.log(this.searchedList);
+  this.services = this.searchedList;
 }
 
 
