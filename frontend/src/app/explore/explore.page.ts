@@ -8,6 +8,7 @@ import {Service} from "../_models/service";
 })
 export class ExplorePage implements OnInit {
 
+
   // Placeholder for services that will be read from the database
   services = [
       new Service(1, 'john_1', 'john\'s failing business', 'Catering', 1000, ['yum', 'food']),
@@ -15,6 +16,34 @@ export class ExplorePage implements OnInit {
       new Service(3, 'JimmyJim', 'jim\'s clean up crew', 'Cleaning', 300, ['clean', 'murder']),
       new Service(4, 'john_1', 'john\'s security crew', 'Security', 5, ['safe AF'])
   ];
+
+  //Function to load all our items so we can work localy (not meant for big lists!)
+  initializeItems() {
+      this.goalList = this.services; //this.services to be replaced with call to backend
+    }
+
+
+  filterData (){
+    this.initializeItems();
+    console.log(this.searchQuery);
+    console.log(this.goalList);
+    const searchTerm = this.searchQuery;
+    if (!searchTerm) {
+    return;
+    }
+
+      this.goalList = this.goalList.filter(Service => {
+    if (Service.title && searchTerm) {
+      if (Service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+        return true;
+      }
+      return false;
+    }
+  });
+  console.log(this.goalList);
+  this.services = this.goalList;
+}
+
 
   constructor() {}
 
