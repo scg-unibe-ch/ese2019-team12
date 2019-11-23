@@ -16,6 +16,8 @@ export class ExplorePage implements OnInit {
       new Service(3, 'JimmyJim', 'jim\'s clean up crew', 'Cleaning', 300, ['clean', 'murder']),
       new Service(4, 'john_1', 'john\'s security crew', 'Security', 5, ['safe AF'])
   ];
+ searchedList = [];
+ searchQuery = "";
 
   //Function to load all our items so we can work localy (not meant for big lists!)
   initializeItems() {
