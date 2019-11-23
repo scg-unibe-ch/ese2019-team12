@@ -79,20 +79,22 @@ router.delete('/:id', async (req, res) => {
   res.send();
 });
 
-router.get('/search/', async (req, res) => {
+router.get('/search', async (req, res) => {
   let User = getUser(req);
   let criteria = '';
   if(req.query.username !== undefined) {
     criteria = req.query.username;
   } else if (req.query.email !== undefined) {
     criteria = req.query.email;
+  } else {
+    res.send('Please submit a proper search');
   }
   await User.findOne({ where: {
       [Op.or]: [{'username': criteria }, {'email': criteria}]
     }
   }).then((user) => {
     res.statusCode = 200;
-    if(user) {
+    if(user !== null) {
       res.send({ 'isUsed': true });
     } else {
       res.send({ 'isUsed': false });
