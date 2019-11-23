@@ -4,7 +4,7 @@ const service = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     date: DataTypes.DATE
   }, {});
-  Service.associate = function(models) {
+  Service.associate = models => {
     Service.belongsTo(models.User);
   };
   return Service;
