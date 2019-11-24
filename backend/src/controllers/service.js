@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { Tag } from 'tag';
 
 const router = Router();
 
@@ -7,25 +8,53 @@ router.get('/', async (req, res) => {
   const users = await Service.findAll();
   res.send(users);
 });
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   let Service = getService(req);
-  const user = await Service.findByPk(
-    req.params.id,
-  );
-  if (!user) {
-    error404(res);
-    return;
-  }
-  res.send(user);
+  await Service.findByPk(req.params.id).then(service => {
+    if(!service) {
+      error404(res);
+      return;
+    }
+    res.send(service);
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+});
+router.get('/user/:id', async (req, res) => {
+  let Service = getService(req);
+  let User = getUser(req);
+
+  await User.findByPk(req.params.id).then(user => {
+    if(!user) {
+      error404(res);
+      return;
+    }
+    res.send(user.services);
+  ).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
+  });
 });
 router.post('/', async (req, res) => {
   let Service = getService(req);
-  let created = await Service.create({
-    name: req.body.name,
-    userId: req.body.userId
+  var serviceData = req.body;
+
+  // Sequelize expects the tags in the form [{ name: 'tag1' }, { name: 'tag2'},.. ]
+  //
+  // As we receive them in the form [ 'tag1', 'tag2',...], 
+  // they have to be rewritten here
+  serviceData.tags.forEach((element, index) => {
+    serviceData.tags[index] = { name: element };
   });
-  res.statusCode = 201;
-  res.send(created);
+
+  await Service.create(serviceData).then(service => {
+    res.statusCode = 201;
+    res.send(created);
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
+  };
 });
 router.put('/:id', async (req, res) => {
   let Service = getService(req);
@@ -34,7 +63,13 @@ router.put('/:id', async (req, res) => {
     error404(res);
     return;
   }
-  toUpdate.name = req.body['name'];
+  let keys = Object.keys(req.body);
+  keys.forEach((key) => {
+    if(toUpdate.key !== undefined) {
+      toUpdate.key = req.body.key;
+    }
+  });
+
   await toUpdate.save();
   res.statusCode = 200;
   res.send(toUpdate);
@@ -53,6 +88,9 @@ router.delete('/:id', async (req, res) => {
 
 function getService(req) {
   return req.context.models.Service;
+}
+function getUser(req) {
+  return req.context.models.User;
 }
 function error404(res){
   res.statusCode = 404;

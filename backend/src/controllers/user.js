@@ -36,15 +36,17 @@ router.get('/:userId', async (req, res, next) => {
 router.post('/', async (req, res) => {
   let User = getUser(req);
   var userData = req.body;
-  userData.username = "" + Math.random();
+
+  // Every User will at first be a normal User 
+  // - only Admins will be able to assign new admins
   userData.role = "User";
+
   await User.create(userData).then(user => {
     res.statusCode = 201;
     res.send(user);
   }).catch( err => {
     console.log(err);
-    res.statusCode = 500;
-    res.send();
+    res.sendStatus(500);
   });
 });
 
