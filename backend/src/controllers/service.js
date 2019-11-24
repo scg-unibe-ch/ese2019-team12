@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Tag } from 'tag';
+import { Tag } from '../models/tag';
 
 const router = Router();
 
@@ -31,7 +31,7 @@ router.get('/user/:id', async (req, res) => {
       return;
     }
     res.send(user.services);
-  ).catch(err => {
+  }).catch(err => {
     console.log(err);
     res.sendStatus(500);
   });
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
-  };
+  });
 });
 router.put('/:id', async (req, res) => {
   let Service = getService(req);
