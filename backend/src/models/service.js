@@ -6,6 +6,14 @@ const service = (sequelize, DataTypes) => {
   }, {});
   Service.associate = models => {
     Service.belongsTo(models.User);
+    Service.belongsToMany(models.Tag, {
+      through: {
+        model: models.ServiceTag,
+        unique: false
+      },
+      foreignKey: 'tagId',
+      constraints: false
+    });
   };
   return Service;
 };

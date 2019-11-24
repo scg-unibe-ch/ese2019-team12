@@ -16,6 +16,8 @@ const models = {
   User: sequelize.import('./user'),
   Service: sequelize.import('./service'),
   Event: sequelize.import('./event'),
+  Tag: sequelize.import('./tag'),
+  ServiceTag: sequelize.import('./servicetag'),
 };
 
 Object.keys(models).forEach(key => {
