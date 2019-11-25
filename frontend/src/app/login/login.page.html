@@ -13,20 +13,20 @@
     <ion-grid>
         <ion-row class="ion-justify-content-center">
             <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-                <h3 class="ion-text-center">Login</h3>
-                <form #form="ngForm" (ngSubmit)="login(event)">
+                <form (ngSubmit)="login(event)" [formGroup]="loginForm">
+                    <h3 class="ion-text-center">Login</h3>
                     <ion-row class="ion-justify-content-center red" *ngIf="loginFailed">
                         Incorrect email/username or password.
                     </ion-row>
                     <ion-item>
                         <ion-label color="primary">Email or username</ion-label>
-                        <ion-input name="login" type="email" [(ngModel)]="credentials.login" required></ion-input>
+                        <ion-input name="login" type="email" formControlName="login" required></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Password</ion-label>
-                        <ion-input name="password" type="password" [(ngModel)]="credentials.password" required></ion-input>
+                        <ion-input name="password" type="password" formControlName="password" required></ion-input>
                     </ion-item>
-                    <ion-button type="submit" [disabled]="form.invalid" expand="block">Login</ion-button>
+                    <ion-button type="submit" [disabled]="loginForm.invalid" expand="block">Login</ion-button>
                 </form>
             </ion-col>
         </ion-row>

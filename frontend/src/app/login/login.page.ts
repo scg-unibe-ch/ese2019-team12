@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../_services/session.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SessionService } from '../_services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -8,21 +9,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  loginFailed: boolean;
+  loginForm: FormGroup;
 
-  constructor(private sessionService : SessionService, private router : Router) { }
-
-  credentials = {};
-  loginFailed : boolean;
-
-  ngOnInit() {
+  constructor(
+      private sessionService : SessionService,
+      public formBuilder: FormBuilder,
+      private router : Router
+  ) {
       this.loginFailed = false;
+      this.loginForm = new FormGroup({
+          login: new FormControl(''),
+          password: new FormControl('')
+      });
   }
 
+  ngOnInit() {}
+
   login(event) {
-    // this is a test user, form input is stored in this.credentials
-    this.sessionService.login('Jony', 'hello').subscribe(
+    let login = this.loginForm.get('login').value;
+    let password = this.loginForm.get('password').value;
+
+    // test user: username 'Jony', password 'hello'
+    this.sessionService.login(login, password).subscribe(
         data => {
-            console.log(data);
             this.router.navigate(['/explore']);
         },
         (err: any) => {

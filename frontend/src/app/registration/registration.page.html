@@ -17,22 +17,24 @@
                     <h3 class="ion-text-center">Register a new account</h3>
                     <ion-item>
                         <ion-label color="primary">First Name</ion-label>
-                        <ion-input name="firstName" formControlName="firstName" type="text" inputmode="text" required></ion-input>
+                        <ion-input name="firstname" formControlName="firstname" type="text" inputmode="text" required></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label color="primary">Last Name</ion-label>
-                        <ion-input name="lastName" formControlName="lastName" type="text" inputmode="text" required></ion-input>
+                        <ion-input name="lastname" formControlName="lastname" type="text" inputmode="text" required></ion-input>
                     </ion-item>
 
                     <ion-item>
                         <ion-label color="primary">E-Mail</ion-label>
-                        <ion-input name="email" formControlName="email" type="email" inputmode="email" required [ngClass]="{ 'is-invalid': submitted && f.email.errors }"></ion-input>
+                        <ion-input name="email" formControlName="email" type="email" inputmode="email" required></ion-input>
+                        <ion-label *ngIf="registrationForm.get('email').errors && registrationForm.get('email').errors.emailTaken" color="danger">already taken</ion-label>
                     </ion-item>
 
                     <ion-item>
                         <ion-label color="primary">Choose a username</ion-label>
-                        <ion-input id="username" formControlName="username" name="username" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }"></ion-input>
+                        <ion-input name="username" formControlName="username" type="text"></ion-input>
+                        <ion-label *ngIf="registrationForm.get('username').errors && registrationForm.get('username').errors.usernameTaken" color="dangers">already taken</ion-label>
                     </ion-item>
                         <!-- <ion-item>
                         <ion-label position="stacked">Address</ion-label>
@@ -46,14 +48,14 @@
                     <ion-item>
                         <ion-label color="primary">Enter Password</ion-label>
                         <ion-input id="password" formControlName="password" name="password" type="password" required></ion-input>
-                        <ion-button class="showPassword" (click)="showPassword()" >
-                            <ion-icon name="eye-off" id="eye"></ion-icon>
-                        </ion-button>
                     </ion-item>
 
                     <ion-item>
                         <ion-label color="primary">Confirm Password</ion-label>
-                        <ion-input id="confirmpassword" formControlName="confirmPassword" name="confirmPassword" type="password" required="true" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"></ion-input>
+                        <ion-input id="confirmpassword" formControlName="confirmPassword" name="confirmPassword" type="password" required="true" class="form-control"></ion-input>
+                        <ion-button class="showPassword" (click)="showPassword()" >
+                            <ion-icon name="eye-off" id="eye"></ion-icon>
+                        </ion-button>
                     </ion-item>
 
                     <div class="ion-text-center ion-padding">

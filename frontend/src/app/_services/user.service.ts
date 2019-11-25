@@ -24,8 +24,9 @@ export class UserService {
 
   create(user: User): Observable<User> {
     return this.httpClient.post<User>(this.apiUrl + '/users/', {
-      lastName: user.firstName,
-      firstName: user.lastName,
+      lastname: user.firstname,
+      firstname: user.lastname,
+      username: user.username,
       email: user.email,
       password: user.password,
       role: user.role
@@ -42,8 +43,9 @@ export class UserService {
 
   update(user: User): Observable<any> {
     return this.httpClient.put(this.apiUrl + '/users/' + user.id, {
-      lastName: user.firstName,
-      firstName: user.lastName,
+      lastname: user.firstname,
+      firstname: user.lastname,
+      username: user.username,
       email: user.email,
       password: user.password,
       role: user.role

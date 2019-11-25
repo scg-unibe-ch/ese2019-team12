@@ -6,7 +6,6 @@ import { UserService } from '../_services/user.service';
 import { User } from '../_models/user';
 import { Role } from '../_models/role';
 
-
 // import custom validator to validate that password and confirm password fields match
 import { PasswordValidator } from '../_validators/password-validator';
 import { AsyncValidators } from '../_validators/async-validators';
@@ -19,7 +18,6 @@ import { AsyncValidators } from '../_validators/async-validators';
 export class RegistrationPage implements OnInit {
     registrationForm: FormGroup;
     passwordForm: FormGroup;
-    usernameForm: FormGroup;
     user = new User(null, '', '', '', '', '', Role.User);
     password = '';
 
@@ -38,8 +36,8 @@ export class RegistrationPage implements OnInit {
             + '.*';    // Needed (ngPattern surrounds with ^ and $)
 
         this.registrationForm = new FormGroup({
-            lastName: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
-            firstName: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
+            lastname: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
+            firstname: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
             email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)], AsyncValidators.checkEmail(this.userService)),
             username: new FormControl('',
                 [
@@ -59,36 +57,33 @@ export class RegistrationPage implements OnInit {
         });
     }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     // Processes the given Inputs to be stored in the Back-End.
     processForm(event) {
-        this.user.firstName = this.registrationForm.get('firstName').value;
-        this.user.lastName = this.registrationForm.get('lastName').value;
+        this.user.firstname = this.registrationForm.get('firstname').value;
+        this.user.lastname = this.registrationForm.get('lastname').value;
+        this.user.username = this.registrationForm.get('username').value;
         this.user.email = this.registrationForm.get('email').value;
         this.user.password = this.passwordForm.get('password').value;
-        console.log(this.user);
 
-        // this.userService.create(this.user).subscribe(
-        //     data => {
-        //         console.log(data);
-        //         this.sessionService.login(this.user.email, this.user.password).subscribe(
-        //             data => {
-        //                 console.log(data);
-        //                 this.router.navigate(['/explore']);
-        //             },
-        //             (err: any) => {
-        //                 if (err.status === 401) {
-        //                     console.log("Error message: " + err.message);
-        //                 }
-        //             }
-        //         );
-        //     },
-        //     (err: any) => {
-        //         console.log("Error message: " + err.message)
-        //     }
-        // );
+        this.userService.create(this.user).subscribe(
+            data => {
+                this.sessionService.login(this.user.email, this.user.password).subscribe(
+                    data => {
+                        this.router.navigate(['/explore']);
+                    },
+                    (err: any) => {
+                        if (err.status === 401) {
+                            console.log("Error message: " + err.message);
+                        }
+                    }
+                );
+            },
+            (err: any) => {
+                console.log("Error message: " + err.message)
+            }
+        );
     }
 
     showPassword() {
