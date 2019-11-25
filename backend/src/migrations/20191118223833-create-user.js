@@ -21,6 +21,9 @@ module.exports = {
       lastname: {
         type: Sequelize.STRING
       },
+      bio: {
+        type: Sequelize.STRING
+      },
       role: {
         type: Sequelize.STRING
       },

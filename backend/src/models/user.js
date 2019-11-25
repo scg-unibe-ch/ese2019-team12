@@ -4,6 +4,7 @@
 // email:     string (unique)
 // firstname: string
 // lastname:  string
+// bio:       string
 // role:      string
 // password:  string | Treated as function by sequelize,
 // salt:      string | to prevent those values from showing up in findAll requests etc.
@@ -22,6 +23,7 @@ const user = (sequelize, DataTypes) => {
     },
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
+    bio: DataTypes.STRING,
     role: DataTypes.STRING,
     password: {
       type: DataTypes.STRING,
