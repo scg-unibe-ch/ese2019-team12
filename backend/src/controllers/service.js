@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Tag } from '../models/tag';
 
 const router = Router();
 
@@ -38,19 +37,23 @@ router.get('/user/:id', async (req, res) => {
 });
 router.post('/', async (req, res) => {
   let Service = getService(req);
+  let Tag = getTag(req);
+
   var serviceData = req.body;
 
-  // Sequelize expects the tags in the form [{ name: 'tag1' }, { name: 'tag2'},.. ]
-  //
-  // As we receive them in the form [ 'tag1', 'tag2',...], 
-  // they have to be rewritten here
-  serviceData.tags.forEach((element, index) => {
-    serviceData.tags[index] = { name: element };
-  });
+  // await Service.create(serviceData, { include: [ Tag ]}).then(service => {
+  await Service.create({
+    name: "bulletis",
+    description: "beste bulleten",
+    date: 0,
+    tags: serviceData.tags
+  }, { include: [ Tag ] }).then(async service => {
+    console.log(Object.keys(serviceData.tags));
+    await findOrCreateTags(Tag, serviceData.tags); 
+    service.setTags(serviceData.tags);
 
-  await Service.create(serviceData).then(service => {
     res.statusCode = 201;
-    res.send(created);
+    res.send(service);
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
@@ -85,12 +88,21 @@ router.delete('/:id', async (req, res) => {
   res.statusCode = 204;
   res.send();
 });
-
+async function findOrCreateTags(model, tags){
+  tags.forEach(tag => {
+    model.findOrCreate({
+      where: { name: tag }
+    });
+  });
+}
 function getService(req) {
   return req.context.models.Service;
 }
 function getUser(req) {
   return req.context.models.User;
+}
+function getTag(req) {
+  return req.context.models.Tag;
 }
 function error404(res){
   res.statusCode = 404;

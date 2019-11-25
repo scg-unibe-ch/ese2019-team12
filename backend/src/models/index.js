@@ -6,6 +6,7 @@ const conf = JSON.parse(fs.readFileSync('config/config.json'));
 
 const sequelize = new Sequelize(
   {
+    transactionType: 'IMMEDIATE',
     dialect: process.env.DB_DIALECT, 
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,

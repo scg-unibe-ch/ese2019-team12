@@ -2,19 +2,15 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('ServiceTags', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        autoIncrement: true
       },
       tagId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      taggable: {
-        type: Sequelize.STRING
-      },
-      taggableId: {
-        type: Sequelize.INTEGER
+      serviceId: {
+        type: Sequelize.INTEGER,
       }
     });
   },

@@ -1,14 +1,17 @@
 module.exports = (sequelize, DataTypes) => {
   const ServiceTag = sequelize.define('ServiceTag', {
-    tagId: DataTypes.INTEGER,
-    taggable: {
-      type: DataTypes.STRING,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    tagId: {
+      type: DataTypes.INTEGER,
       unique: 'service_tag_taggable'
     },
-    taggableId: {
+    serviceId: {
       type: DataTypes.INTEGER,
       unique: 'service_tag_taggable',
-      references: null
     }
   }, {});
   ServiceTag.associate = models => {

@@ -9,10 +9,8 @@ const service = (sequelize, DataTypes) => {
     Service.belongsToMany(models.Tag, {
       through: {
         model: models.ServiceTag,
-        unique: false
+        foreignKey: 'serviceId'
       },
-      foreignKey: 'tagId',
-      constraints: false
     });
   };
   return Service;
