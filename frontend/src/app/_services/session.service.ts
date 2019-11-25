@@ -36,7 +36,7 @@ export class SessionService {
   setSession(loginResult) {
     localStorage.setItem('token', loginResult.token);
     localStorage.setItem('expires_at', loginResult.expiresAt);
-    localStorage.setItem('user', JSON.stringify(loginResult.user));
+    localStorage.setItem('currentUser', JSON.stringify(loginResult.user));
     this.currentRole.emit(loginResult.user.role);
   }
 

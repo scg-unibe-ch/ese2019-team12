@@ -25,6 +25,10 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule),
   },
   {
+    path: 'logout',
+    loadChildren: () => import('./logout/logout.module').then(m => m.LogoutPageModule),
+  },
+  {
     path: 'registration',
     loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationPageModule),
   },
@@ -32,7 +36,8 @@ const routes: Routes = [
     path: 'service-creator',
     loadChildren: () => import('./service-creator/service-creator.module').then(m => m.ServiceCreatorPageModule),
     canActivate: [AuthGuard],
-  }
+  },
+  { path: 'logout', loadChildren: './logout/logout.module#LogoutPageModule' }
 ];
 @NgModule({
   declarations: [],

@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Log Out',
-      url: '/explore',
+      url: '/logout',
     }
   ];
   public adminPages = [
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Log Out',
-      url: '/explore',
+      url: '/logout',
     }
   ];
 
