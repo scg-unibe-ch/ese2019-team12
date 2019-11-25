@@ -4,16 +4,28 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   let Service = getService(req);
-  const users = await Service.findAll();
-  res.send(users);
+  let Tag = getTag(req);
+  const services = await Service.findAll({ include: { model: Tag, through: { attributes: [] }} });
+  services.forEach((service) => {
+    service.dataValues.tags = [];
+    service.Tags.forEach((tag) => {
+      service.dataValues.tags.push(tag.name);
+    });
+  });
+
+  // TODO: find a nice way to transmitt tags
+
+  res.send(services);
 });
 router.get('/:id', async (req, res, next) => {
   let Service = getService(req);
-  await Service.findByPk(req.params.id).then(service => {
+  let Tag = getTag(req);
+  await Service.findByPk(req.params.id, { include: { model: Tag, through: { attributes: []}}}).then(service => {
     if(!service) {
       error404(res);
       return;
     }
+    service.Tags = compactTags(service);
     res.send(service);
   }).catch(err => {
     console.log(err);
@@ -23,8 +35,11 @@ router.get('/:id', async (req, res, next) => {
 router.get('/user/:id', async (req, res) => {
   let Service = getService(req);
   let User = getUser(req);
+  let Tag = getTag(req);
 
-  await User.findByPk(req.params.id).then(user => {
+  await User.findByPk(req.params.id, { 
+    include: { model: Service, include: { model: Tag, through: { attributes: []}}}
+  }).then(user => {
     if(!user) {
       error404(res);
       return;
@@ -40,17 +55,19 @@ router.post('/', async (req, res) => {
   let Tag = getTag(req);
 
   var serviceData = req.body;
+  serviceData.userId = req.user.sub;
 
-  // await Service.create(serviceData, { include: [ Tag ]}).then(service => {
-  await Service.create({
-    name: "bulletis",
-    description: "beste bulleten",
-    date: 0,
-    tags: serviceData.tags
-  }, { include: [ Tag ] }).then(async service => {
-    console.log(Object.keys(serviceData.tags));
-    await findOrCreateTags(Tag, serviceData.tags); 
+  // Tags have to be created prior to usage
+  await findOrCreateTags(Tag, serviceData.tags);
+
+  // Service creation
+  await Service.create(serviceData, { include: [ Tag ]}).then(async service => {
     service.setTags(serviceData.tags);
+    let tags = await service.getTags();
+    await service.save();
+    await service.reload();
+
+    service.Tags = compactTags(service);
 
     res.statusCode = 201;
     res.send(service);
@@ -74,6 +91,10 @@ router.put('/:id', async (req, res) => {
   });
 
   await toUpdate.save();
+  await toUpdate.reload();
+
+  toUpdate.Tags = compactTags(service);
+
   res.statusCode = 200;
   res.send(toUpdate);
 });
@@ -103,6 +124,14 @@ function getUser(req) {
 }
 function getTag(req) {
   return req.context.models.Tag;
+}
+function compactTags(service) {
+  var res = [];
+  let tags = service.Tags;
+  tags.forEach((tag) => {
+    res.push(tag.dataValues.name);
+  });
+  return res;
 }
 function error404(res){
   res.statusCode = 404;
