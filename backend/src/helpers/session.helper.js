@@ -17,7 +17,9 @@ function getTokenFromHeaderOrQuery(req) {
   } else if (req.query && req.query.token) {
     return req.query.token;
   }
-  return null;
+  var res = req.res;
+  res.status = 401;
+  res.send({});
 }
 export const checkIfAuthenticated = jwtExpress({
   secret: process.env.SECRET,
