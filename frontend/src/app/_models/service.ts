@@ -4,7 +4,7 @@ export class Service {
 
   constructor(
     public id: number,
-    public user: string,
+    public userId: id,
     public title: string,
     public description: string,
     public price: number,

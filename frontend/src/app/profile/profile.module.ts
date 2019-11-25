@@ -1,26 +1,27 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
+import { ProfileResolver } from '../_services/profile-resolver.service';
 
-const routes: Routes = [
+const profileRouting: ModuleWithProviders = RouterModule.forChild([
   {
-    path: '',
-    component: ProfilePage
+    path: 'profile/:id',
+    component: ProfilePage,
+    resolve: {
+        profile: ProfileResolver
+    }
   }
-];
+]);
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    profileRouting
   ],
-  declarations: [ProfilePage]
+  declarations: [ProfilePage],
+  providers: [ProfileResolver]
 })
 export class ProfilePageModule {}

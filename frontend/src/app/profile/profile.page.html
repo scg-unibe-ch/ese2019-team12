@@ -14,7 +14,7 @@
   <div class="body">
     <ion-grid>
       <ion-row>
-        <h2>Username</h2>
+        <h2>{{profile.username}}</h2>
       </ion-row>
       <ion-row>
         <ion-col>
@@ -23,9 +23,9 @@
           </ion-avatar>
         </ion-col>
         <ion-col>
-          <p>Username</p>
-          <p>Description</p>
-          <textarea name="name" rows="8" cols="80"></textarea>
+          <p>{{profile.firstname}}</p>
+          <p>{{profile.lastname}}</p>
+          <p>[Description]</p>
         </ion-col>
         <ion-col>
           <ion-button size="default" expand="block" color="light">

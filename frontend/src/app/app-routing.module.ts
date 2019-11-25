@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { RoleGuard } from './auth/role.guard';
+import { ProfilePageModule } from './profile/profile.module';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./explore/explore.module').then(m => m.ExplorePageModule),
   },
   {
-    path: 'profile',
+    path: 'profile/:id',
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule),
     canActivate: [AuthGuard],
   },
@@ -40,7 +41,7 @@ const routes: Routes = [
 ];
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }), ProfilePageModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

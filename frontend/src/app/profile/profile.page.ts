@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+    profile: User;
+    isUser: boolean;
 
-  ngOnInit() {
-  }
+    constructor(
+      private route: ActivatedRoute,
+      private router: Router
+    ) {}
 
+    ngOnInit() {
+        this.route.data.subscribe(
+            (data: {profile: User}) => {
+                this.profile = data.profile;
+                console.log(this.profile);
+            },
+            (err) => {
+                this.router.navigate(['/explore']);
+            }
+        );
+    }
 }

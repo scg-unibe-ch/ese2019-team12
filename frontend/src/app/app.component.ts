@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Profile',
-      url: '/profile',
+      url: '/profile/me',
     },
     {
       title: 'Add Service',
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Profile',
-      url: '/profile',
+      url: '/profile/me',
     },
     {
       title: 'Add Service',
