@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../_services/session.service';
 import { User } from '../_models/user';
 
 @Component({
@@ -10,18 +12,20 @@ import { User } from '../_models/user';
 export class ProfilePage implements OnInit {
 
     profile: User;
-    isUser: boolean;
+    isMe: boolean;
 
     constructor(
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router,
+      private sessionService: SessionService
     ) {}
 
     ngOnInit() {
         this.route.data.subscribe(
             (data: {profile: User}) => {
                 this.profile = data.profile;
-                console.log(this.profile);
+                let currentUser = this.sessionService.getCurrentUser();
+                this.isMe = (this.profile.id === currentUser.id);
             },
             (err) => {
                 this.router.navigate(['/explore']);

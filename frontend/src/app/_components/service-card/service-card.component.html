@@ -1,16 +1,16 @@
 <ion-col>
-  <ion-card href="#" class="activated">
-    <ion-card-header >
-      <ion-card-title routerLink="/service">{{ service.title }}</ion-card-title>
-      <ion-card-subtitle routerLink="/profile/{{service.userId}}">by {{ username }}</ion-card-subtitle>
-    </ion-card-header>
+    <ion-card href="#" class="activated">
+        <ion-card-header >
+            <ion-card-title routerLink="/service">{{ service.title }}</ion-card-title>
+            <ion-card-subtitle>by <a routerLink="/profile/{{service.userId}}" color="primary">{{ username }}</a></ion-card-subtitle>
+        </ion-card-header>
 
-    <ion-card-content>
-      {{ service.description }}
-      <br>
-      <ion-chip outline color="primary" *ngFor="let tag of service.tags">
-          <ion-label>{{tag}}</ion-label>
-      </ion-chip>
-    </ion-card-content>
-  </ion-card>
+        <ion-card-content>
+            {{ service.description }}
+            <br>
+            <ion-chip outline color="primary" *ngFor="let tag of service.tags">
+                <ion-label>{{tag}}</ion-label>
+            </ion-chip>
+        </ion-card-content>
+    </ion-card>
 </ion-col>

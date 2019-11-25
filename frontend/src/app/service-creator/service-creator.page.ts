@@ -10,7 +10,7 @@ import { Role } from '../_models/role';
     styleUrls: ['./service-creator.page.scss'],
 })
 export class ServiceCreatorPage implements OnInit {
-    service = new Service(null, '', '', '', null, []);
+    service = new Service(null, null, '', '', null, []);
     chips = [];
 
     serviceForm = new FormGroup({
@@ -37,8 +37,10 @@ export class ServiceCreatorPage implements OnInit {
         this.service.description = this.serviceForm.get('description').value;
         this.service.price = this.serviceForm.get('price').value;
         this.service.tags = this.chips;
-        this.service.user = this.sessionService.getCurrentUser().username;
+        this.service.userId = this.sessionService.getCurrentUser().id;
         console.log(this.service);
+
+        // add backend here
     }
 
     createChip(chipToAdd) {

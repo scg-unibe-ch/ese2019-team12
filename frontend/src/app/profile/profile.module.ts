@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
@@ -19,6 +19,7 @@ const profileRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
   imports: [
     IonicModule,
+    CommonModule,
     profileRouting
   ],
   declarations: [ProfilePage],
