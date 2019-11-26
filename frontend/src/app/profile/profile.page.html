@@ -32,7 +32,7 @@
             <ion-row>
                 <ion-col>
                     <ion-title>Offered Services</ion-title>
-                    <ion-button size="default" expand="block" color="light">
+                    <ion-button *ngIf="isMe" size="default" expand="block" color="light">
                         Add services
                         <ion-icon name="add-circle-outline"></ion-icon>
                     </ion-button>

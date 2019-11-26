@@ -12,7 +12,6 @@ import { User } from '../_models/user';
 export class SessionService {
   @Output()
   currentRole: EventEmitter<any> = new EventEmitter();
-
   currentUser: User;
 
   constructor(
@@ -57,10 +56,7 @@ export class SessionService {
   }
 
   getCurrentUser() {
-    if(!this.currentUser) {
-        let user = JSON.parse(localStorage.getItem('currentUser'));
-        this.currentUser = user;
-    }
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     return this.currentUser;
   }
 

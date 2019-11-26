@@ -14,7 +14,7 @@
       <ion-row>
         <ion-col>
           <h2>Service: {{service.title}}</h2>
-          <p *ngIf="!isMyService">by <a routerLink="/profile/{{service.userId}}">placeholder</a></p>
+          <p *ngIf="!isMyService">by <a routerLink="/profile/{{service.userId}}">{{serviceUser.username}}</a></p>
           <ion-label position="floating">Service description:</ion-label>
           <p>{{service.description}}</p>
           <p>{{service.price}}</p>
