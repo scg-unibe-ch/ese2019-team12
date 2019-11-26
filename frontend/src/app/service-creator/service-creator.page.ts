@@ -44,14 +44,13 @@ export class ServiceCreatorPage implements OnInit {
         this.service.price = this.serviceForm.get('price').value;
         this.service.tags = this.chips;
         this.service.userId = this.sessionService.getCurrentUser().id;
-        console.log(this.service);
 
         this.serviceService.create(this.service).subscribe(
-            data => {
-                console.log("service created");
+            (data: Service) => {
+                console.log(data);
             },
             (err: any) => {
-                console.log("Error message: " + err.message)
+                console.log('error message: ' + err.message);
             }
         );
     }

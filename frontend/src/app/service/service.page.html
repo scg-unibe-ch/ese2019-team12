@@ -9,32 +9,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
-  <div class="body">
+<ion-content class="ion-padding">
     <ion-grid>
       <ion-row>
         <ion-col>
-          <h2>[servicename]</h2>
-          <p>by [username]</p>
+          <h2>Service: {{service.title}}</h2>
+          <p *ngIf="!isMyService">by <a routerLink="/profile/{{service.userId}}">placeholder</a></p>
+          <ion-label position="floating">Service description:</ion-label>
+          <p>{{service.description}}</p>
+          <p>{{service.price}}</p>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-item>
-            <ion-label position="floating">Description</ion-label>
-            <ion-textarea align-self-stretch></ion-textarea>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-button size="default" expand="block" color="light">
+          <ion-button *ngIf="isMyService" size="default" expand="block" color="light">
             <ion-icon name="cog"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="!isMyService" size="default" expand="block" color="light">
+            Add to Event
+            <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </div>
-
 </ion-content>

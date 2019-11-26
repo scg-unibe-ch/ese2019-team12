@@ -17,14 +17,7 @@ export class SessionService {
 
   constructor(
     private httpClient: HttpClient
-  ) { }
-
-  loadUser() {
-    let user = JSON.parse(localStorage.getItem('currentUser'));
-    if (user) {
-      this.currentUser = user;
-    }
-  }
+  ) {}
 
   login(login: string, password: string) {
     return this.httpClient.post<any>(`http://localhost:3000/session/login`, {
@@ -64,8 +57,9 @@ export class SessionService {
   }
 
   getCurrentUser() {
-    if(!this.currentUser){
-      this.loadUser();
+    if(!this.currentUser) {
+        let user = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = user;
     }
     return this.currentUser;
   }
