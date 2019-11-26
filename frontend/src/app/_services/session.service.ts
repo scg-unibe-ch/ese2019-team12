@@ -20,7 +20,7 @@ export class SessionService {
   ) { }
 
   loadUser() {
-    let user = JSON.parse(localStorage.getItem('user'));
+    let user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
       this.currentUser = user;
     }
