@@ -22,10 +22,12 @@
     </ion-item>
     <ion-button (click)="clearTags()">Clear Tags</ion-button>
 
-    <ion-grid *ngFor="let service of services">
+    <ion-grid >
         <ion-row class="ion-justify-content-center">
             <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-                <app-service-card [service]="service"></app-service-card>
+                <div *ngFor="let service of services">
+                    <app-service-card [service]="service"></app-service-card>
+                </div>
             </ion-col>
         </ion-row>
     </ion-grid>

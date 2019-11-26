@@ -18,6 +18,10 @@ export class ServiceService {
         return this.httpClient.get<Service[]>(this.apiUrl + '/services');
     }
 
+    getServicesOfUser(id: number): Observable<Service[]> {
+        return this.httpClient.get<Service[]>(this.apiUrl + '/services/user/' + id);
+    }
+
     getService(id: number): Observable<Service> {
         return this.httpClient.get<Service>(this.apiUrl + '/services/' + id);
     }

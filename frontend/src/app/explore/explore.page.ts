@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Service} from "../_models/service";
+import { Service } from "../_models/service";
 
 @Component({
     selector: 'app-explore',

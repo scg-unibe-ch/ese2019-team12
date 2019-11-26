@@ -31,7 +31,8 @@ export class ServicePage implements OnInit {
                 this.service = data.service;
                 console.log(this.service);
                 let currentUser = this.sessionService.getCurrentUser();
-                this.isMyService = (this.service.userId === currentUser.id);
+                // if its yours, its true
+                this.isMyService = (currentUser) ? (this.service.userId === currentUser.id) : false;
 
                 if (!this.isMyService) {
                     this.userService.getUser(this.service.userId).subscribe(

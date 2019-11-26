@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from '../_services/session.service';
+import { ServiceService } from '../_services/service.service';
 import { User } from '../_models/user';
+import { Service } from '../_models/service';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +15,13 @@ export class ProfilePage implements OnInit {
 
     profile: User;
     isMe: boolean;
+    services: Service[];
 
     constructor(
       private route: ActivatedRoute,
       private router: Router,
-      private sessionService: SessionService
+      private sessionService: SessionService,
+      private serviceService: ServiceService
     ) {}
 
     ngOnInit() {
@@ -26,6 +30,13 @@ export class ProfilePage implements OnInit {
                 this.profile = data.profile;
                 let currentUser = this.sessionService.getCurrentUser();
                 this.isMe = (this.profile.id === currentUser.id);
+
+
+                this.serviceService.getServicesOfUser(this.profile.id).subscribe(
+                    (data) => {
+                        this.services = data;
+                    }
+                )
             },
             (err) => {
                 this.router.navigate(['/explore']);
