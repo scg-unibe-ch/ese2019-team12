@@ -11,17 +11,18 @@ export class ExplorePage implements OnInit {
 
   // Placeholder for services that will be read from the database
   services = [
-      new Service(1, 1, 'jony\'s failing business', 'Catering', 1000, ['yum', 'food']),
-      new Service(2, 2, 'admins\'s trashy food', 'Catering', 200, ['sexy', 'trashy']),
-      new Service(3, 1, 'jony\'s clean up crew', 'Cleaning', 300, ['clean', 'murder']),
-      new Service(4, 1, 'jony\'s security crew', 'Security', 5, ['safe AF'])
+      new Service(1, 'john_1', 'john\'s failing business', 'Catering', 1000, ['yum', 'food']),
+      new Service(2, 'janette69', 'jane\'s trashy food', 'Catering', 200, ['sexy', 'trashy']),
+      new Service(3, 'JimmyJim', 'jim\'s clean up crew', 'Cleaning', 300, ['clean', 'murder']),
+      new Service(4, 'john_1', 'john\'s security crew', 'Security', 5, ['safe AF'])
   ];
  searchedList = [];
  searchQuery = "";
+ allServices = [];
 
   //Function to load all our items so we can work localy (not meant for big lists!)
   initializeItems() {
-      this.searchedList = this.services; //this.services to be replaced with call to backend
+      this.searchedList = this.allServices; //this.allServices to be replaced with call to backend
     }
 
 
@@ -29,13 +30,15 @@ export class ExplorePage implements OnInit {
 // for now only compares on title
   filterData (){
     this.initializeItems();
-    console.log(this.searchQuery);
-    console.log(this.searchedList);
+
     const searchTerm = this.searchQuery;
     if (!searchTerm) {
-    return;
+        this.services = this.allServices;
+        return;
     }
 
+
+    //filtering our array of possible services by title
       this.searchedList = this.searchedList.filter(Service => {
     if (Service.title && searchTerm) {
       if (Service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
@@ -44,13 +47,20 @@ export class ExplorePage implements OnInit {
       return false;
     }
   });
-  console.log(this.searchedList);
+
+  //setting services to searchresult
   this.services = this.searchedList;
+
 }
+
+
 
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+      this.allServices = this.services;
+
+  }
 
 }
