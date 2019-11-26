@@ -13,9 +13,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      date: {
-        type: Sequelize.DATE
-      },
+      price: {
+        type: Sequelize.INTEGER
+      }
     });
   },
   down: (queryInterface, Sequelize) => {
