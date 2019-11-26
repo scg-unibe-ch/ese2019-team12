@@ -6,16 +6,8 @@ router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
   const services = await Service.findAll({ include: { model: Tag, through: { attributes: [] }} });
-  services.forEach((service) => {
-    service.dataValues.tags = [];
-    service.Tags.forEach((tag) => {
-      service.dataValues.tags.push(tag.name);
-    });
-  });
 
-  // TODO: find a nice way to transmitt tags
-
-  res.send(services);
+  res.send(jsonFromServices(services));
 });
 router.get('/:id', async (req, res, next) => {
   let Service = getService(req);
@@ -25,8 +17,7 @@ router.get('/:id', async (req, res, next) => {
       error404(res);
       return;
     }
-    service.Tags = compactTags(service);
-    res.send(service);
+    res.send(service.simplified());
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
@@ -44,7 +35,7 @@ router.get('/user/:id', async (req, res) => {
       error404(res);
       return;
     }
-    res.send(user.services);
+    res.send(jsonFromServices(user.services));
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
@@ -55,7 +46,7 @@ router.post('/', async (req, res) => {
   let Tag = getTag(req);
 
   var serviceData = req.body;
-  serviceData.userId = req.user.sub;
+  serviceData.UserId = 1//req.user.sub;
 
   // Tags have to be created prior to usage
   await findOrCreateTags(Tag, serviceData.tags);
@@ -67,10 +58,7 @@ router.post('/', async (req, res) => {
     await service.save();
     await service.reload();
 
-    service.Tags = compactTags(service);
-
-    res.statusCode = 201;
-    res.send(service);
+    res.sendStatus(201);
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
@@ -93,10 +81,8 @@ router.put('/:id', async (req, res) => {
   await toUpdate.save();
   await toUpdate.reload();
 
-  toUpdate.Tags = compactTags(service);
-
   res.statusCode = 200;
-  res.send(toUpdate);
+  res.send(toUpdate.simplified());
 });
 router.delete('/:id', async (req, res) => {
   let Service = getService(req);
@@ -125,11 +111,10 @@ function getUser(req) {
 function getTag(req) {
   return req.context.models.Tag;
 }
-function compactTags(service) {
-  var res = [];
-  let tags = service.Tags;
-  tags.forEach((tag) => {
-    res.push(tag.dataValues.name);
+function jsonFromServices(services) {
+  let res = [];
+  services.forEach((service) => {
+    res.push(service.simplified());
   });
   return res;
 }
