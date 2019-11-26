@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SessionService } from '../_services/session.service';
+import { ServiceService } from '../_services/service.service';
 import { Service } from '../_models/service';
 import { Role } from '../_models/role';
 
@@ -20,7 +22,11 @@ export class ServiceCreatorPage implements OnInit {
         tagInput: new FormControl(''),
     });
 
-    constructor(private sessionService: SessionService) { }
+    constructor(
+        private sessionService: SessionService,
+        private serviceService: ServiceService,
+        private router: Router
+    ) {}
 
     ngOnInit() {}
 
@@ -40,7 +46,14 @@ export class ServiceCreatorPage implements OnInit {
         this.service.userId = this.sessionService.getCurrentUser().id;
         console.log(this.service);
 
-        // add backend here
+        this.serviceService.create(this.service).subscribe(
+            data => {
+                console.log("service created");
+            },
+            (err: any) => {
+                console.log("Error message: " + err.message)
+            }
+        );
     }
 
     createChip(chipToAdd) {

@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { RoleGuard } from './auth/role.guard';
 import { ProfilePageModule } from './profile/profile.module';
+import { ServicePageModule } from './service/service.module';
 
 const routes: Routes = [
   {
@@ -36,12 +37,11 @@ const routes: Routes = [
     path: 'service-creator',
     loadChildren: () => import('./service-creator/service-creator.module').then(m => m.ServiceCreatorPageModule),
     canActivate: [AuthGuard],
-  },
-  { path: 'logout', loadChildren: './logout/logout.module#LogoutPageModule' }
+  }
 ];
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }), ProfilePageModule],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }), ProfilePageModule, ServicePageModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
