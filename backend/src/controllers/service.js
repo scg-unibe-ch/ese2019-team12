@@ -38,7 +38,7 @@ router.get('/user/:id', async (req, res) => {
       error404(res);
       return;
     }
-    res.send(jsonFromServices(user.services));
+    res.send(jsonFromServices(user.getServices()));
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
