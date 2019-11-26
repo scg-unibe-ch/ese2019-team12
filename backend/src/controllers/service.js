@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
   let Tag = getTag(req);
 
   var serviceData = req.body;
-  serviceData.UserId = 1//req.user.sub;
+  serviceData.UserId = req.user.sub;
 
   // Tags have to be created prior to usage
   await findOrCreateTags(Tag, serviceData.tags);
