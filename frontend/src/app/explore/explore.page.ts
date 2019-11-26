@@ -7,7 +7,7 @@ import {Service} from "../_models/service";
     styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
-    
+
 
     // Placeholder for services that will be read from the database
     services = [
@@ -19,6 +19,14 @@ export class ExplorePage implements OnInit {
     searchedList = [];
     searchQuery = "";
     allServices = [];
+    searchTags = "";
+
+    constructor() {}
+
+    ngOnInit() {
+        this.allServices = this.services;   //allServices can be replaced by top100 or something the like once it gets too big
+
+    }
 
     //Function to load all our items so we can work localy (not meant for big lists!)
     initializeItems() {
@@ -37,27 +45,48 @@ export class ExplorePage implements OnInit {
             return;
         }
 
-
         //filtering our array of possible services by title
-        this.searchedList = this.searchedList.filter(Service => {
-            if (Service.title && searchTerm) {
-                if (Service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+        this.searchedList = this.searchedList.filter(service => {
+            if (service.title && searchTerm) {
+                if (service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
                     return true;
-                }
-                return false;
+                }return false;
             }
         });
+
 
         //setting services to searchresult
         this.services = this.searchedList;
 
     }
 
-    constructor() {}
+    //funtction to filter our list by a given Tag (for now only one)
+    filterByTags(){
+        this.initializeItems();
 
-    ngOnInit() {
-        this.allServices = this.services;
+        const searchTerm = this.searchTags;
+        if (!searchTerm) {
+            this.services = this.allServices;
+            return;
+        }
+
+
+        //filtering our array by tags
+        this.searchedList = this.searchedList.filter(service => {
+            if (service.tags && searchTerm) {
+                if (service.tags.includes(searchTerm.toLowerCase())){
+                    return true;
+                }
+            }return false;
+        });
+
+
+        //setting services to searchresult
+        this.services = this.searchedList;
+
 
     }
+
+
 
 }
