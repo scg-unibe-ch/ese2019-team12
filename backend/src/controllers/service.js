@@ -5,17 +5,22 @@ const router = Router();
 export const serviceAuthFilter = ((req) => {
   return req.method === 'OPTIONS' || req.method === 'GET';
 });
+
 router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
-  const services = await Service.findAll({ include: { model: Tag, through: { attributes: [] }} });
-
-  res.send(jsonFromServices(services));
+  Service.findAll({ include: { model: Tag } }).then((services) => {
+    res.send(jsonFromServices(services));
+  }).catch((err) => {
+    console.log(err)
+    res.sendStatus(500);
+  });
 });
+
 router.get('/:id', async (req, res, next) => {
   let Service = getService(req);
   let Tag = getTag(req);
-  await Service.findByPk(req.params.id, { include: { model: Tag, through: { attributes: []}}}).then(service => {
+  await Service.findByPk(req.params.id, { include: { model: Tag }}).then(service => {
     if(!service) {
       error404(res);
       return;
@@ -26,24 +31,27 @@ router.get('/:id', async (req, res, next) => {
     res.sendStatus(500);
   });
 });
+
 router.get('/user/:id', async (req, res) => {
   let Service = getService(req);
-  let User = getUser(req);
   let Tag = getTag(req);
 
-  await User.findByPk(req.params.id, { 
-    include: { model: Service, include: { model: Tag, through: { attributes: []}}}
-  }).then(user => {
-    if(!user) {
-      error404(res);
-      return;
+  const services = await Service.findAll({
+    where: {
+      UserId: req.params.id
+    },
+    include: { model: Tag }}).then((services) => {
+    if(!services) {
+      res.send([]);
     }
-    res.send(jsonFromServices(user.getServices()));
-  }).catch(err => {
+    
+    res.send(jsonFromServices(services));
+  }).catch((err) => {
     console.log(err);
     res.sendStatus(500);
   });
 });
+
 router.post('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
@@ -67,6 +75,7 @@ router.post('/', async (req, res) => {
     res.sendStatus(500);
   });
 });
+
 router.put('/:id', async (req, res) => {
   let Service = getService(req);
   let toUpdate = await Service.findByPk(req.params.id);
@@ -87,6 +96,7 @@ router.put('/:id', async (req, res) => {
   res.statusCode = 200;
   res.send(toUpdate.simplified());
 });
+
 router.delete('/:id', async (req, res) => {
   let Service = getService(req);
   let toDelete = await Service.findByPk(req.params.id);
@@ -98,6 +108,7 @@ router.delete('/:id', async (req, res) => {
   res.statusCode = 204;
   res.send();
 });
+
 async function findOrCreateTags(model, tags){
   tags.forEach(tag => {
     model.findOrCreate({
@@ -105,22 +116,28 @@ async function findOrCreateTags(model, tags){
     });
   });
 }
+
 function getService(req) {
   return req.context.models.Service;
 }
+
 function getUser(req) {
   return req.context.models.User;
 }
+
 function getTag(req) {
   return req.context.models.Tag;
 }
+
 function jsonFromServices(services) {
   let res = [];
+  console.log(services);
   services.forEach((service) => {
     res.push(service.simplified());
   });
   return res;
 }
+
 function error404(res){
   res.statusCode = 404;
   res.json({
@@ -128,4 +145,5 @@ function error404(res){
   });
   return;
 }
+
 export default router;
