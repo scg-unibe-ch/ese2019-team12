@@ -2,6 +2,9 @@ import { Router } from 'express';
 
 const router = Router();
 
+export const serviceAuthFilter = ((req) => {
+  return req.method === 'OPTIONS' || req.method === 'GET';
+});
 router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);

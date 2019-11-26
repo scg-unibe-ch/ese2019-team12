@@ -7,7 +7,7 @@ const router = Router();
 
 // Only allow admins to call /users/
 // Allow not authenticated Users to create an account and to view profile pages
-export const authFilter = ((req) => {
+export const userAuthFilter = ((req) => {
   return req.method === 'OPTIONS' || req.method === 'POST' ||
     (req.method === 'GET' && req.originalUrl != '/users/');
 });
