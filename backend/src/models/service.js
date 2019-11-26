@@ -1,3 +1,11 @@
+// Service model:
+//
+// title:       string
+// description: string
+// price:       integer
+//
+// hasmany:     Tags    through: ServiceTags
+//
 const service = (sequelize, DataTypes) => {
   const Service = sequelize.define('Service', {
     title: DataTypes.STRING,
