@@ -12,6 +12,7 @@
 <ion-content class="ion-padding">
     <ion-searchbar [(ngModel)]="searchQuery" (search)="filterData($event)"></ion-searchbar>
     <ion-searchbar placeholder="Enter a Tag" [(ngModel)]="searchTags" (search)="filterByTags($event)"></ion-searchbar>
+    <ion-button (click)="resetSearch()">Reset Search</ion-button>
 
     <ion-grid *ngFor="let service of services">
         <ion-row>

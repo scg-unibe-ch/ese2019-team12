@@ -54,10 +54,8 @@ export class ExplorePage implements OnInit {
             }
         });
 
-
         //setting services to searchresult
         this.services = this.searchedList;
-
     }
 
     //funtction to filter our list by a given Tag (for now only one)
@@ -70,7 +68,6 @@ export class ExplorePage implements OnInit {
             return;
         }
 
-
         //filtering our array by tags
         this.searchedList = this.searchedList.filter(service => {
             if (service.tags && searchTerm) {
@@ -79,14 +76,14 @@ export class ExplorePage implements OnInit {
                 }
             }return false;
         });
-
-
         //setting services to searchresult
         this.services = this.searchedList;
-
-
     }
 
-
+    resetSearch(){
+    this.services = this.allServices;
+    this.searchQuery = '';
+    this.searchTags = '';
+    }
 
 }
