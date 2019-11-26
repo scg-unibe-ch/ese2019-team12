@@ -9,3 +9,12 @@ root {
      --ion-safe-area-top: 20px;
      --ion-safe-area-bottom: 22px;
  }
+ ion-icon:hover{
+     cursor:pointer;
+ }
+ ion-icon{
+     padding: 5px;
+     margin-right: 10px;
+     border: darkgrey solid 1px;
+     border-radius: 8px;
+ }
