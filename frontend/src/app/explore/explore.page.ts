@@ -14,10 +14,10 @@ export class ExplorePage implements OnInit {
         new Service(3, 1, 'jim\'s clean up crew', 'Cleaning', 300, ['clean', 'murder']),
         new Service(4, 1, 'john\'s security crew', 'Security', 5, ['safe AF'])
     ];
+    tempArray = [];
     searchedList = [];
     searchQuery = "";
     allServices = [];
-    searchTags = "";
     chips = [];
 
     constructor() {}
@@ -52,35 +52,33 @@ export class ExplorePage implements OnInit {
     }
     //funtction to filter our list by a given Tag (for now only one)
     filterByTags(){
+
         this.initializeItems();
 
-        const searchTerm = this.searchTags;
-        if (!searchTerm) {
-            this.services = this.allServices;
-            return;
-        }
-        //filtering our array by tags
-        this.searchedList = this.searchedList.filter(service => {
-            if (service.tags && searchTerm) {
-                if (service.tags.includes(searchTerm)){
-                    return true;
-                }
-            }return false;
-        });
-        //setting services to searchresult
+        console.log(this.chips);
+        this.chips.forEach(chip =>{
+            var searchTerm = chip;
+            //filtering our array by tags
+               this.searchedList = this.searchedList.filter(service => {
+                   if (service.tags && searchTerm) {
+                       if (service.tags.includes(searchTerm)){
+                           return true;
+                       }
+                   }return false;
+               });
+        })
+
         this.services = this.searchedList;
     }
     resetSearch(){
         this.services = this.allServices;
         this.searchQuery = '';
-        this.searchTags = '';
     }
     tagsParser() {
         const input = this.searchTags;
-        console.log(input);
         if (input.slice(-1) === ",") {
             this.createChip(input.slice(0, -1));
-
+            this.searchTags = '';
         }
     }
     createChip(chipToAdd) {
@@ -92,6 +90,10 @@ export class ExplorePage implements OnInit {
         this.chips = this.chips.filter(chip => {
             return chip != chipToDelete;
         })
+    }
+    clearTags(){
+        this.services = this.allServices;
+        this.chips = [];
     }
 
 }

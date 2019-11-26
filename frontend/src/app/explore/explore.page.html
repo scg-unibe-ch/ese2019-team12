@@ -20,6 +20,7 @@
             <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
         </ion-chip>
     </ion-item>
+    <ion-button (click)="clearTags()">Clear Tags</ion-button>
 
     <ion-grid *ngFor="let service of services">
         <ion-row class="ion-justify-content-center">
