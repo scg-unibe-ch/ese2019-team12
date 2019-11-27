@@ -15,4 +15,8 @@ Als finaler Task bleibt dann noch die Überarbeitung des Layouts und die Verbess
 
 ## 2. Bewertung des Status
 
-Wir haben uns in den letzten zwei Wochen mehrere Male zusammengesetzt und haben zusammen am Code gearbeitet. So konnten wir viele Fortschritte machen und haben die Entwicklung auf dem Develop-Branch zentralisiert. Die Entwicklung läuft gut.
+Wir haben uns in den letzten zwei Wochen mehrere Male zusammengesetzt und haben zusammen am Code gearbeitet. So konnten wir viele Fortschritte machen und haben die Entwicklung auf dem Develop-Branch zentralisiert.
+
+Detaillierte Infos zum Stand der verschiedenen Features können dem File 'Milestone 3' im Folder 'milestones' entnommen werden.
+
+Da Dominik die gesamte nächste Woche im Militär ist und daher nicht am Projekt arbeiten kann, sind wir etwas besorgt, dass wir vor der Abgabe noch in Stress geraten. Wir haben uns überlegt, eine Anfrage der Extension der Code-Deadline zu stellen, und werden das mit den Übungsleitern abklären.
