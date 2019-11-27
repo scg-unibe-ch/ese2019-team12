@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Statusbericht 4 (Semesterwoche 11)
 
 ## 1. Bericht
