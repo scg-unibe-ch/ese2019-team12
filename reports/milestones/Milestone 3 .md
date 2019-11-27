@@ -26,6 +26,8 @@ Erstellung der Businesslogik der verschiedenen Pages:
 
 
 ### Im Backend:
-| **Ziel** | **Status** | **Zu erledigen** | **In Progress** |
-| -------------------------- | ---------- | ---------- | ---------- |
-| TBD | TBD | TBD | ---------- |
+| **Ziel** | **Status** | **Zu erledigen** |
+| -------------------------- | ---------- | ---------- |
+| Events controller | in Progress | * Curl smoketests
+                                    * Verlinken mit Service | 
+| Message controller | TBD | * Chat mit Socket.io |

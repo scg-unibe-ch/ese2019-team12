@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 # Statusbericht 4 (Semesterwoche 11)
 
 ## 1. Bericht
 
 Wir haben viele Fortschritte gemacht in den letzten zwei Wochen. Wir haben das Backend mit dem Frontend verknüpft, und somit ist die Erstellung neuer User (Registrierung), das Einloggen (Login), die Erstellung neuer Services, das Suchen nach Services und das ID-basierte Routing vollkommen funktionsfähig.
+
+Auf dem Wiki sind nun cURL beschrieben, mit denen die API Endpoints des Backends getestet werden können.
+Weiter im Backend wurden diverse Bugs gefixt, Tags richtig implementiert und authentication Filters für /services und /users erstellt.
 
 Was wir nun noch implementieren müssen, ist die Erstellung und das Managen von Events. Events können vom User erstellt werden. Sie enthalten Name, Description, Datum, Location und eine Liste der Services, die für diesen Event erstellt wurden. Diese Events sind nur dem jeweiligen User, der sie erstellt hat, einsichtbar, und sie dienen lediglich zur Organisation der angefragten Services.
 
