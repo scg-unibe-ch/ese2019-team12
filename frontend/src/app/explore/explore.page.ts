@@ -17,6 +17,7 @@ export class ExplorePage implements OnInit {
     tempArray = [];
     searchedList = [];
     searchQuery = "";
+    searchTags = "";
     allServices = [];
     chips = [];
 

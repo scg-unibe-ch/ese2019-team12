@@ -29,12 +29,13 @@ export class ProfilePage implements OnInit {
             (data: {profile: User}) => {
                 this.profile = data.profile;
                 let currentUser = this.sessionService.getCurrentUser();
-                this.isMe = (this.profile.id === currentUser.id);
-
+                // if its you, its true :)
+                this.isMe = (currentUser) ? (this.profile.id === currentUser.id) : false;
 
                 this.serviceService.getServicesOfUser(this.profile.id).subscribe(
                     (data) => {
                         this.services = data;
+                        console.log(this.services);
                     }
                 )
             },
