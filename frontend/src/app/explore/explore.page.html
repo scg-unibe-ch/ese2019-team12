@@ -27,6 +27,9 @@
                     <app-service-card [service]="service"></app-service-card>
                 </ion-col>
             </div>
+            <div *ngIf="services.length === 0">
+                <p>No results were found for your search. But here, have a slice of pizza...<ion-icon name="pizza" size="large"></ion-icon></p>
+            </div>
         </ion-row>
     </ion-grid>
 
