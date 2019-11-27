@@ -12,16 +12,15 @@ export class ExplorePage implements OnInit {
         new Service(1, 1, 'john\'s failing business', 'Catering', 1000, ['yum', 'food']),
         new Service(2, 2, 'jane\'s trashy food', 'Catering', 200, ['sexy', 'trashy']),
         new Service(3, 1, 'jim\'s clean up crew', 'Cleaning', 300, ['clean', 'murder']),
-        new Service(4, 2, 'Bulleti\'s Bulletten', 'Catering', 5, ['buns','bulletten', 'juicy']),
+        new Service(4, 2, 'Bulletti\'s Bulletten', 'Catering', 5, ['buns','bulletten', 'juicy']),
         new Service(5, 2, 'Yael\'s mad DJ-Set', 'Entertainment', 1000, ['disco', 'mad','sick']),
         new Service(6, 1, 'Lino\'s Club', 'Venue', 2000, ['sexy', 'fancy','place to be']),
         new Service(7, 1, 'Dominik\'s Shoecleaners', 'Cleaning', 30, ['clean', 'shoes','spotless']),
-        new Service(8, 1, 'Gelateria di berna', 'Catering', 5, ['Ice cream','tasty'])
+        new Service(8, 1, 'Gelateria di Berna', 'Catering', 5, ['Ice cream','tasty'])
     ];
     tempArray = [];
     searchedList = [];
     searchQuery = "";
-    searchTags = "";
     allServices = [];
     chips = [];
     searchTags = "";
@@ -62,16 +61,22 @@ export class ExplorePage implements OnInit {
         this.initializeItems();
 
         console.log(this.chips);
-        this.chips.forEach((chip) =>{
-            //filtering our array by tags
-               this.searchedList = this.searchedList.filter(service => {
-                   if (service.tags && chip) {
-                       if (service.tags.includes(chip)){
-                           return true;
-                       }
-                   }return false;
-               });
-        })
+        this.searchedList = this.searchedList.filter(service => {
+            let hasChip = false;
+            this.chips.forEach((chip) =>{
+                  if (service.tags.includes(chip)) {
+                      hasChip = true;
+                  }
+            });
+            return hasChip;
+        });
+        // this.chips.forEach((chip) =>{
+        //     //filtering our array by tags
+        //        this.searchedList = this.searchedList.filter(service => {
+        //
+        //        });
+        //        return
+        // })
 
         this.services = this.searchedList;
     }
@@ -90,6 +95,7 @@ export class ExplorePage implements OnInit {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
         }
+        this.filterByTags()
     }
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
