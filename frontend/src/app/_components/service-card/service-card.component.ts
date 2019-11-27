@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Service } from "../../_models/service";
-import { UserService } from "../../_services/user.service";
+import { Service } from '../../_models/service';
+import { UserService } from '../../_services/user.service';
 
 @Component({
   selector: 'app-service-card',
@@ -10,7 +10,7 @@ import { UserService } from "../../_services/user.service";
 
 export class ServiceCardComponent implements OnInit {
   @Input() service: Service;
-  username: String;
+  username: string;
 
   constructor(private userService: UserService) {
   }
