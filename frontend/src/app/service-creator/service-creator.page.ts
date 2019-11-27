@@ -44,6 +44,7 @@ export class ServiceCreatorPage implements OnInit {
         this.service.price = this.serviceForm.get('price').value;
         this.service.tags = this.chips;
         this.service.userId = this.sessionService.getCurrentUser().id;
+        this.serviceForm.reset();
 
         this.serviceService.create(this.service).subscribe(
             (data: Service) => {

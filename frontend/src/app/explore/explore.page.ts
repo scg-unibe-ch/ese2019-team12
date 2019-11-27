@@ -21,7 +21,6 @@ export class ExplorePage implements OnInit {
     tempArray = [];
     searchedList = [];
     searchQuery = "";
-    searchTags = "";
     allServices = [];
     chips = [];
     searchTags = "";
@@ -62,16 +61,22 @@ export class ExplorePage implements OnInit {
         this.initializeItems();
 
         console.log(this.chips);
-        this.chips.forEach((chip) =>{
-            //filtering our array by tags
-               this.searchedList = this.searchedList.filter(service => {
-                   if (service.tags && chip) {
-                       if (service.tags.includes(chip)){
-                           return true;
-                       }
-                   }return false;
-               });
-        })
+        this.searchedList = this.searchedList.filter(service => {
+            let hasChip = false;
+            this.chips.forEach((chip) =>{
+                  if (service.tags.includes(chip)) {
+                      hasChip = true;
+                  }
+            });
+            return hasChip;
+        });
+        // this.chips.forEach((chip) =>{
+        //     //filtering our array by tags
+        //        this.searchedList = this.searchedList.filter(service => {
+        //
+        //        });
+        //        return
+        // })
 
         this.services = this.searchedList;
     }
@@ -90,6 +95,7 @@ export class ExplorePage implements OnInit {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
         }
+        this.filterByTags()
     }
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {

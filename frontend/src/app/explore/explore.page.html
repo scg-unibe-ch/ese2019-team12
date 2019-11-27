@@ -12,7 +12,7 @@
 <ion-content class="ion-padding">
     <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="filterByTitle($event)"(ionClear)="resetSearch()"></ion-searchbar>
     <ion-label>Tags</ion-label>
-    <ion-input placeholder="Enter different Tags. Separated by a comma"type="search" [(ngModel)]="searchTags" (ionChange)="filterByTags($event)" (ionClear)="resetSearch()" (keyup)="tagsParser($event)"></ion-input>
+    <ion-input placeholder="Enter different Tags. Separated by a comma"type="search" [(ngModel)]="searchTags" (ionClear)="resetSearch()" (keyup)="tagsParser($event)"></ion-input>
     <ion-item>
         <ion-label color="primary">Marked tags:</ion-label>
         <ion-chip outline color="primary" *ngFor="let c of chips">
