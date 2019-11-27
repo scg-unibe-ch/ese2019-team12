@@ -1,4 +1,4 @@
-# ESE: Usability Test (Team 12)
+# ESE: Usability Test
 
 #### Luca Bulletti, Lino Hess, Dominik Fischli, Yael van Dok (Team 12)
 
