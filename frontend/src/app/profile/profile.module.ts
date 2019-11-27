@@ -8,23 +8,23 @@ import { ProfilePage } from './profile.page';
 import { ProfileResolver } from '../_services/profile-resolver.service';
 
 const profileRouting: ModuleWithProviders = RouterModule.forChild([
-  {
-    path: 'profile/:id',
-    component: ProfilePage,
-    resolve: {
-        profile: ProfileResolver
+    {
+        path: 'profile/:id',
+        component: ProfilePage,
+        resolve: {
+            profile: ProfileResolver
+        }
     }
-  }
 ]);
 
 @NgModule({
-  imports: [
-    IonicModule,
-    FormsModule,
-    CommonModule,
-    profileRouting
-  ],
-  declarations: [ProfilePage],
-  providers: [ProfileResolver]
+    imports: [
+        IonicModule,
+        FormsModule,
+        CommonModule,
+        profileRouting
+    ],
+    declarations: [ProfilePage],
+    providers: [ProfileResolver]
 })
 export class ProfilePageModule {}

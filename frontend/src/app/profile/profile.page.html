@@ -32,10 +32,27 @@
             <ion-row>
                 <ion-col>
                     <ion-title>Offered Services</ion-title>
-                    <ion-button *ngIf="isMe" size="default" expand="block" color="light">
-                        Add services
-                        <ion-icon name="add-circle-outline"></ion-icon>
-                    </ion-button>
+                    <ion-card routerLink="/service-creator">
+                        <ion-card-header color="primary">
+                            <p class="ion-text-center">
+                                Add a Service<br>
+                                <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                            </p>
+                        </ion-card-header>
+                    </ion-card>
+                    <ion-card class="activated" *ngFor="let service of services">
+                        <ion-card-header routerLink="/service/{{service.id}}">
+                            <ion-card-title routerLink="/service/{{service.id}}">{{ service.title }}</ion-card-title>
+                            <ion-card-subtitle>{{ service.description }}</ion-card-subtitle>
+                        </ion-card-header>
+                        <ion-card-content>
+                            <ion-label>Price:</ion-label>
+                            <p>{{service.price}}</p>
+                            <ion-chip outline color="primary" *ngFor="let tag of service.tags">
+                                <ion-label>{{tag}}</ion-label>
+                            </ion-chip>
+                        </ion-card-content>
+                    </ion-card>
                 </ion-col>
             </ion-row>
         </ion-grid>

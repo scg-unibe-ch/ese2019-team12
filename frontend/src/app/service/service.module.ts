@@ -8,23 +8,23 @@ import { ServicePage } from './service.page';
 import { ServiceResolver } from '../_services/service-resolver.service';
 
 const serviceRouting: ModuleWithProviders = RouterModule.forChild([
-  {
-    path: 'service/:id',
-    component: ServicePage,
-    resolve: {
-        service: ServiceResolver
+    {
+        path: 'service/:id',
+        component: ServicePage,
+        resolve: {
+            service: ServiceResolver
+        }
     }
-  }
 ]);
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    serviceRouting
-  ],
-  declarations: [ServicePage],
-  providers: [ServiceResolver]
+    imports: [
+        IonicModule,
+        FormsModule,
+        CommonModule,
+        serviceRouting
+    ],
+    declarations: [ServicePage],
+    providers: [ServiceResolver]
 })
 export class ServicePageModule {}
