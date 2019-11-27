@@ -2,7 +2,7 @@
 
 ## 1. Bericht
 
-Wir haben viele Fortschritte gemacht in den letzten zwei Wochen. Wir haben das Backend mit dem Frontend verknüpft, und somit ist die Erstellung neuer User (Registrierung), das Einloggen (Login), die Erstellung neuer Services, das Suchen nach Services und das ID-basierte Routing vollkommen funktionsfähig.
+Wir haben viele Fortschritte gemacht in den letzten zwei Wochen. Wir haben das Backend mit dem Frontend verknüpft, und somit ist die Erstellung neuer User (Registrierung), das Einloggen (Login), die Erstellung neuer Services, das Suchen nach Services und das ID-basierte Routing (beinahe) vollkommen funktionsfähig. Die Einbindung der Services auf der Explore-Page muss noch vorgenommen werden.
 
 Auf dem Wiki sind nun cURL beschrieben, mit denen die API Endpoints des Backends getestet werden können.
 Weiter im Backend wurden diverse Bugs gefixt, Tags richtig implementiert und authentication Filters für /services und /users erstellt.
