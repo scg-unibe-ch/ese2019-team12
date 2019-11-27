@@ -67,24 +67,17 @@ export class ExplorePage implements OnInit {
     filterByTags(){
 
         this.initializeItems();
-
-        console.log(this.chips);
-        this.searchedList = this.searchedList.filter(service => {
-            let hasChip = false;
-            this.chips.forEach((chip) =>{
-                  if (service.tags.includes(chip)) {
-                      hasChip = true;
-                  }
+        if (this.chips.length > 0) {
+            this.searchedList = this.searchedList.filter(service => {
+                let hasChip = false;
+                this.chips.forEach((chip) =>{
+                    if (service.tags.includes(chip)) {
+                        hasChip = true;
+                    }
+                });
+                return hasChip;
             });
-            return hasChip;
-        });
-        // this.chips.forEach((chip) =>{
-        //     //filtering our array by tags
-        //        this.searchedList = this.searchedList.filter(service => {
-        //
-        //        });
-        //        return
-        // })
+        }
 
         this.services = this.searchedList;
     }
