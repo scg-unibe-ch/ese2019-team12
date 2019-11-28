@@ -36,14 +36,14 @@ export class RegistrationPage implements OnInit {
             + '.*';    // Needed (ngPattern surrounds with ^ and $)
 
         this.registrationForm = new FormGroup({
-            lastname: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
-            firstname: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*')]),
+            lastname: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
+            firstname: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
             email: new FormControl('', [Validators.required, Validators.pattern(EMAILPATTERN)], AsyncValidators.checkEmail(this.userService)),
             username: new FormControl('',
                 [
                     Validators.required,
                     Validators.maxLength(30),
-                    Validators.pattern('[a-zA-Z ]*')
+                    Validators.pattern('([a-zA-Z0-9-_]+)')
                 ],
                     AsyncValidators.checkUsername(this.userService)
             )

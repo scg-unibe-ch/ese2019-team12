@@ -65,6 +65,13 @@
                     <ion-item>
                         <ion-label color="primary">Confirm Password</ion-label>
                         <ion-input id="confirmpassword" formControlName="confirmPassword" name="confirmPassword" type="password" required="true" class="form-control"></ion-input>
+                        <ion-label *ngIf="passwordForm.errors && passwordForm.get('confirmPassword').value !== '' && passwordForm.errors.areEqual" color="danger">
+                            does not match
+                            <ion-icon name="close-circle" color="danger"></ion-icon>
+                        </ion-label>
+                        <ion-label *ngIf="!passwordForm.errors && passwordForm.get('confirmPassword').value !== ''">
+                            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                        </ion-label>
                         <ion-button class="showPassword" (click)="showPassword()" >
                             <ion-icon name="eye-off" id="eye"></ion-icon>
                         </ion-button>

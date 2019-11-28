@@ -32,7 +32,8 @@
         </ion-grid>
         <ion-grid>
             <ion-row>
-                <ion-title>Your Services</ion-title>
+                <ion-title *ngIf="isMe">Your Services</ion-title>
+                <ion-title *ngIf="!isMe">{{ profile.username }}'s Services</ion-title>
             </ion-row>
             <ion-row>
                 <ion-col size="3" *ngIf="isMe">
@@ -53,12 +54,17 @@
                         </ion-card-header>
                         <ion-card-content>
                             <p>Price: {{ service.price }}</p>
-                            <ion-chip outline color="primary" *ngFor="let tag of service.tags">
-                                <ion-label>{{ tag }}</ion-label>
-                            </ion-chip>
+                            <p>Tags:
+                                <ion-chip outline color="primary" *ngFor="let tag of service.tags">
+                                    <ion-label>{{ tag }}</ion-label>
+                                </ion-chip>
+                            </p>
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
+            </ion-row>
+            <ion-row class="ion-justify-content-center">
+                <p *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
             </ion-row>
         </ion-grid>
     </div>

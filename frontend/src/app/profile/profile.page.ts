@@ -15,7 +15,7 @@ export class ProfilePage implements OnInit {
 
     profile: User;
     isMe: boolean;
-    services: Service[];
+    services: Service[] = [];
 
     constructor(
       private route: ActivatedRoute,
