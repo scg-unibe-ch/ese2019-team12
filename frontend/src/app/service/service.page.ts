@@ -16,7 +16,7 @@ export class ServicePage implements OnInit {
 
     service: Service;
     isMyService: boolean;
-    serviceUser = new User(null, '', '', '', '', '', Role.User);
+    serviceUser = new User(null, '', '', '', '', '', '', Role.User);
 
     constructor(
         private route: ActivatedRoute,

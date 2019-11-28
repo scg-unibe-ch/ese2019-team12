@@ -28,6 +28,7 @@ export class UserService {
       firstname: user.lastname,
       username: user.username,
       email: user.email,
+      bio: '',
       password: user.password,
       role: user.role
     });
@@ -47,6 +48,7 @@ export class UserService {
       firstname: user.lastname,
       username: user.username,
       email: user.email,
+      bio: user.bio,
       password: user.password,
       role: user.role
     });

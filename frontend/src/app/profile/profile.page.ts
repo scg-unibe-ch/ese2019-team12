@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../_services/session.service';
+import { UserService } from '../_services/user.service';
 import { ServiceService } from '../_services/service.service';
 import { User } from '../_models/user';
 import { Service } from '../_models/service';
@@ -15,16 +17,20 @@ export class ProfilePage implements OnInit {
 
     profile: User;
     isMe: boolean;
+    isEditing: boolean;
+    editForm: FormGroup;
     services: Service[] = [];
 
     constructor(
       private route: ActivatedRoute,
       private router: Router,
       private sessionService: SessionService,
+      private userService: UserService,
       private serviceService: ServiceService
     ) {}
 
     ngOnInit() {
+        this.isEditing = false;
         this.route.data.subscribe(
             (data: {profile: User}) => {
                 this.profile = data.profile;
@@ -32,16 +38,43 @@ export class ProfilePage implements OnInit {
                 // if its you, its true :)
                 this.isMe = (currentUser) ? (this.profile.id === currentUser.id) : false;
 
-                this.serviceService.getServicesOfUser(this.profile.id).subscribe(
-                    (data) => {
-                        this.services = data;
-                        console.log(this.services);
-                    }
-                )
+                this.editForm = new FormGroup({
+                    firstname: new FormControl(this.profile.firstname, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
+                    lastname: new FormControl(this.profile.lastname, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
+                    bio: new FormControl(this.profile.bio, [Validators.maxLength(500)])
+                });
+
+                this.getServicesOfUser();
             },
             (err) => {
                 this.router.navigate(['/explore']);
             }
         );
+    }
+
+    getServicesOfUser() {
+        this.serviceService.getServicesOfUser(this.profile.id).subscribe(
+            (data) => {
+                this.services = data;
+                console.log(this.services);
+            }
+        );
+    }
+
+    editProfilePage() {
+        this.isEditing = true;
+    }
+
+    saveProfile(event) {
+        this.profile.firstname = this.editForm.get('firstname').value;
+        this.profile.lastname = this.editForm.get('lastname').value;
+        this.profile.bio = this.editForm.get('bio').value;
+
+        this.userService.update(this.profile).subscribe(
+            data => {
+                console.log(data);
+            }
+        );
+        this.isEditing = false;
     }
 }

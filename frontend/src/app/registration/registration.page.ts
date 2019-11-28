@@ -18,7 +18,7 @@ import { AsyncValidators } from '../_validators/async-validators';
 export class RegistrationPage implements OnInit {
     registrationForm: FormGroup;
     passwordForm: FormGroup;
-    user = new User(null, '', '', '', '', '', Role.User);
+    user = new User(null, '', '', '', '', '', '', Role.User);
     password = '';
 
     constructor(
