@@ -10,7 +10,10 @@ router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
   Service.findAll({ include: { model: Tag } }).then((services) => {
-    res.setStatus(200);
+    res.status = 200;
+    if(!services) {
+      res.send([]);
+    }
     res.send(jsonFromServices(services));
   }).catch((err) => {
     console.log(err)
@@ -67,12 +70,11 @@ router.post('/', async (req, res) => {
   }
 
   // Service creation
-  await Service.create(serviceData, { include: [ Tag ]}).then(async service => {
+  Service.create(serviceData, { include: [ Tag ]}).then(async service => {
     if(hasTags){
       service.setTags(serviceData.tags);
     }
     await service.save();
-    await service.reload();
 
     res.sendStatus(201);
   }).catch(err => {

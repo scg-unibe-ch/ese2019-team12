@@ -4,40 +4,88 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   let Event = getEvent(req);
-  const users = await Event.findAll();
-  res.send(users);
+
+  Event.findAll().then(events => {
+    res.status = 200;
+    if(!events) {
+      res.send([]);
+    }
+    let toSend = [];
+    events.forEach(e => {
+      toSend.push(e.simplified());
+    });
+    res.send(toSend);
+  }).catch(err => {
+    console.log(err);
+    return res.sendStatus(500);
+  });
 });
+
 router.get('/:id', async (req, res) => {
   let Event = getEvent(req);
-  const user = await Event.findByPk(
-    req.params.id,
-  );
-  if (!user) {
-    error404(res);
-    return;
-  }
-  res.send(user);
+
+  Event.findByPk(req.params.id).then(e => {
+    if(!e) {
+      error404(res);
+      return;
+    }
+    res.status = 200;
+    res.send(e.simplified());
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
+  });
 });
+
+router.get('/user/:id', async (req, res) => {
+  let Event = getEvent(req);
+  Event.findAll({ where: { userId: req.params.id } }).then(events => {
+    if(!events) {
+      res.send([]);
+    }
+    res.send(events);
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+});
+
 router.post('/', async (req, res) => {
   let Event = getEvent(req);
-  let created = await Event.create({
-    name: req.body.name,
-    userId: req.body.userId
+  let eventData = req.body;
+  eventData.userId = req.user.sub;
+
+  Event.create(req.body).then(() => {
+    res.sendStatus(201);
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
   });
-  res.statusCode = 201;
-  res.send(created);
 });
+
 router.put('/:id', async (req, res) => {
   let Event = getEvent(req);
-  let toUpdate = await Event.findByPk(req.params.id);
-  if (!toUpdate) {
-    error404(res);
-    return;
-  }
-  toUpdate.name = req.body['name'];
-  await toUpdate.save();
-  res.statusCode = 200;
-  res.send(toUpdate);
+  Event.findByPk(req.params.id).then(e => {
+    if (!e) {
+      error404(res);
+      return
+    }
+    let keys = Object.keys(req.body);
+    keys.forEach(key => {
+      if(e[key] !== undefined) {
+        e[key] = req.body[key];
+      }
+    });
+    e.save().then(() => {
+      res.sendStatus(202);
+    }).catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500)
+  });
 });
 router.delete('/:id', async (req, res) => {
   let Event = getEvent(req);
@@ -59,6 +107,5 @@ function error404(res){
   res.json({
     'message': 'not found'
   });
-  return;
 }
 export default router;

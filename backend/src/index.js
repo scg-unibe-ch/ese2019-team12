@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 });
 app.use('/users', checkIfAuthenticated.unless(userAuthFilter),controllers.user);
 app.use('/services', checkIfAuthenticated.unless(serviceAuthFilter), controllers.service);
+app.use('/events', checkIfAuthenticated, controllers.e);
 app.use('/session', controllers.session);
 
 var server = app.listen(process.env.PORT, () => {
