@@ -42,6 +42,8 @@ export class ServicePage implements OnInit {
 
                 if (!this.isMyService) {
                     this.getServiceUser();
+                } else {
+                    this.serviceUser = currentUser;
                 }
 
                 this.editForm = new FormGroup({

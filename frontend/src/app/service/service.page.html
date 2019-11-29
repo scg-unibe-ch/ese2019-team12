@@ -14,12 +14,13 @@
         <ion-row class="ion-justify-content-center">
             <ion-col size="5">
                 <ion-card *ngIf="!isEditing">
-                    <ion-card-header routerLink="/service/{{service.id}}">
-                        <ion-card-title routerLink="/service/{{service.id}}">{{ service.title }}</ion-card-title>
+                    <ion-card-header>
+                        <ion-card-title>{{ service.title }}</ion-card-title>
                         <ion-card-subtitle>{{ service.description }}</ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-content>
-                        <p *ngIf="!isMyService">by <a routerLink="profile/user/{{ serviceUser.id }}">{{ serviceUser.username }}</a></p>
+                        <p *ngIf="!isMyService">by <a routerLink="/profile/user/{{ serviceUser.id }}">{{ serviceUser.username }}</a></p>
+                        <p *ngIf="isMyService">by <a routerLink="/profile/me">{{ serviceUser.username }}</a></p>
                         <p>Price: {{service.price}}</p>
                         <ion-chip outline color="primary" *ngFor="let tag of service.tags">
                             <ion-label>{{ tag }}</ion-label>
@@ -31,6 +32,10 @@
                         <ion-button *ngIf="isMyService" expand="block" color="danger" (click)="deleteService()">
                             Delete
                             <ion-icon name="trash" class="ion-padding"></ion-icon>
+                        </ion-button>
+                        <ion-button *ngIf="!isMyService" size="default" expand="block" color="light">
+                            Add to Event
+                            <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
                         </ion-button>
                     </ion-card-content>
                 </ion-card>
@@ -52,14 +57,6 @@
                         </form>
                     </ion-card-content>
                 </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <ion-button *ngIf="!isMyService" size="default" expand="block" color="light">
-                    Add to Event
-                    <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
-                </ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
