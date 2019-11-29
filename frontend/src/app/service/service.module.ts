@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ServicePage } from './service.page';
@@ -21,6 +21,7 @@ const serviceRouting: ModuleWithProviders = RouterModule.forChild([
     imports: [
         IonicModule,
         FormsModule,
+        ReactiveFormsModule,
         CommonModule,
         serviceRouting
     ],
