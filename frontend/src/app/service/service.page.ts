@@ -16,6 +16,8 @@ import { Service } from '../_models/service';
 })
 export class ServicePage implements OnInit {
 
+    isLoggedIn: boolean;
+    currentUser: User;
     service: Service;
     serviceTags: string[];
     isEditing: boolean;
@@ -33,19 +35,23 @@ export class ServicePage implements OnInit {
 
     ngOnInit() {
         this.isEditing = false;
+        this.isLoggedIn = this.sessionService.isLoggedIn();
+        if (this.isLoggedIn) {
+            this.currentUser = this.sessionService.getCurrentUser();
+        }
         this.route.data.subscribe(
             (data: {service: Service}) => {
                 this.service = data.service;
                 this.serviceTags = this.service.tags;
                 console.log(this.service);
-                let currentUser = this.sessionService.getCurrentUser();
+
                 // if its yours, its true
-                this.isMyService = (currentUser) ? (this.service.userId === currentUser.id) : false;
+                this.isMyService = (this.isLoggedIn) ? (this.service.userId === this.currentUser.id) : false;
 
                 if (!this.isMyService) {
                     this.getServiceUser();
                 } else {
-                    this.serviceUser = currentUser;
+                    this.serviceUser = this.currentUser;
                 }
 
                 this.editForm = new FormGroup({

@@ -17,6 +17,8 @@ export class ProfilePage implements OnInit {
 
     profile: User;
     isMe: boolean;
+    currentUser: User;
+    isLoggedIn: boolean;
     isEditing: boolean;
     editForm: FormGroup;
     services: Service[] = [];
@@ -31,12 +33,15 @@ export class ProfilePage implements OnInit {
 
     ngOnInit() {
         this.isEditing = false;
+        this.isLoggedIn = this.sessionService.isLoggedIn();
+        if (this.isLoggedIn) {
+            this.currentUser = this.sessionService.getCurrentUser();
+        }
         this.route.data.subscribe(
             (data: {profile: User}) => {
                 this.profile = data.profile;
-                let currentUser = this.sessionService.getCurrentUser();
                 // if its you, its true :)
-                this.isMe = (currentUser) ? (this.profile.id === currentUser.id) : false;
+                this.isMe = (this.isLoggedIn) ? (this.profile.id === this.currentUser.id) : false;
 
                 this.editForm = new FormGroup({
                     firstname: new FormControl(this.profile.firstname, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),

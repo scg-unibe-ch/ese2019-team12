@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SessionService } from '../_services/session.service';
 import { ServiceService } from '../_services/service.service';
 import { Service } from '../_models/service';
+import { User } from '../_models/user';
 import { Role } from '../_models/role';
 
 @Component({
@@ -12,6 +13,9 @@ import { Role } from '../_models/role';
     styleUrls: ['./service-creator.page.scss'],
 })
 export class ServiceCreatorPage implements OnInit {
+
+    isLoggedIn: boolean;
+    currentUser: User;
     service = new Service(null, null, '', '', null, []);
     chips = [];
 
@@ -28,7 +32,12 @@ export class ServiceCreatorPage implements OnInit {
         private router: Router
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.isLoggedIn = this.sessionService.isLoggedIn();
+        if (this.isLoggedIn) {
+            this.currentUser = this.sessionService.getCurrentUser();
+        }
+    }
 
     tagsParser() {
         let input = this.serviceForm.get('tagInput').value;
