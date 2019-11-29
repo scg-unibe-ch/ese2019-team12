@@ -32,7 +32,7 @@
                     <p class="ion-text-center">Help peope to find your service by adding tags:</p>
                     <ion-item>
                         <ion-label color="primary">Tags</ion-label>
-                        <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keydown)="tagsParser()"></ion-input>
+                        <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Marked tags:</ion-label>

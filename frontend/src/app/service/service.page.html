@@ -19,8 +19,7 @@
                         <ion-card-subtitle>{{ service.description }}</ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-content>
-                        <p *ngIf="!isMyService">by <a routerLink="/profile/user/{{ serviceUser.id }}">{{ serviceUser.username }}</a></p>
-                        <p *ngIf="isMyService">by <a routerLink="/profile/me">{{ serviceUser.username }}</a></p>
+                        <p>by <a routerLink="/profile/{{ serviceUser.id }}">{{ serviceUser.username }}</a></p>
                         <p>Price: {{service.price}}</p>
                         <ion-chip outline color="primary" *ngFor="let tag of service.tags">
                             <ion-label>{{ tag }}</ion-label>
@@ -52,6 +51,21 @@
                             <ion-item>
                                 <ion-label color="primary">Description</ion-label>
                                 <ion-textarea name="description" formControlName="description" type="text" inputmode="text" rows="2" maxlength="200"></ion-textarea>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Tags</ion-label>
+                                <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Marked tags:</ion-label>
+                                <ion-chip outline color="primary" *ngFor="let c of serviceTags">
+                                    <ion-label>{{c}}</ion-label>
+                                    <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
+                                </ion-chip>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Price</ion-label>
+                                <ion-input expand="block" type="number" required formControlName="price" placeholder="Enter the price of your service"></ion-input>
                             </ion-item>
                             <ion-button type="submit" expand="block" class="submitButton" [disabled]="editForm.invalid">Save</ion-button>
                         </form>

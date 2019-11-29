@@ -17,6 +17,7 @@ import { Service } from '../_models/service';
 export class ServicePage implements OnInit {
 
     service: Service;
+    serviceTags: String[];
     isEditing: boolean;
     editForm: FormGroup;
     isMyService: boolean;
@@ -35,6 +36,7 @@ export class ServicePage implements OnInit {
         this.route.data.subscribe(
             (data: {service: Service}) => {
                 this.service = data.service;
+                this.serviceTags = this.service.tags;
                 console.log(this.service);
                 let currentUser = this.sessionService.getCurrentUser();
                 // if its yours, its true
@@ -48,8 +50,9 @@ export class ServicePage implements OnInit {
 
                 this.editForm = new FormGroup({
                     title: new FormControl(this.service.title, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
-                    description: new FormControl(this.service.description, [Validators.required, Validators.maxLength(200)])
-                    // tags: new FormControl('')
+                    description: new FormControl(this.service.description, [Validators.required, Validators.maxLength(200)]),
+                    price: new FormControl(this.service.price, [Validators.required]),
+                    tagInput: new FormControl('')
                 });
             },
             (err) => {
@@ -70,12 +73,35 @@ export class ServicePage implements OnInit {
         this.isEditing = true;
     }
 
+    tagsParser() {
+        let input = this.editForm.get('tagInput').value;
+        if (input.slice(-1) === ",") {
+            this.createChip(input.slice(0, -1));
+            this.editForm.get('tagInput').setValue("");
+        }
+    }
+
+    createChip(chipToAdd) {
+        if (!this.serviceTags.includes(chipToAdd)) {
+            this.serviceTags.push(chipToAdd);
+        }
+    }
+
+    deleteChip(chipToDelete) {
+        this.serviceTags = this.serviceTags.filter(chip => {
+            return chip != chipToDelete;
+        })
+    }
+
     saveService(event) {
         this.service.title = this.editForm.get('title').value;
         this.service.description = this.editForm.get('description').value;
+        this.service.price = this.editForm.get('price').value;
+        this.service.tags = this.serviceTags;
 
         this.serviceService.update(this.service).subscribe(
             data => {
+                // this 'update' is not working either...
                 console.log(data);
             }
         );
