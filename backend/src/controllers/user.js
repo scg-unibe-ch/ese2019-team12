@@ -59,14 +59,18 @@ router.put('/:id', async (req, res) => {
   }
   let keys = Object.keys(req.body); // Find all transmitted attributes
   keys.forEach((key) => {           // For each attribute name,
-    if(toUpdate.key !== undefined) {
-      toUpdate.key = req.body.key;
+    if(toUpdate[key] !== undefined) {
+      toUpdate[key] = req.body[key];
     }
   });
 
-  await toUpdate.save();
-  res.statusCode = 200;
-  res.send(toUpdate);
+  toUpdate.save().then((user) => {
+    res.statusCode = 200;
+    res.send(user);
+  }).catch(err => {
+    console.log(err);
+    res.sendStatus(500);
+  });
 });
 
 router.delete('/:id', async (req, res) => {
