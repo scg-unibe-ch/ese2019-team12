@@ -1,13 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Admin
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-chip outline routerLink="/profile/me" *ngIf="isLoggedIn && !isMe">
+                <ion-avatar>
+                    <img src="../../assets/defaultAvatar.png">
+                </ion-avatar>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Profile
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
 
