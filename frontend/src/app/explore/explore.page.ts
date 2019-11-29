@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from "../_services/session.service";
 import { Service } from "../_models/service";
 
 @Component({
@@ -32,12 +33,13 @@ export class ExplorePage implements OnInit {
     allServices = [];
     chips = [];
     searchTags = "";
+    isLoggedIn: boolean;
 
-    constructor() {}
+    constructor(private sessionService: SessionService) {}
 
     ngOnInit() {
         this.allServices = this.services;   //allServices can be replaced by top100 or something the like once it gets too big
-
+        this.isLoggedIn = this.sessionService.isLoggedIn();
     }
     //Function to load all our items so we can work localy (not meant for big lists!)
     initializeItems() {

@@ -17,7 +17,7 @@ import { Service } from '../_models/service';
 export class ServicePage implements OnInit {
 
     service: Service;
-    serviceTags: String[];
+    serviceTags: string[];
     isEditing: boolean;
     editForm: FormGroup;
     isMyService: boolean;
