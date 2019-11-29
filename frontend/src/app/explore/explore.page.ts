@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionService } from "../_services/session.service";
+import { UserService } from "../_services/user.service";
 import { Service } from "../_models/service";
 import { User } from "../_models/user";
 
@@ -28,6 +29,7 @@ export class ExplorePage implements OnInit {
         new Service(15, 2, 'Guacamole Guapos', 'Ven a buscar la mejor guacamole en la ciudad. Guacamole por todo el mundo.', 8, ['guacamole', 'spicy','verde']),
         new Service(16, 1, 'Blossoming Flowers', 'Der Blumenlieferant für Grossanlässe in der Umgebung.', 200, ['Flowers','colorful','pretty'])
     ];
+    servicesToDisplay = [];
     tempArray = [];
     searchedList = [];
     searchQuery = "";
@@ -37,10 +39,26 @@ export class ExplorePage implements OnInit {
     isLoggedIn: boolean;
     currentUser: User;
 
-    constructor(private sessionService: SessionService) {}
+    constructor(
+        private sessionService: SessionService,
+        private userService: UserService
+    ) {}
 
     ngOnInit() {
-        this.allServices = this.services;   //allServices can be replaced by top100 or something the like once it gets too big
+
+        // adding username field to service objects (deviating from the model)
+        // to optimize backend calls.
+        // service.username now stores the username of the service-provider.
+        this.services.forEach(service => {
+            this.userService.getUser(service.userId).subscribe(data => {
+                let optimizedService = service;
+                optimizedService.username = data.username;
+                this.allServices.push(optimizedService);
+            });
+        })
+        this.servicesToDisplay = this.allServices;
+
+        // checking if logged in.
         this.isLoggedIn = this.sessionService.isLoggedIn();
         if (this.isLoggedIn) {
             this.currentUser = this.sessionService.getCurrentUser();
@@ -48,7 +66,7 @@ export class ExplorePage implements OnInit {
     }
     //Function to load all our items so we can work localy (not meant for big lists!)
     initializeItems() {
-        this.searchedList = this.allServices; //this.allServices to be replaced with call to backend
+        this.searchedList = this.allServices;
     }
     //filters our Array and then sets the services array to the services that are left matching the search
     // for now only compares on title
@@ -56,7 +74,7 @@ export class ExplorePage implements OnInit {
         this.initializeItems();
         const searchTerm = this.searchQuery;
         if (!searchTerm) {
-            this.services = this.allServices;
+            this.servicesToDisplay = this.allServices;
             return;
         }
         //filtering our array of possible services by title
@@ -64,11 +82,12 @@ export class ExplorePage implements OnInit {
             if (service.title && searchTerm) {
                 if (service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
                     return true;
-                }return false;
+                }
+                return false;
             }
         });
         //setting services to searchresult
-        this.services = this.searchedList;
+        this.servicesToDisplay = this.searchedList;
     }
     //funtction to filter our list by a given Tag (for now only one)
     filterByTags(){
@@ -86,12 +105,14 @@ export class ExplorePage implements OnInit {
             });
         }
 
-        this.services = this.searchedList;
+        this.servicesToDisplay = this.searchedList;
     }
+
     resetSearch(){
-        this.services = this.allServices;
+        this.servicesToDisplay = this.allServices;
         this.searchQuery = '';
     }
+
     tagsParser() {
         const input = this.searchTags;
         if (input.slice(-1) === ",") {
@@ -99,20 +120,23 @@ export class ExplorePage implements OnInit {
             this.searchTags = '';
         }
     }
+
     createChip(chipToAdd) {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
         }
         this.filterByTags()
     }
+
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
             return chip != chipToDelete;
         })
         this.filterByTags();
     }
+
     clearTags(){
-        this.services = this.allServices;
+        this.servicesToDisplay = this.allServices;
         this.chips = [];
     }
 

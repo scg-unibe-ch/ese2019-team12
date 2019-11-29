@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Service } from '../../_models/service';
-import { UserService } from '../../_services/user.service';
 
 @Component({
   selector: 'app-service-card',
@@ -10,15 +9,9 @@ import { UserService } from '../../_services/user.service';
 
 export class ServiceCardComponent implements OnInit {
   @Input() service: Service;
-  username: string;
 
-  constructor(private userService: UserService) {
-  }
+  constructor() {}
 
-  ngOnInit() {
-      this.userService.getUser(this.service.userId).subscribe(data => {
-          this.username = data.username;
-      });
-  }
+  ngOnInit() {}
 
 }

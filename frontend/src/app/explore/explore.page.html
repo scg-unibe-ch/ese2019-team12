@@ -30,12 +30,12 @@
 
     <ion-grid >
         <ion-row class="ion-justify-content-center">
-            <div *ngFor="let service of services">
+            <div *ngFor="let service of servicesToDisplay">
                 <ion-col size="3" class="ion-align-self-center">
                     <app-service-card [service]="service"></app-service-card>
                 </ion-col>
             </div>
-            <div *ngIf="services.length === 0">
+            <div *ngIf="servicesToDisplay.length === 0">
                 <p>No results were found for your search. But here, have a slice of pizza...<ion-icon name="pizza" size="large"></ion-icon></p>
             </div>
         </ion-row>

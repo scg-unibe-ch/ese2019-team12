@@ -5,7 +5,7 @@
     </ion-card-header>
 
     <ion-card-content>
-        <p>by <a routerLink="/profile/{{service.userId}}" color="primary">{{ username }}</a></p>
+        <p>by <a routerLink="/profile/{{ service.userId }}" color="primary">{{ service.username }}</a></p>
         <br>
         <ion-chip outline color="primary" *ngFor="let tag of service.tags">
             <ion-label>{{tag}}</ion-label>
