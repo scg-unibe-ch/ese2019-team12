@@ -46,13 +46,13 @@ export class ExplorePage implements OnInit {
 
     ngOnInit() {
 
-        // adding username field to service objects (deviating from the model)
+        // wrapping service into an object which 'adds' the username field
         // to optimize backend calls.
-        // service.username now stores the username of the service-provider.
+        // allServices.username now holds the username of the service-provider.
+        // allServices.service holds the service.
         this.services.forEach(service => {
             this.userService.getUser(service.userId).subscribe(data => {
-                let optimizedService = service;
-                optimizedService.username = data.username;
+                let optimizedService = { username: data.username, service: service };
                 this.allServices.push(optimizedService);
             });
         })
@@ -78,9 +78,9 @@ export class ExplorePage implements OnInit {
             return;
         }
         //filtering our array of possible services by title
-        this.searchedList = this.searchedList.filter(service => {
-            if (service.title && searchTerm) {
-                if (service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+        this.searchedList = this.searchedList.filter(serviceCard => {
+            if (serviceCard.service.title && searchTerm) {
+                if (serviceCard.service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
                     return true;
                 }
                 return false;
@@ -94,10 +94,10 @@ export class ExplorePage implements OnInit {
 
         this.initializeItems();
         if (this.chips.length > 0) {
-            this.searchedList = this.searchedList.filter(service => {
+            this.searchedList = this.searchedList.filter(serviceCard => {
                 let hasChip = false;
                 this.chips.forEach((chip) =>{
-                    if (service.tags.includes(chip)) {
+                    if (serviceCard.service.tags.includes(chip)) {
                         hasChip = true;
                     }
                 });
