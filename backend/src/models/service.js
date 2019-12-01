@@ -7,18 +7,19 @@
 // hasmany:     Tags    through: ServiceTags
 //
 const service = (sequelize, DataTypes) => {
-  const Service = sequelize.define('Service', {
+  const Service = sequelize.define('service', {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     price: DataTypes.INTEGER
   }, {});
   Service.associate = models => {
     Service.belongsTo(models.User);
-    Service.belongsToMany(models.Tag, { through: 'ServiceTags' });
+    Service.belongsToMany(models.Tag, { through: 'services_tags' });
+    Service.belongsToMany(models.Event, { through: 'services_events' });
   };
   Service.prototype.simplified = function() {
     let tags = [];
-    this.Tags.forEach(tag => {
+    this.tags.forEach(tag => {
       tags.push(tag.dataValues.name);
     });
     return {

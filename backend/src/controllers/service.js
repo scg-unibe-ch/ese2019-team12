@@ -64,18 +64,11 @@ router.post('/', async (req, res) => {
   serviceData.UserId = req.user.sub;
   let hasTags = serviceData.tags !== undefined;
 
-  if(hasTags) {
-    // Tags have to be created prior to usage
-    await findOrCreateTags(Tag, serviceData.tags);
-  }
+  // Tags have to be created prior to usage
+  await findOrCreateTags(Tag, serviceData.tags);
 
   // Service creation
   Service.create(serviceData, { include: [ Tag ]}).then(async service => {
-    if(hasTags){
-      service.setTags(serviceData.tags);
-    }
-    await service.save();
-
     res.sendStatus(201);
   }).catch(err => {
     console.log(err);
@@ -138,11 +131,12 @@ router.delete('/:id', async (req, res) => {
 });
 
 async function findOrCreateTags(model, tags){
-  tags.forEach(tag => {
-    model.findOrCreate({
-      where: { name: tag }
-    });
-  });
+  if(!tags || tags === undefined) { 
+    return;
+  }
+  for (const tag of tags) {
+    await model.findOrCreate({ where: { name: tag } });
+  }
 }
 
 function getService(req) {
