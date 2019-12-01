@@ -18,20 +18,40 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-searchbar [(ngModel)]="searchQuery" (ionChange)="filterByTitle($event)"(ionClear)="resetSearch()"></ion-searchbar>
-    <ion-label>Tags</ion-label>
-    <ion-input type="search" placeholder="Enter different Tags. Separated by a comma ','" [(ngModel)]="searchTags" (ionClear)="resetSearch()" (keyup)="tagsParser($event)"></ion-input>
-    <ion-label color="primary">Marked tags:</ion-label>
-    <ion-chip color="primary" (click)="clearTags()">Clear Tags</ion-chip>
-    <ion-chip outline color="primary" *ngFor="let c of chips">
-        <ion-label>{{c}}</ion-label>
-        <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
-    </ion-chip>
+    <ion-grid>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="auto">
+                <ion-chip color="primary">
+                    <ion-label>Search by</ion-label>
+                    <ion-select (ionChange)="switchSearch()" interface="popover" selectedText=" ">
+                        <ion-select-option value="term" selected>Search term</ion-select-option>
+                        <ion-select-option value="tags">Tags</ion-select-option>
+                    </ion-select>
+                </ion-chip>
+            </ion-col>
+            <ion-col>
+                <form [formGroup]="searchForm">
+                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" (ionClear)="resetSearch()" placeholder="Search services by term"></ion-searchbar>
+                    <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="resetSearch()" (ionChange)="tagsParser(event)"></ion-searchbar>
+                </form>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="tagsSearch" class="ion-align-items-center">
+            <ion-col>
+                <ion-chip *ngIf="chips.length > 0" color="danger" (click)="clearTags()">Clear Tags</ion-chip>
+                <ion-chip color="primary" *ngFor="let c of chips">
+                    <ion-label>{{c}}</ion-label>
+                    <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
+                </ion-chip>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-    <ion-grid >
+
+    <ion-grid>
         <ion-row class="ion-justify-content-center">
             <div *ngFor="let service of servicesToDisplay">
-                <ion-col size="3" class="ion-align-self-center">
+                <ion-col size="auto">
                     <app-service-card [serviceCard]="service"></app-service-card>
                 </ion-col>
             </div>

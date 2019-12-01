@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from "../_services/session.service";
 import { UserService } from "../_services/user.service";
 import { Service } from "../_models/service";
@@ -30,12 +31,11 @@ export class ExplorePage implements OnInit {
         new Service(16, 1, 'Blossoming Flowers', 'Der Blumenlieferant für Grossanlässe in der Umgebung.', 200, ['Flowers','colorful','pretty'])
     ];
     servicesToDisplay = [];
-    tempArray = [];
+    tagsSearch: boolean = false;
+    searchForm: FormGroup;
     searchedList = [];
-    searchQuery = "";
     allServices = [];
     chips = [];
-    searchTags = "";
     isLoggedIn: boolean;
     currentUser: User;
 
@@ -45,6 +45,12 @@ export class ExplorePage implements OnInit {
     ) {}
 
     ngOnInit() {
+
+        // initalizing searchbars
+        this.searchForm = new FormGroup({
+            query: new FormControl(''),
+            tags: new FormControl('')
+        })
 
         // wrapping service into an object which 'adds' the username field
         // to optimize backend calls.
@@ -68,11 +74,12 @@ export class ExplorePage implements OnInit {
     initializeItems() {
         this.searchedList = this.allServices;
     }
+
     //filters our Array and then sets the services array to the services that are left matching the search
     // for now only compares on title
     filterByTitle (){
         this.initializeItems();
-        const searchTerm = this.searchQuery;
+        const searchTerm = this.searchForm.get('query').value;
         if (!searchTerm) {
             this.servicesToDisplay = this.allServices;
             return;
@@ -89,6 +96,7 @@ export class ExplorePage implements OnInit {
         //setting services to searchresult
         this.servicesToDisplay = this.searchedList;
     }
+
     //funtction to filter our list by a given Tag (for now only one)
     filterByTags(){
 
@@ -110,14 +118,14 @@ export class ExplorePage implements OnInit {
 
     resetSearch(){
         this.servicesToDisplay = this.allServices;
-        this.searchQuery = '';
+        this.searchForm.get('query').setValue("");
     }
 
     tagsParser() {
-        const input = this.searchTags;
+        const input = this.searchForm.get('tags').value;
         if (input.slice(-1) === ",") {
             this.createChip(input.slice(0, -1));
-            this.searchTags = '';
+            this.searchForm.get('tags').setValue("");
         }
     }
 
@@ -138,6 +146,10 @@ export class ExplorePage implements OnInit {
     clearTags(){
         this.servicesToDisplay = this.allServices;
         this.chips = [];
+    }
+
+    switchSearch() {
+        this.tagsSearch = !this.tagsSearch;
     }
 
 }
