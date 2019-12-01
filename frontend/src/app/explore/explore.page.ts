@@ -30,12 +30,13 @@ export class ExplorePage implements OnInit {
         new Service(15, 2, 'Guacamole Guapos', 'Ven a buscar la mejor guacamole en la ciudad. Guacamole por todo el mundo.', 8, ['guacamole', 'spicy','verde']),
         new Service(16, 1, 'Blossoming Flowers', 'Der Blumenlieferant für Grossanlässe in der Umgebung.', 200, ['Flowers','colorful','pretty'])
     ];
+    optimizedServices = [];
     servicesToDisplay = [];
-    tagsSearch: boolean = false;
     searchForm: FormGroup;
-    searchedList = [];
-    allServices = [];
+    searchedByTitle = [];
+    searchedByTags = [];
     chips = [];
+    tagsSearch: boolean;
     isLoggedIn: boolean;
     currentUser: User;
 
@@ -54,15 +55,24 @@ export class ExplorePage implements OnInit {
 
         // wrapping service into an object which 'adds' the username field
         // to optimize backend calls.
-        // allServices.username now holds the username of the service-provider.
-        // allServices.service holds the service.
+        // optimizedServices.username now holds the username of the service-provider.
+        // optimizedServices.service holds the service.
+
         this.services.forEach(service => {
             this.userService.getUser(service.userId).subscribe(data => {
-                let optimizedService = { username: data.username, service: service };
-                this.allServices.push(optimizedService);
+                this.optimizedServices.push({ username: data.username, service: service });
+                this.searchedByTitle = this.optimizedServices;
+                this.searchedByTags = this.optimizedServices;
+                this.displayServices();
             });
-        })
-        this.servicesToDisplay = this.allServices;
+        });
+
+
+
+        // console.log("all services:");
+        // console.log(this.optimizedServices);
+
+        this.tagsSearch = false;
 
         // checking if logged in.
         this.isLoggedIn = this.sessionService.isLoggedIn();
@@ -70,39 +80,32 @@ export class ExplorePage implements OnInit {
             this.currentUser = this.sessionService.getCurrentUser();
         }
     }
-    //Function to load all our items so we can work localy (not meant for big lists!)
-    initializeItems() {
-        this.searchedList = this.allServices;
-    }
 
     //filters our Array and then sets the services array to the services that are left matching the search
     // for now only compares on title
     filterByTitle (){
-        this.initializeItems();
+        console.log("filtering by title");
+
         const searchTerm = this.searchForm.get('query').value;
-        if (!searchTerm) {
-            this.servicesToDisplay = this.allServices;
-            return;
+        if (searchTerm === "") {
+            this.searchedByTitle = this.optimizedServices;
+        } else {
+            this.searchedByTitle = this.optimizedServices.filter(serviceCard => {
+                return (serviceCard.service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+            });
         }
-        //filtering our array of possible services by title
-        this.searchedList = this.searchedList.filter(serviceCard => {
-            if (serviceCard.service.title && searchTerm) {
-                if (serviceCard.service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        //setting services to searchresult
-        this.servicesToDisplay = this.searchedList;
+
+        this.displayServices();
     }
 
-    //funtction to filter our list by a given Tag (for now only one)
+    //funtction to filter our list by a given Tag
     filterByTags(){
+        console.log("filtering by tags");
 
-        this.initializeItems();
-        if (this.chips.length > 0) {
-            this.searchedList = this.searchedList.filter(serviceCard => {
+        if (this.chips.length === 0) {
+            this.searchedByTags = this.optimizedServices;
+        } else {
+            this.searchedByTags = this.optimizedServices.filter(serviceCard => {
                 let hasChip = false;
                 this.chips.forEach((chip) =>{
                     if (serviceCard.service.tags.includes(chip)) {
@@ -113,12 +116,13 @@ export class ExplorePage implements OnInit {
             });
         }
 
-        this.servicesToDisplay = this.searchedList;
+        this.displayServices();
     }
 
-    resetSearch(){
-        this.servicesToDisplay = this.allServices;
-        this.searchForm.get('query').setValue("");
+    displayServices() {
+        this.servicesToDisplay = this.searchedByTitle.filter(service => {
+            return this.searchedByTags.includes(service);
+        })
     }
 
     tagsParser() {
@@ -144,7 +148,6 @@ export class ExplorePage implements OnInit {
     }
 
     clearTags(){
-        this.servicesToDisplay = this.allServices;
         this.chips = [];
     }
 

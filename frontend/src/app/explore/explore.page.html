@@ -31,12 +31,12 @@
             </ion-col>
             <ion-col>
                 <form [formGroup]="searchForm">
-                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" (ionClear)="resetSearch()" placeholder="Search services by term"></ion-searchbar>
+                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" placeholder="Search services by term"></ion-searchbar>
                     <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="resetSearch()" (ionChange)="tagsParser(event)"></ion-searchbar>
                 </form>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="tagsSearch" class="ion-align-items-center">
+        <ion-row class="ion-align-items-center">
             <ion-col>
                 <ion-chip *ngIf="chips.length > 0" color="danger" (click)="clearTags()">Clear Tags</ion-chip>
                 <ion-chip color="primary" *ngFor="let c of chips">
