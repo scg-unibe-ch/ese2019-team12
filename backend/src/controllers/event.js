@@ -59,7 +59,10 @@ router.post('/', async (req, res) => {
   let eventData = req.body;
   eventData.userId = req.user.sub;
 
-  Event.create(eventData).then(() => {
+  Event.create(eventData).then((e) => {
+    if(hasServices(req)) {
+      e.setServices(req.body.services);
+    }
     res.status = 201;
     res.send();
   }).catch(err => {
