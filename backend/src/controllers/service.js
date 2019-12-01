@@ -45,7 +45,7 @@ router.get('/user/:id', async (req, res) => {
     if(!services) {
       res.send([]);
     }
-    
+
     res.send(jsonFromServices(services));
   }).catch((err) => {
     console.log(err);
@@ -90,6 +90,7 @@ router.put('/:id', async (req, res) => {
     return;
   }
   let keys = Object.keys(req.body);
+  console.log(keys);
   keys.forEach((key) => {
     if(toUpdate[key] !== undefined) {
       toUpdate[key] = req.body[key];
@@ -100,7 +101,9 @@ router.put('/:id', async (req, res) => {
       toUpdate.getTags().then((tags) => {
         toUpdate.removeTags(tags);
         toUpdate.setTags(req.body.tags);
-        res.sendStatus(202);
+        toUpdate.save();
+        res.status = 202;
+        res.send();
       }).catch((err) => {
         console.log(err);
         res.sendStatus(500);
@@ -110,7 +113,8 @@ router.put('/:id', async (req, res) => {
       res.sendStatus(500);
     });
   } else {
-    toUpdate.save().then((u) => {
+    console.log(toUpdate);
+    toUpdate.save().then(() => {
       res.sendStatus(202);
     }).catch((err) => {
       console.log(err);
