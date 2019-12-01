@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ServiceTags', {
+    return queryInterface.createTable('services_tags', {
       tagName: {
         allowNull: false,
         type: Sequelize.STRING
@@ -13,6 +13,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('ServiceTags');
+    return queryInterface.dropTable('services_tags');
   }
 };
