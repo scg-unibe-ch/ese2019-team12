@@ -21,17 +21,13 @@
     <ion-grid>
         <ion-row class="ion-align-items-center">
             <ion-col size="auto">
-                <ion-chip color="primary">
-                    <ion-label>Search by</ion-label>
-                    <ion-select (ionChange)="switchSearch()" interface="popover" selectedText=" ">
-                        <ion-select-option value="term" selected>Search term</ion-select-option>
-                        <ion-select-option value="tags">Tags</ion-select-option>
-                    </ion-select>
+                <ion-chip color="primary" (click)="switchSearch()">
+                    <ion-label>Search by: {{ searchType }}</ion-label>
                 </ion-chip>
             </ion-col>
             <ion-col>
                 <form [formGroup]="searchForm">
-                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" placeholder="Search services by term"></ion-searchbar>
+                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" placeholder="Search services by Title"></ion-searchbar>
                     <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="resetSearch()" (ionChange)="tagsParser(event)"></ion-searchbar>
                 </form>
             </ion-col>

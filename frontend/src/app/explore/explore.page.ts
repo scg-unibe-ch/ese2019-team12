@@ -15,7 +15,7 @@ export class ExplorePage implements OnInit {
     services = [
         new Service(1, 1, 'John\'s failing business', 'Catering Service by John himself. All homecooked, but not that well.', 1000, ['yum', 'food']),
         new Service(2, 2, 'Jane\'s trashy food', 'Some pretty darn fine food made by Jane herself. Anyone who says something else on tripadvisor is lying.', 200, ['oldschool', 'dinner', 'food']),
-        new Service(3, 1, 'Jim\'s clean up crew', 'Cleaning for your \"Party\" if you need any \"cleaning\" call Jim.', 300, ['clean', 'murder']),
+        new Service(3, 1, 'Jim\'s clean up crew', 'Cleaning for your \"Party\". If you need any \"cleaning\", call Jim.', 300, ['clean', 'murder']),
         new Service(4, 2, 'Bulletti\'s Bulletten', 'Die besten Bulletten in der Stadt. Kommt und probiert Lucas\' saftige Bulletten.', 5, ['buns','bulletten', 'juicy']),
         new Service(5, 1, 'Yael\'s mad DJ-Set', 'DJ Yael an den Turntables. Beste DJ-Sets direkt hier.', 100, ['party', 'disco', 'mad','sick']),
         new Service(6, 2, 'Lino\'s Club', 'Coolest venue in town. We even have a shoecleaner.', 2000, ['fancy','place to be']),
@@ -36,6 +36,7 @@ export class ExplorePage implements OnInit {
     searchedByTitle = [];
     searchedByTags = [];
     chips = [];
+    searchType: string;
     tagsSearch: boolean;
     isLoggedIn: boolean;
     currentUser: User;
@@ -72,6 +73,7 @@ export class ExplorePage implements OnInit {
         // console.log("all services:");
         // console.log(this.optimizedServices);
 
+        this.searchType = "Title";
         this.tagsSearch = false;
 
         // checking if logged in.
@@ -153,6 +155,7 @@ export class ExplorePage implements OnInit {
 
     switchSearch() {
         this.tagsSearch = !this.tagsSearch;
+        this.searchType = (this.tagsSearch) ? "Tags" : "Title";
     }
 
 }
