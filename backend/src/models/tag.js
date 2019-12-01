@@ -1,12 +1,12 @@
 const tag = (sequelize, DataTypes) => {
-  const Tag = sequelize.define('Tag', {
+  const Tag = sequelize.define('tag', {
     name: {
       type: DataTypes.STRING,
       primaryKey: true
     }
   }, {});
   Tag.associate = models => {
-    Tag.belongsToMany(models.Service, { through:  'ServiceTags' });
+    Tag.belongsToMany(models.Service, { through:  'services_tags' });
   };
   return Tag;
 };

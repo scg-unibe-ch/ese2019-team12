@@ -61,14 +61,15 @@ router.post('/', async (req, res) => {
   let Tag = getTag(req);
 
   var serviceData = req.body;
-  serviceData.UserId = req.user.sub;
+  serviceData.userId = req.user.sub;
   let hasTags = serviceData.tags !== undefined;
 
   // Tags have to be created prior to usage
   await findOrCreateTags(Tag, serviceData.tags);
 
   // Service creation
-  Service.create(serviceData, { include: [ Tag ]}).then(async service => {
+  Service.create(serviceData).then(service => {
+    service.setTags(serviceData.tags);
     res.sendStatus(201);
   }).catch(err => {
     console.log(err);

@@ -4,27 +4,28 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   let Event = getEvent(req);
+  let Service = getService(req);
+  let Tag = getTag(req);
 
-  Event.findAll().then(events => {
-    res.status = 200;
-    if(!events) {
-      res.send([]);
-    }
-    let toSend = [];
-    events.forEach(e => {
-      toSend.push(e.simplified());
-    });
-    res.send(toSend);
+  // Include service model and include the tags but exclude the model which links tags and services
+  Event.findAll({ include: { model: Service, through: { attributes: [] }, 
+                    include: { model: Tag, through: { attributes: [] }}}}).then(events => {
+    res.send(jsonFromEvents(events));
   }).catch(err => {
     console.log(err);
-    return res.sendStatus(500);
+    res.status = 500;
+    res.send();
   });
 });
 
 router.get('/:id', async (req, res) => {
   let Event = getEvent(req);
+  let Service = getService(req);
+  let Tag = getTag(req);
 
-  Event.findByPk(req.params.id).then(e => {
+  Event.findByPk(req.params.id, { 
+    include: { model: Service, through: { attributes: [] }, 
+        include: { model: Tag, through: { attributes: [] }}}}).then(e => {
     if(!e) {
       error404(res);
       return;
@@ -33,17 +34,20 @@ router.get('/:id', async (req, res) => {
     res.send(e.simplified());
   }).catch(err => {
     console.log(err);
-    res.sendStatus(500);
+    res.status = 500;
+    res.send();
   });
 });
 
 router.get('/user/:id', async (req, res) => {
   let Event = getEvent(req);
-  Event.findAll({ where: { userId: req.params.id } }).then(events => {
-    if(!events) {
-      res.send([]);
-    }
-    res.send(events);
+  let Service = getService(req);
+  let Tag = getTag(req);
+
+  Event.findAll({ where: { userId: req.params.id }, 
+    include: { model: Service, through: { attributes: [] }, 
+        include: { model: Tag, through: { attributes: [] }}}}).then(events => {
+    res.send(jsonFromEvents(events));
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
@@ -55,8 +59,9 @@ router.post('/', async (req, res) => {
   let eventData = req.body;
   eventData.userId = req.user.sub;
 
-  Event.create(req.body).then(() => {
-    res.sendStatus(201);
+  Event.create(eventData).then(() => {
+    res.status = 201;
+    res.send();
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);
@@ -76,8 +81,11 @@ router.put('/:id', async (req, res) => {
         e[key] = req.body[key];
       }
     });
+    if(hasServices(req)) {
+      e.setServices(req.body.services);
+    }
     e.save().then(() => {
-      res.sendStatus(202);
+      res.send();
     }).catch(err => {
       console.log(err);
       res.sendStatus(500);
@@ -101,6 +109,25 @@ router.delete('/:id', async (req, res) => {
 
 function getEvent(req) {
   return req.context.models.Event;
+}
+function getService(req) {
+  return req.context.models.Service;
+}
+function getTag(req) {
+  return req.context.models.Tag;
+}
+function hasServices(req) {
+  return req.body.services !== undefined;
+}
+function jsonFromEvents(events) {
+  if (!events) {
+    return [];
+  }
+  let result= [];
+  for (let event of events) {
+    result.push(event.simplified());
+  }
+  return result;
 }
 function error404(res){
   res.statusCode = 404;
