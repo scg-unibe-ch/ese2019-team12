@@ -14,10 +14,11 @@ The Server's replies are always of the format JSON as specified in the index fil
 
 ### Endpoints
 The following endpoints are available:
+
 | Controller | Endpoint | Method | Info | Requires Token |
-| ---------- | -------- | ------ | ---- |
+| ---------- | -------- | ------ | ---- | -------------- |
 | `/session` | `/login` | POST   | Send login (username or email address) and receive token and user. | No |
-| `/users` | `/` | GET |Load all users|Yes|
+| `/users` | `/` | GET | Load all users | Yes|
 ||`/:id`|GET|Load specific user|Yes|
 ||`/`|POST|Create new user|No|
 ||`/:id`|PUT|Update user|Yes|
