@@ -8,6 +8,7 @@
 // role:      string
 // password:  string | Treated as function by sequelize,
 // salt:      string | to prevent those values from showing up in findAll requests etc.
+// image:     string | filename of the profile picture
 
 import { generateSalt, encryptPassword, checkPassword } from '../helpers/crypt.helper';
 
@@ -37,6 +38,7 @@ const user = (sequelize, DataTypes) => {
         return () => this.getDataValue('salt')
       }
     },
+    image: DataTypes.STRING,
   }, {});
   User.associate = models => {
     User.hasMany(models.Service, { onDelete: 'CASCADE' });

@@ -33,6 +33,9 @@ module.exports = {
       salt: {
         type: Sequelize.STRING
       },
+      image: {
+        type: Sequelize.STRING
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

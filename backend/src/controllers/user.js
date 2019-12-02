@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Sequelize } from 'sequelize';
+import { upload } from '../helpers/upload.helper';
 
 const Op = Sequelize.Op;
 
@@ -47,6 +48,28 @@ router.post('/', async (req, res) => {
   }).catch( err => {
     console.log(err);
     res.sendStatus(500);
+  });
+});
+
+router.get('/:id/image', async (req, res) => {
+  let User = getUser(req);
+  var options = {
+    root: path.join(__dirname, '../uploads'),
+    dotfiles: 'deny',
+  }
+  User.findByPk(req.params.id).then(user => {
+    res.sendFile(user.image);
+  }).catch(err => {
+    console.log(err);
+    res.status = 500;
+    res.send();
+  });
+});
+
+router.post('/:id/image', upload.single('profile'), async (req, res) => {
+  let User = getUser(req);
+  User.findByPk(req.params.id).then((user) => {
+    user.setImage(req.file.filename);
   });
 });
 
