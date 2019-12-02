@@ -27,7 +27,7 @@ const service = (sequelize, DataTypes) => {
       title: this.title,
       description: this.description,
       price: this.price,
-      userId: this.UserId,
+      userId: this.userId,
       tags
     }
   }

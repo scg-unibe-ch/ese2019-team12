@@ -65,6 +65,7 @@ export class ExplorePage implements OnInit {
         this.serviceService.getServices().subscribe(
             (data) => {
                 this.services = data;
+                console.log(data);
                 this.services.forEach(service => {
                     this.userService.getUser(service.userId).subscribe(data => {
                         this.optimizedServices.push({ username: data.username, service: service });

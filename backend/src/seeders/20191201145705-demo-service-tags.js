@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('ServiceTags', [
+    return queryInterface.bulkInsert('services_tags', [
         {
             tagName: "food",
             serviceId: 1

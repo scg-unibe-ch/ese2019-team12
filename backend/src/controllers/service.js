@@ -10,10 +10,10 @@ router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
   Service.findAll({ include: { model: Tag } }).then((services) => {
-    res.statusCode = 200;
     if(!services) {
       res.send([]);
     }
+    res.statusCode = 200;
     res.send(jsonFromServices(services));
   }).catch((err) => {
     console.log(err)
