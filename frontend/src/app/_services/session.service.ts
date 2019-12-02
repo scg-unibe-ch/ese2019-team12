@@ -14,12 +14,14 @@ export class SessionService {
   currentRole: EventEmitter<any> = new EventEmitter();
   currentUser: User;
 
+  apiUrl = 'http://localhost:3000';
+
   constructor(
     private httpClient: HttpClient
   ) {}
 
   login(login: string, password: string) {
-    return this.httpClient.post<any>(`http://localhost:3000/session/login`, {
+    return this.httpClient.post<any>(this.apiUrl + `/session/login`, {
         "login": login,
         "password": password
       }).pipe(tap((res) => this.setSession(res)));

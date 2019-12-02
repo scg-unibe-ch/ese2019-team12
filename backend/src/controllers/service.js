@@ -42,11 +42,14 @@ router.get('/user/:id', async (req, res) => {
 
   const services = await Service.findAll({
     where: {
-      UserId: req.params.id
+      userId: req.params.id
     },
-    include: { model: Tag }}).then((services) => {
+    include: {
+      model: Tag
+    }
+  }).then((services) => {
     if(!services) {
-      res.send([]);
+      res.send();
     }
 
     res.send(jsonFromServices(services));
@@ -70,7 +73,8 @@ router.post('/', async (req, res) => {
   // Service creation
   Service.create(serviceData).then(service => {
     service.setTags(serviceData.tags);
-    res.sendStatus(201);
+    res.statusCode = 201;
+    res.send(service);
   }).catch(err => {
     console.log(err);
     res.sendStatus(500);

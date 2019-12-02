@@ -57,7 +57,9 @@ export class ServiceCreatorPage implements OnInit {
 
         this.serviceService.create(this.service).subscribe(
             (data: Service) => {
+                console.log("created service:");
                 console.log(data);
+                this.router.navigate(['/profile/me']);
             },
             (err: any) => {
                 console.log('error message: ' + err.message);
