@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
   Service.findAll({ include: { model: Tag } }).then((services) => {
-    res.status = 200;
+    res.statusCode = 200;
     if(!services) {
       res.send([]);
     }
@@ -132,7 +132,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 async function findOrCreateTags(model, tags){
-  if(!tags || tags === undefined) { 
+  if(!tags || tags === undefined) {
     return;
   }
   for (const tag of tags) {
