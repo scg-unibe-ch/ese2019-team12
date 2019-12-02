@@ -1,27 +1,22 @@
 <ion-header>
-
+    <ion-toolbar>
+        <ion-title>
+            Explore
+        </ion-title>
+        <ion-buttons slot="end">
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-avatar>
+                    <img src="../../assets/defaultAvatar.png">
+                </ion-avatar>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
     <ion-toolbar>
         <ion-grid>
-            <ion-row class="ion-align-items-center ion-justify-content-between">
-                <ion-col size="auto">
-                    <ion-title>
-                        Explore
-                    </ion-title>
-                </ion-col>
-                <ion-col size="auto">
-                    <ion-buttons>
-                        <ion-chip outline routerLink="/profile/me" *ngIf="isLoggedIn">
-                            <ion-avatar>
-                                <img src="../../assets/defaultAvatar.png">
-                            </ion-avatar>
-                            <ion-label>
-                                {{ currentUser.username }}
-                            </ion-label>
-                        </ion-chip>
-                        <ion-menu-button></ion-menu-button>
-                    </ion-buttons>
-                </ion-col>
-            </ion-row>
             <ion-row class="ion-align-items-center">
                 <ion-col size="auto">
                     <ion-chip color="primary" (click)="switchSearch()">
