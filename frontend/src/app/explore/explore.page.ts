@@ -17,6 +17,7 @@ export class ExplorePage implements OnInit {
     optimizedServices = [];
     servicesToDisplay = [];
     searchForm: FormGroup;
+    searchTerm: string;
     searchedByTitle = [];
     searchedByTags = [];
     chips = [];
@@ -38,6 +39,8 @@ export class ExplorePage implements OnInit {
             query: new FormControl(''),
             tags: new FormControl('')
         })
+
+        this.searchTerm = this.searchForm.get('query').value;
 
         // wrapping service into an object which 'adds' the username field
         // to optimize backend calls.
@@ -76,12 +79,12 @@ export class ExplorePage implements OnInit {
     filterByTitle (){
         console.log("filtering by title");
 
-        const searchTerm = this.searchForm.get('query').value;
-        if (searchTerm === "") {
+        this.searchTerm = this.searchForm.get('query').value;
+        if (this.searchTerm === "") {
             this.searchedByTitle = this.optimizedServices;
         } else {
             this.searchedByTitle = this.optimizedServices.filter(serviceCard => {
-                return (serviceCard.service.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+                return (serviceCard.service.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1);
             });
         }
 
@@ -126,19 +129,25 @@ export class ExplorePage implements OnInit {
     createChip(chipToAdd) {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
+            this.filterByTags();
         }
-        this.filterByTags()
     }
 
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
             return chip != chipToDelete;
+            this.filterByTags();
         })
-        this.filterByTags();
     }
 
     clearTags(){
         this.chips = [];
+        this.filterByTags();
+    }
+
+    clearSearch() {
+        this.searchForm.get('query').setValue("");
+        this.filterByTitle();
     }
 
     switchSearch() {

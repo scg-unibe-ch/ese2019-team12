@@ -27,8 +27,8 @@
             </ion-col>
             <ion-col>
                 <form [formGroup]="searchForm">
-                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" placeholder="Search services by Title"></ion-searchbar>
-                    <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="resetSearch()" (ionChange)="tagsParser(event)"></ion-searchbar>
+                    <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" (ionClear)="clearSearch" placeholder="Search services by Title"></ion-searchbar>
+                    <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="clearTags()" (ionChange)="tagsParser(event)"></ion-searchbar>
                 </form>
             </ion-col>
         </ion-row>
@@ -41,9 +41,15 @@
                 </ion-chip>
             </ion-col>
         </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col>
+                <ion-chip *ngIf="searchTerm" color="primary">
+                    <ion-label>Searching by: {{ searchTerm }}</ion-label>
+                    <ion-icon name="close-circle" (click)="clearSearch()"></ion-icon>
+                </ion-chip>
+            </ion-col>
+        </ion-row>
     </ion-grid>
-
-
     <ion-grid>
         <ion-row class="ion-justify-content-center">
             <div *ngFor="let service of servicesToDisplay">
@@ -56,5 +62,4 @@
             </div>
         </ion-row>
     </ion-grid>
-
 </ion-content>
