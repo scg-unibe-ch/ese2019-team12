@@ -14,9 +14,27 @@ The Server's replies are always of the format JSON as specified in the index fil
 
 ### Endpoints
 The following endpoints are available:
-* `/session`
-* `/users`
-* `/services`
+| Controller | Endpoint | Method | Info | Requires Token |
+| ---------- | -------- | ------ | ---- |
+| `/session` | `/login` | POST   | Send login (username or email address) and receive token and user. | No |
+| `/users` | `/` | GET |Load all users|Yes|
+||`/:id`|GET|Load specific user|Yes|
+||`/`|POST|Create new user|No|
+||`/:id`|PUT|Update user|Yes|
+||`/:id`|DELETE|Remove user|Yes|
+||`/search`|GET|Search users. Accepts queries of the form `{"username": "xyz"}` or `{"email": "xyz"}`|No|
+|`/services`|`/`|GET|Load all services|No|
+||`/:id`|GET|Load specific service|No|
+||`/user/:id`|GET|Load all services by a specific user|No|
+||`/:id`|PUT|Update a service|Yes|
+||`/:id`|DELETE| Remove a service|Yes|
+|`/events`|`/`|GET|Load all events|Yes|
+||`/:id`|GET|Load specific event|Yes|
+||`/user/:id`|GET|Load all events by a specific user|Yes|
+||`/`|POST|Create an event|Yes|
+||`/:id`|PUT|Update an event|Yes|
+||`/:id`|DELETE|Remove an event|Yes|
+
 
 ## The Database
 This server uses an sqlite3 database. It is stored in the file `db.sqlite`
