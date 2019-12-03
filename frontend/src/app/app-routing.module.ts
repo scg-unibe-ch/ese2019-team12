@@ -5,6 +5,7 @@ import { RoleGuard } from './auth/role.guard';
 import { ProfilePageModule } from './profile/profile.module';
 import { ServicePageModule } from './service/service.module';
 import { EventPageModule } from './event/event.module';
+import { EventCreatorPageModule } from './event-creator/event-creator.module';
 
 const routes: Routes = [
     {
@@ -38,16 +39,16 @@ const routes: Routes = [
         path: 'service-creator',
         loadChildren: () => import('./service-creator/service-creator.module').then(m => m.ServiceCreatorPageModule),
         canActivate: [AuthGuard],
-    },
-    {
-        path: 'event-creator',
-        loadChildren: () => import('./event-creator/event-creator.module').then(m => m.EventCreatorPageModule),
-        canActivate: [AuthGuard],
     }
+    // {
+    //     path: 'event-creator',
+    //     loadChildren: () => import('./event-creator/event-creator.module').then(m => m.EventCreatorPageModule),
+    //     canActivate: [AuthGuard],
+    // }
 ];
 @NgModule({
     declarations: [],
-    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }), ProfilePageModule, ServicePageModule, EventPageModule],
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }), ProfilePageModule, ServicePageModule, EventPageModule, EventCreatorPageModule],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,18 +1,26 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
 import { IonicModule } from '@ionic/angular';
 
 import { EventCreatorPage } from './event-creator.page';
+import { EventCreatorResolver } from '../_services/event-creator-resolver.service';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: EventCreatorPage
-  }
-];
+const eventCreatorRouting: ModuleWithProviders = RouterModule.forChild([
+    {
+        path: '',
+        component: EventCreatorPage
+    },
+    {
+        path: 'event-creator/:id',
+        component: EventCreatorPage,
+        resolve: {
+            event: EventCreatorResolver
+        }
+        // add AuthGuard if it works
+    }
+]);
 
 @NgModule({
   imports: [
@@ -20,8 +28,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    eventCreatorRouting
   ],
-  declarations: [EventCreatorPage]
+  declarations: [EventCreatorPage],
+  providers: [EventCreatorResolver]
 })
 export class EventCreatorPageModule {}

@@ -40,8 +40,8 @@
                             Delete
                             <ion-icon name="trash" class="ion-padding"></ion-icon>
                         </ion-button>
-                        <ion-button *ngIf="!isMyService" size="default" expand="block" color="light">
-                            Add to Event
+                        <ion-button *ngIf="!isMyService" size="default" expand="block" color="light" routerLink="/event-creator/{{ service.id }}">
+                            Add to new Event
                             <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
                         </ion-button>
                     </ion-card-content>

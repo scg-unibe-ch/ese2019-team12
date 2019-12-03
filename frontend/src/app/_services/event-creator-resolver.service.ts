@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { UserService } from './user.service';
-import { SessionService } from './session.service';
 import { ServiceService } from './service.service';
-
 import { Service } from '../_models/service';
 
 @Injectable()
-export class ServiceResolver implements Resolve<Service> {
+export class EventCreatorResolver implements Resolve<Service> {
     constructor(
         private serviceService: ServiceService,
         private router: Router
@@ -19,6 +16,8 @@ export class ServiceResolver implements Resolve<Service> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<Service> {
+        console.log("params");
+        console.log(route.params['id']);
         return this.serviceService.getService(route.params['id']);
     }
 }
