@@ -24,23 +24,23 @@ export class EventService {
 
     create(event: Event): Observable<Event> {
         return this.httpClient.post<Event>(this.apiUrl + '/events/', {
-            // id: service.id,
-            // userId: service.userId,
-            // title: service.title,
-            // description: service.description,
-            // price: service.price,
-            // tags: service.tags
+            id: event.id,
+            userId: event.userId,
+            name: event.name,
+            description: event.description,
+            date: event.date,
+            services: event.services
         });
     }
 
     update(event: Event): Observable<any> {
         return this.httpClient.put(this.apiUrl + '/events/' + event.id, {
-            // id: service.id,
-            // userId: service.userId,
-            // title: service.title,
-            // description: service.description,
-            // price: service.price,
-            // tags: service.tags
+            id: event.id,
+            userId: event.userId,
+            name: event.name,
+            description: event.description,
+            date: event.date,
+            services: event.services
         });
     }
 

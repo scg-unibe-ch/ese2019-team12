@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { EventService } from '../_services/event.service';
 import { SessionService } from '../_services/session.service';
 import { UserService } from '../_services/user.service';
 import { Event } from '../_models/event';
@@ -15,15 +17,17 @@ export class EventPage implements OnInit {
 
   isLoggedIn: boolean;
   isEditing: boolean;
+  editForm: FormGroup;
   currentUser: User;
-  event: Event;
+  event: Event = new Event(null, null, '', '', '', []);
   services = [];
 
   constructor(
       private route: ActivatedRoute,
       private router: Router,
       private sessionService: SessionService,
-      private userService: UserService
+      private userService: UserService,
+      private eventService: EventService
   ) {}
 
   ngOnInit() {
@@ -39,6 +43,13 @@ export class EventPage implements OnInit {
           (data: {event: Event}) => {
               this.event = data.event;
               console.log(this.event);
+
+              this.editForm = new FormGroup({
+                  name: new FormControl(this.event.name, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9 ]*')]),
+                  description: new FormControl(this.event.description, [Validators.required, Validators.maxLength(200), Validators.pattern('[A-zÄ-ü0-9 ]*')]),
+                  date: new FormControl(this.event.date, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9 ]*')])
+              });
+
               this.event.services.forEach(service => {
                   this.userService.getUser(service.userId).subscribe(data => {
                       this.services.push({
@@ -50,7 +61,24 @@ export class EventPage implements OnInit {
           }
       )
   }
-  
+
+  editEvent() {
+      this.isEditing = !this.isEditing;
+  }
+
+  saveEvent(event) {
+      this.event.name = this.editForm.get('name').value;
+      this.event.description = this.editForm.get('description').value;
+      this.event.date = this.editForm.get('date').value;
+
+      this.eventService.update(this.event).subscribe(
+          data => {
+              console.log(data);
+          }
+      )
+      this.isEditing = !this.isEditing;
+  }
+
   ionViewDidLeave() {
       this.services = [];
   }

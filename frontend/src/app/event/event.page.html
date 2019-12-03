@@ -21,10 +21,33 @@
     <ion-grid>
         <ion-row class="ion-justify-content-center">
             <ion-col size="5">
-                <ion-card *ngIf="!isEditing">
-                    <ion-card-header>
+                <ion-card>
+                    <ion-card-header  *ngIf="!isEditing">
                         <ion-card-title>{{ event.name }} on {{ event.date }}</ion-card-title>
                         <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
+                        <ion-button (click)="editEvent()">
+                            Edit Event
+                            <ion-icon name="create"></ion-icon>
+                        </ion-button>
+                    </ion-card-header>
+                    <ion-card-header  *ngIf="isEditing">
+                        <form (ngSubmit)="saveEvent(event)" novalidate [formGroup]="editForm">
+                            <ion-item>
+                                <ion-label color="primary">Name</ion-label>
+                                <ion-input name="name" formControlName="name" type="text" inputmode="text"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Description</ion-label>
+                                <ion-textarea name="description" formControlName="description" type="text" inputmode="text" rows="2" maxlength="200"></ion-textarea>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Date</ion-label>
+                                <ion-input name="date" formControlName="date" type="text" inputmode="text"></ion-input>
+                            </ion-item>
+                            <ion-button type="submit" [disabled]="editForm.invalid">
+                                Save Event
+                            </ion-button>
+                        </form>
                     </ion-card-header>
                     <ion-card-content >
                         <ion-card *ngFor="let serviceCard of services">
@@ -40,39 +63,6 @@
                                 </ion-chip>
                             </ion-card-content>
                         </ion-card>
-                    </ion-card-content>
-                </ion-card>
-                <ion-card *ngIf="isEditing">
-                    <ion-card-header>
-                        <ion-card-title>Edit Event</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <!-- <form (ngSubmit)="saveService(event)" novalidate [formGroup]="editForm">
-                            <ion-item>
-                                <ion-label color="primary">Title</ion-label>
-                                <ion-input name="title" formControlName="title" type="text" inputmode="text"></ion-input>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label color="primary">Description</ion-label>
-                                <ion-textarea name="description" formControlName="description" type="text" inputmode="text" rows="2" maxlength="200"></ion-textarea>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label color="primary">Tags</ion-label>
-                                <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label color="primary">Marked tags:</ion-label>
-                                <ion-chip outline color="primary" *ngFor="let c of serviceTags">
-                                    <ion-label>{{c}}</ion-label>
-                                    <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
-                                </ion-chip>
-                            </ion-item>
-                            <ion-item>
-                                <ion-label color="primary">Price</ion-label>
-                                <ion-input expand="block" type="number" required formControlName="price" placeholder="Enter the price of your service"></ion-input>
-                            </ion-item>
-                            <ion-button type="submit" expand="block" class="submitButton" [disabled]="editForm.invalid">Save</ion-button>
-                        </form> -->
                     </ion-card-content>
                 </ion-card>
             </ion-col>

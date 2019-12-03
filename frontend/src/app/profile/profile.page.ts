@@ -44,6 +44,8 @@ export class ProfilePage implements OnInit {
         this.route.data.subscribe(
             (data: {profile: User}) => {
                 this.profile = data.profile;
+                console.log(this.profile);
+
                 // if its you, its true :)
                 this.isMe = (this.isLoggedIn) ? (this.profile.id === this.currentUser.id) : false;
 
@@ -76,6 +78,7 @@ export class ProfilePage implements OnInit {
         this.eventService.getEventsOfUser(this.profile.id).subscribe(
             (data) => {
                 this.events = data;
+                console.log(this.events);
             }
         )
     }
