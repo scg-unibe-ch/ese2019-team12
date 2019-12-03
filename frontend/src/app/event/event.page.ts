@@ -70,13 +70,24 @@ export class EventPage implements OnInit {
       this.event.name = this.editForm.get('name').value;
       this.event.description = this.editForm.get('description').value;
       this.event.date = this.editForm.get('date').value;
+      this.event.services = this.services.map(serviceCard => {
+          return serviceCard.service;
+      })
 
-      this.eventService.update(this.event).subscribe(
-          data => {
-              console.log(data);
-          }
-      )
+      console.log(this.event);
+
+      // this.eventService.update(this.event).subscribe(
+      //     data => {
+      //         console.log(data);
+      //     }
+      // )
       this.isEditing = !this.isEditing;
+  }
+
+  removeService(serviceToRemove) {
+      this.services = this.services.filter(service => {
+          return (service != serviceToRemove);
+      })
   }
 
   ionViewDidLeave() {
