@@ -5,8 +5,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { SessionService } from '../_services/session.service';
 import { UserService } from '../_services/user.service';
 import { ServiceService } from '../_services/service.service';
+import { EventService } from '../_services/event.service';
 import { User } from '../_models/user';
 import { Service } from '../_models/service';
+import { Event } from '../_models/event';
 
 @Component({
   selector: 'app-profile',
@@ -22,13 +24,15 @@ export class ProfilePage implements OnInit {
     isEditing: boolean;
     editForm: FormGroup;
     services: Service[] = [];
+    events: Event[] = [];
 
     constructor(
       private route: ActivatedRoute,
       private router: Router,
       private sessionService: SessionService,
       private userService: UserService,
-      private serviceService: ServiceService
+      private serviceService: ServiceService,
+      private eventService: EventService
     ) {}
 
     ngOnInit() {
@@ -50,6 +54,7 @@ export class ProfilePage implements OnInit {
                 });
 
                 this.getServicesOfUser();
+                this.getEventsOfUser();
             },
             (err) => {
                 this.router.navigate(['/explore']);
@@ -64,6 +69,15 @@ export class ProfilePage implements OnInit {
                 console.log(this.services);
             }
         );
+    }
+
+    getEventsOfUser() {
+        this.eventService.getEventsOfUser(this.profile.id).subscribe(
+            (data) => {
+                this.events = data;
+                console.log(this.events);
+            }
+        )
     }
 
     editProfilePage() {

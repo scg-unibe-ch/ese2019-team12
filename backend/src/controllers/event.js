@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   let Tag = getTag(req);
 
   // Include service model and include the tags but exclude the model which links tags and services
-  Event.findAll({ include: { model: Service, through: { attributes: [] }, 
+  Event.findAll({ include: { model: Service, through: { attributes: [] },
                     include: { model: Tag, through: { attributes: [] }}}}).then(events => {
     res.send(jsonFromEvents(events));
   }).catch(err => {
@@ -23,8 +23,8 @@ router.get('/:id', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
 
-  Event.findByPk(req.params.id, { 
-    include: { model: Service, through: { attributes: [] }, 
+  Event.findByPk(req.params.id, {
+    include: { model: Service, through: { attributes: [] },
         include: { model: Tag, through: { attributes: [] }}}}).then(e => {
     if(!e) {
       error404(res);
@@ -44,9 +44,25 @@ router.get('/user/:id', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
 
-  Event.findAll({ where: { userId: req.params.id }, 
-    include: { model: Service, through: { attributes: [] }, 
-        include: { model: Tag, through: { attributes: [] }}}}).then(events => {
+  Event.findAll(
+      {
+          where: {
+              userId: req.params.id
+          },
+          include: {
+              model: Service,
+              through: {
+                    attributes: []
+              },
+              include: {
+                    model: Tag,
+                    through: {
+                        attributes: []
+                    }
+                }
+            }
+      }).then(events => {
+    console.log(events);
     res.send(jsonFromEvents(events));
   }).catch(err => {
     console.log(err);

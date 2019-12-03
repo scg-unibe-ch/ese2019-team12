@@ -119,50 +119,12 @@
                         </ion-card-header>
                     </ion-card>
                 </ion-col>
-                <ion-col size="auto">
+                <ion-col size="auto" *ngFor="let event of events">
                     <ion-card class="custom-ion-card">
-                        <ion-card-header>Event 1</ion-card-header>
+                        <ion-card-header routerLink="/events/{{ event.id }}">{{ event.name }}</ion-card-header>
                         <ion-card-content>
-                            <ion-card>
-                                <ion-card-header>Service 1</ion-card-header>
-                            </ion-card>
-                            <ion-card>
-                                <ion-card-header>Service 2</ion-card-header>
-                            </ion-card>
-                            <ion-card>
-                                <ion-card-header>Service 3</ion-card-header>
-                            </ion-card>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-                <ion-col size="auto">
-                    <ion-card class="custom-ion-card">
-                        <ion-card-header>Event 2</ion-card-header>
-                        <ion-card-content>
-                            <ion-card>
-                                <ion-card-header>Service 1</ion-card-header>
-                            </ion-card>
-                            <ion-card>
-                                <ion-card-header>Service 2</ion-card-header>
-                            </ion-card>
-                            <ion-card>
-                                <ion-card-header>Service 3</ion-card-header>
-                            </ion-card>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-                <ion-col size="auto">
-                    <ion-card class="custom-ion-card">
-                        <ion-card-header>Event 3</ion-card-header>
-                        <ion-card-content>
-                            <ion-card>
-                                <ion-card-header>Service 1</ion-card-header>
-                            </ion-card>
-                            <ion-card>
-                                <ion-card-header>Service 2</ion-card-header>
-                            </ion-card>
-                            <ion-card>
-                                <ion-card-header>Service 3</ion-card-header>
+                            <ion-card *ngFor="let service of event.services">
+                                <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
                             </ion-card>
                         </ion-card-content>
                     </ion-card>
