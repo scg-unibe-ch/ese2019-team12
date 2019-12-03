@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import { Sequelize } from 'sequelize';
 import { upload } from '../helpers/upload.helper';
+import  'dotenv/config';
+
+var path = require('path');
 
 const Op = Sequelize.Op;
 
@@ -53,12 +56,13 @@ router.post('/', async (req, res) => {
 
 router.get('/:id/image', async (req, res) => {
   let User = getUser(req);
+  const image_root = path.join(__dirname, process.env.IMAGE_DIR);
   var options = {
-    root: path.join(__dirname, '../uploads'),
+    root: image_root,
     dotfiles: 'deny',
   }
   User.findByPk(req.params.id).then(user => {
-    res.sendFile(user.image);
+    res.sendFile(user.image, options);
   }).catch(err => {
     console.log(err);
     res.status = 500;
@@ -69,7 +73,18 @@ router.get('/:id/image', async (req, res) => {
 router.post('/:id/image', upload.single('profile'), async (req, res) => {
   let User = getUser(req);
   User.findByPk(req.params.id).then((user) => {
-    user.setImage(req.file.filename);
+    user.image = req.file.filename;
+    user.save().then(() => {
+      res.send();
+    }).catch(err => {
+      console.log('Couldn\' save new image: ', err);
+      res.status = 500;
+      res.send();
+    });
+  }).catch(err => {
+    console.log(err);
+    res.status = 500;
+    res.send();
   });
 });
 
