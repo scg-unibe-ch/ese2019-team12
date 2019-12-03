@@ -97,4 +97,8 @@ App: Generally good design, though some improvements are necessary (see above). 
 
 ## Interpretation of Results
 
-to be determined
+We discussed the feedback from the assistants and decided to implement the following/improve our code in the following way:
+
+- We implemented support for "special" Latin characters (such as "é", "è", "ä", "ü", etc.) in first names and last names 
+- We improved the tag search and clarified the design. It now features only one search bar where you can specify whether you want to search for tags or for names. You can also stack searches thereby simultaneously search for tags and names
+- We now allow usernames to have numbers, underscores and dashes
