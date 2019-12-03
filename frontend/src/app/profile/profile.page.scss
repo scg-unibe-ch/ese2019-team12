@@ -1,9 +1,17 @@
-.useravatar{
-  height: 200px;
-  width: 200px;
-  border-radius: 8;
+.useravatar {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
 }
-.Bookservice{
-  align-self: center;
-  width: 20%;
+
+.horizontalScroll {
+    overflow-x: auto;
+}
+
+.custom-ion-card-subtitle {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+.custom-ion-card {
+     width: 300px !important;
 }
