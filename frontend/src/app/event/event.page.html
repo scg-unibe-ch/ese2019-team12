@@ -37,6 +37,10 @@
                                 <ion-button type="submit" [disabled]="editForm.invalid">
                                     Save Event
                                 </ion-button>
+                                <ion-button (click)="deleteEvent()" color="danger">
+                                    Delete Event
+                                    <ion-icon name="trash" class="ion-padding"></ion-icon>
+                                </ion-button>
                             </ion-title>
                             <ion-item>
                                 <ion-label color="primary">Name</ion-label>

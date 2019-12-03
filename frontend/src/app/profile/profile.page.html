@@ -110,10 +110,10 @@
         <div class="horizontalScroll">
             <ion-row nowrap class="ion-justify-content-start">
                 <ion-col size="auto">
-                    <ion-card class="custom-ion-card">
+                    <ion-card routerLink="/event-creator" class="custom-ion-card">
                         <ion-card-header color="primary">
                             <p class="ion-text-center">
-                                Add an event<br>
+                                Add an Event<br>
                                 <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
                             </p>
                         </ion-card-header>
@@ -121,7 +121,10 @@
                 </ion-col>
                 <ion-col size="auto" *ngFor="let event of events">
                     <ion-card class="custom-ion-card">
-                        <ion-card-header routerLink="/event/{{ event.id }}">{{ event.name }}</ion-card-header>
+                        <ion-card-header routerLink="/event/{{ event.id }}">
+                            <ion-card-title>{{ event.name }}</ion-card-title>
+                            <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
+                        </ion-card-header>
                         <ion-card-content>
                             <ion-card *ngFor="let service of event.services">
                                 <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>

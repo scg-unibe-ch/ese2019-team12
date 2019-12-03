@@ -66,6 +66,13 @@ export class EventPage implements OnInit {
       this.isEditing = !this.isEditing;
   }
 
+  deleteEvent() {
+      this.eventService.delete(this.event.id).subscribe(() => {
+              this.router.navigate(['/profile/me']);
+          }
+      )
+  }
+
   saveEvent(event) {
       this.event.name = this.editForm.get('name').value;
       this.event.description = this.editForm.get('description').value;

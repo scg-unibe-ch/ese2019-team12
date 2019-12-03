@@ -16,15 +16,9 @@ export class ServiceCreatorPage implements OnInit {
 
     isLoggedIn: boolean;
     currentUser: User;
+    serviceForm: FormGroup;
     service = new Service(null, null, '', '', null, []);
     chips = [];
-
-    serviceForm = new FormGroup({
-        title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-        description: new FormControl('', [Validators.required]),
-        price: new FormControl('', [Validators.required]),
-        tagInput: new FormControl(''),
-    });
 
     constructor(
         private sessionService: SessionService,
@@ -37,6 +31,13 @@ export class ServiceCreatorPage implements OnInit {
         if (this.isLoggedIn) {
             this.currentUser = this.sessionService.getCurrentUser();
         }
+
+        this.serviceForm = new FormGroup({
+            title: new FormControl('', [Validators.required, Validators.minLength(1)]),
+            description: new FormControl('', [Validators.required]),
+            price: new FormControl('', [Validators.required]),
+            tagInput: new FormControl(''),
+        });
     }
 
     tagsParser() {

@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-chip outline routerLink="/profile/me" *ngIf="isLoggedIn">
+                <ion-avatar>
+                    <img src="../../assets/defaultAvatar.png">
+                </ion-avatar>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Create an Event
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                <form (ngSubmit)="createEvent(event)" novalidate [formGroup]="eventForm">
+                    <div class="ion-text-center">
+                        <h3>Create an Event</h3>
+                    </div>
+                    <ion-item>
+                        <ion-label color="primary">Name</ion-label>
+                        <ion-input expand="block" type="text" required formControlName="name" placeholder="Enter the name of your Event"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Description</ion-label>
+                        <ion-textarea type="text" required  formControlName="description" placeholder="Describe your Event in a few words" rows="4" maxlength="200"></ion-textarea>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Date</ion-label>
+                        <ion-input expand="block" type="text" required formControlName="date" placeholder="Pick a date for your Event"></ion-input>
+                    </ion-item>
+                    <ion-button type="submit" [disabled]="eventForm.invalid" expand="block">Create Event</ion-button>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

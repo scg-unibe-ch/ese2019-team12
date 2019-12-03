@@ -39,6 +39,11 @@ const routes: Routes = [
         loadChildren: () => import('./service-creator/service-creator.module').then(m => m.ServiceCreatorPageModule),
         canActivate: [AuthGuard],
     },
+    {
+        path: 'event-creator',
+        loadChildren: () => import('./event-creator/event-creator.module').then(m => m.EventCreatorPageModule),
+        canActivate: [AuthGuard],
+    }
 ];
 @NgModule({
     declarations: [],
