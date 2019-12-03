@@ -54,7 +54,9 @@ export class ProfilePage implements OnInit {
                 });
 
                 this.getServicesOfUser();
-                this.getEventsOfUser();
+                if (this.isMe) {
+                    this.getEventsOfUser();
+                }
             },
             (err) => {
                 this.router.navigate(['/explore']);
@@ -66,7 +68,6 @@ export class ProfilePage implements OnInit {
         this.serviceService.getServicesOfUser(this.profile.id).subscribe(
             (data) => {
                 this.services = data;
-                console.log(this.services);
             }
         );
     }
@@ -75,7 +76,6 @@ export class ProfilePage implements OnInit {
         this.eventService.getEventsOfUser(this.profile.id).subscribe(
             (data) => {
                 this.events = data;
-                console.log(this.events);
             }
         )
     }
