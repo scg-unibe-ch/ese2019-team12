@@ -42,14 +42,16 @@ export class ExplorePage implements OnInit {
 
         this.searchTerm = this.searchForm.get('query').value;
 
-        // wrapping service into an object which 'adds' the username field
-        // to optimize backend calls.
-        // optimizedServices.username now holds the username of the service-provider.
-        // optimizedServices.service holds the service.
+        // getting all services from backend (not suitable for the future)
         this.serviceService.getServices().subscribe(
             (data) => {
                 this.services = data;
                 console.log(data);
+
+                // wrapping service into an object which 'adds' the username field
+                // to optimize backend calls.
+                // optimizedServices.username now holds the username of the service-provider.
+                // optimizedServices.service holds the service.
                 this.services.forEach(service => {
                     this.userService.getUser(service.userId).subscribe(data => {
                         this.optimizedServices.push({ username: data.username, service: service });
@@ -74,7 +76,7 @@ export class ExplorePage implements OnInit {
         }
     }
 
-    //filters our Array and then sets the services array to the services that are left matching the search
+    // filters our Array and then sets the services array to the services that are left matching the search
     // for now only compares on title
     filterByTitle (){
         console.log("filtering by title");
@@ -91,11 +93,12 @@ export class ExplorePage implements OnInit {
         this.displayServices();
     }
 
-    //funtction to filter our list by a given Tag
+    // funtction to filter our list by given tags.
     filterByTags(){
         console.log("filtering by tags");
 
         if (this.chips.length === 0) {
+            // reset the filtered list if no tags are selected.
             this.searchedByTags = this.optimizedServices;
         } else {
             this.searchedByTags = this.optimizedServices.filter(serviceCard => {
@@ -112,12 +115,15 @@ export class ExplorePage implements OnInit {
         this.displayServices();
     }
 
+    // compares both searched lists (title & tags).
+    // stores the result of the comparison in servicesToDisplay.
     displayServices() {
         this.servicesToDisplay = this.searchedByTitle.filter(service => {
             return this.searchedByTags.includes(service);
         })
     }
 
+    // parses a tag if a comma "," is found in the tags-searchbar
     tagsParser() {
         const input = this.searchForm.get('tags').value;
         if (input.slice(-1) === ",") {
@@ -126,6 +132,7 @@ export class ExplorePage implements OnInit {
         }
     }
 
+    // adds a chip to the local chips (filtered tags) array.
     createChip(chipToAdd) {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
@@ -133,23 +140,27 @@ export class ExplorePage implements OnInit {
         }
     }
 
+    // deletes a chip from the local chips (filtered tags) array.
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
             return chip != chipToDelete;
-            this.filterByTags();
         })
+        this.filterByTags();
     }
 
+    // clears the local chips (filtered tags) array.
     clearTags(){
         this.chips = [];
         this.filterByTags();
     }
 
+    // clears the query-searchbar.
     clearSearch() {
         this.searchForm.get('query').setValue("");
         this.filterByTitle();
     }
 
+    // switches the search mode and displays the according searchbar.
     switchSearch() {
         this.tagsSearch = !this.tagsSearch;
         this.searchType = (this.tagsSearch) ? "Tags" : "Title";

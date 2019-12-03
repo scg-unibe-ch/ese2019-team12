@@ -39,7 +39,8 @@ const routes: Routes = [
         canActivate: [AuthGuard],
     },
     {
-        path: 'event', loadChildren: './event/event.module#EventPageModule'
+        path: 'event',
+        loadChildren: './event/event.module#EventPageModule'
     }
 ];
 @NgModule({
