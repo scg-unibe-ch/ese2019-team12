@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import { upload } from '../helpers/upload.helper';
+import  'dotenv/config';
+var path = require('path');
 
 const router = Router();
 
@@ -80,6 +83,41 @@ router.post('/', async (req, res) => {
     res.sendStatus(500);
   });
 });
+
+router.get('/:id/image', async (req, res) => {
+  let Service = getService(req);
+  const image_root = path.join(__dirname, process.env.IMAGE_DIR);
+  var options = {
+    root: image_root,
+    dotfiles: 'deny',
+  }
+  Service.findByPk(req.params.id).then(service => {
+    res.sendFile(service.image, options);
+  }).catch(err => {
+    console.log(err);
+    res.status = 500;
+    res.send();
+  });
+});
+
+router.post('/:id/image', upload.single('service_image'), async (req, res) => {
+  let Service = getService(req);
+  Service.findByPk(req.params.id).then((service) => {
+    service.image = req.file.filename;
+    service.save().then(() => {
+      res.send();
+    }).catch(err => {
+      console.log('Couldn\' save new image: ', err);
+      res.status = 500;
+      res.send();
+    });
+  }).catch(err => {
+    console.log(err);
+    res.status = 500;
+    res.send();
+  });
+});
+
 
 router.put('/:id', async (req, res) => {
   let Service = getService(req);

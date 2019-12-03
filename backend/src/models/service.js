@@ -10,7 +10,8 @@ const service = (sequelize, DataTypes) => {
   const Service = sequelize.define('service', {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.INTEGER
+    price: DataTypes.INTEGER,
+    image: DataTypes.STRING,
   }, {});
   Service.associate = models => {
     Service.belongsTo(models.User);

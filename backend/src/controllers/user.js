@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { Sequelize } from 'sequelize';
 import { upload } from '../helpers/upload.helper';
 import  'dotenv/config';
-
 var path = require('path');
 
 const Op = Sequelize.Op;
@@ -70,7 +69,7 @@ router.get('/:id/image', async (req, res) => {
   });
 });
 
-router.post('/:id/image', upload.single('profile'), async (req, res) => {
+router.post('/:id/image', upload.single('user_image'), async (req, res) => {
   let User = getUser(req);
   User.findByPk(req.params.id).then((user) => {
     user.image = req.file.filename;
