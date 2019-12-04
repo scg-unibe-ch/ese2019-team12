@@ -38,6 +38,6 @@ Erstellung der Businesslogik der verschiedenen Pages:
 
 Comment on the deadline of this milestone (4th Dec 2019):
 
-Since Dominik is absent from 27th November to 6th December due to his military service, we were not able to complete every task of our milestone, namely the ones that need work in the backend. (Dominik is in charge of the backend).
+Since Dominik is absent from 27th November to 6th December due to his military service, we were not able to complete every task of our milestone, namely the ones that need work in the backend. This is because Dominik is in charge of the backend, and he understandalbly hasn't been able to join our group meetings and didn't have time to work on the code. Similarly, since Lino started his new job this week, he hasn't been able to attend our group meetings either and hasn't had the time to work much on the code.
 
-As soon as he is back on Friday, we will finish the tasks above and complete the milestone. We will update this document accordingly.
+As soon as Dominik and Lino are back on Friday and have time, we will finish the tasks above and complete the milestone. We will update this document accordingly.
