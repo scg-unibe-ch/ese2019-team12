@@ -31,10 +31,9 @@ export class EventCreatorPage implements OnInit {
 
     ngOnInit() {
         this.route.data.subscribe(
-            (data: Service) => {
-                this.serviceToAdd = data;
-                console.log("data");
-                console.log(data);
+            (data: {service: Service}) => {
+                this.serviceToAdd = data.service;
+                console.log(this.serviceToAdd);
 
                 this.isLoggedIn = this.sessionService.isLoggedIn();
                 if (this.isLoggedIn) {

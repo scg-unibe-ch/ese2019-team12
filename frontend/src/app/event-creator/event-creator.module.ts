@@ -9,14 +9,14 @@ import { EventCreatorResolver } from '../_services/event-creator-resolver.servic
 
 const eventCreatorRouting: ModuleWithProviders = RouterModule.forChild([
     {
-        path: '',
+        path: 'event-creator',
         component: EventCreatorPage
     },
     {
         path: 'event-creator/:id',
         component: EventCreatorPage,
         resolve: {
-            event: EventCreatorResolver
+            service: EventCreatorResolver
         }
         // add AuthGuard if it works
     }

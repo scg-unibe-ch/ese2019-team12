@@ -16,8 +16,6 @@ export class EventCreatorResolver implements Resolve<Service> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<Service> {
-        console.log("params");
-        console.log(route.params['id']);
         return this.serviceService.getService(route.params['id']);
     }
 }
