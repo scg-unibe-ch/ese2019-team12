@@ -107,7 +107,7 @@ router.post('/:id/image', upload.single('service_image'), async (req, res) => {
     service.save().then(() => {
       res.send();
     }).catch(err => {
-      console.log('Couldn\' save new image: ', err);
+      console.log('Couldn\'t save new image: ', err);
       res.status = 500;
       res.send();
     });

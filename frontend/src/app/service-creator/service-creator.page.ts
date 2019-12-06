@@ -37,8 +37,8 @@ export class ServiceCreatorPage implements OnInit {
             title: new FormControl('', [Validators.required, Validators.minLength(1)]),
             description: new FormControl('', [Validators.required]),
             price: new FormControl('', [Validators.required]),
-            file: new FormControl(''),
-            tagInput: new FormControl('')
+            tagInput: new FormControl(''),
+            file: new FormControl('')
         });
     }
 
@@ -60,14 +60,11 @@ export class ServiceCreatorPage implements OnInit {
 
         this.serviceService.create(this.service).subscribe(
             (data: Service) => {
-                console.log("created service:");
-                console.log(data);
-                // this.serviceService.uploadImage(this.service.id, this.image).subscribe(
-                //     (data) => {
-                //         console.log(data);
-                //         this.router.navigate(['/profile/me']);
-                //     }
-                // )
+                this.serviceService.uploadImage(data.id, this.image).subscribe(
+                    (data) => {
+                        this.router.navigate(['/profile/me']);
+                    }
+                )
             },
             (err: any) => {
                 console.log('error message: ' + err.message);
@@ -77,7 +74,6 @@ export class ServiceCreatorPage implements OnInit {
 
     processImage(event) {
          this.image = (event.target as HTMLInputElement).files[0];
-         console.log(this.image);
     }
 
     createChip(chipToAdd) {
