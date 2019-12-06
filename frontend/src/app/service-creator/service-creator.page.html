@@ -35,7 +35,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Upload a picture</ion-label>
-                        <ion-input formControlName="file" name="service_image" type="file" accept="image/*" (change)="processImage(image)"></ion-input>
+                        <ion-input formControlName="file" name="service_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
                     </ion-item>
                     <p class="ion-text-center">Help peope to find your service by adding tags:</p>
                     <ion-item>

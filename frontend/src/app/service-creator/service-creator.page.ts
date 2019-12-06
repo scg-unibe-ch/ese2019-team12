@@ -56,29 +56,28 @@ export class ServiceCreatorPage implements OnInit {
         this.service.price = this.serviceForm.get('price').value;
         this.service.tags = this.chips;
         this.service.userId = this.sessionService.getCurrentUser().id;
-        console.log(this.image)
         this.serviceForm.reset();
 
-        // this.serviceService.create(this.service).subscribe(
-        //     (data: Service) => {
-        //         console.log("created service:");
-        //         console.log(data);
-        //         this.serviceService.uploadImage(this.service.id, this.image).subscribe(
-        //             (data) => {
-        //                 console.log(data);
-        //                 this.router.navigate(['/profile/me']);
-        //             }
-        //         )
-        //     },
-        //     (err: any) => {
-        //         console.log('error message: ' + err.message);
-        //     }
-        // );
+        this.serviceService.create(this.service).subscribe(
+            (data: Service) => {
+                console.log("created service:");
+                console.log(data);
+                this.serviceService.uploadImage(this.service.id, this.image).subscribe(
+                    (data) => {
+                        console.log(data);
+                        this.router.navigate(['/profile/me']);
+                    }
+                )
+            },
+            (err: any) => {
+                console.log('error message: ' + err.message);
+            }
+        );
     }
 
-    processImage(image: File) {
-        console.log(image);
-        //this.image = image.files[0];
+    processImage(event) {
+         this.image = (event.target as HTMLInputElement).files[0];
+         console.log(this.image);
     }
 
     createChip(chipToAdd) {
