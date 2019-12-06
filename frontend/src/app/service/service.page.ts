@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IonSelect } from '@ionic/angular';
 import { SessionService } from '../_services/session.service';
 import { ServiceService } from '../_services/service.service';
 import { UserService } from '../_services/user.service';
@@ -17,7 +18,7 @@ import { Event } from '../_models/event';
   styleUrls: ['./service.page.scss'],
 })
 export class ServicePage implements OnInit {
-    @ViewChild('eventSelect') eventSelect: Select;
+    @ViewChild('eventSelect', {static: false}) eventSelect: IonSelect;
 
     isLoggedIn: boolean;
     isMyService: boolean;
