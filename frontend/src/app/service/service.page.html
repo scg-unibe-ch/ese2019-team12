@@ -44,6 +44,20 @@
                             Add to new Event
                             <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
                         </ion-button>
+                        <ion-button *ngIf="!isMyService && currentUserEvents.length > 0" size="default" expand="block" color="light" (click)="openEventSelect()">
+                            <ion-label>Add to existing Event</ion-label>
+                            <ion-select [(ngModel)]="selectedEventId" (ionChange)="addToExistingEvent()" #eventSelect>
+                                <ion-select-option *ngFor="let event of currentUserEvents" value="{{ event.id }}">
+                                    {{ event.name }}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-button>
+                        <!-- <ion-list class="eventSelector" *ngIf="showUserEvents" color="light">
+                            <ion-item *ngFor="let event of currentUserEvents">
+                                <ion-label (click)="addToExistingEvent(event)">{{ event.name }}</ion-label>
+                                <ion-icon name="add-circle"class="ion-padding"></ion-icon>
+                            </ion-item>
+                        </ion-list> -->
                     </ion-card-content>
                 </ion-card>
                 <ion-card *ngIf="isEditing">

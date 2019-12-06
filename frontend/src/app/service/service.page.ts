@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../_services/session.service';
 import { ServiceService } from '../_services/service.service';
 import { UserService } from '../_services/user.service';
+import { EventService } from '../_services/event.service';
 import { User } from '../_models/user';
 import { Role } from '../_models/role';
 import { Service } from '../_models/service';
+import { Event } from '../_models/event';
 
 @Component({
   selector: 'app-service',
@@ -15,22 +17,26 @@ import { Service } from '../_models/service';
   styleUrls: ['./service.page.scss'],
 })
 export class ServicePage implements OnInit {
+    @ViewChild('eventSelect') eventSelect: Select;
 
     isLoggedIn: boolean;
+    isMyService: boolean;
     currentUser: User;
+    currentUserEvents = [];
+    selectedEventId;
+    serviceUser = new User(null, '', '', '', '', '', '', Role.User);
     service: Service;
     serviceTags: string[];
     isEditing: boolean;
     editForm: FormGroup;
-    isMyService: boolean;
-    serviceUser = new User(null, '', '', '', '', '', '', Role.User);
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private sessionService: SessionService,
         private serviceService: ServiceService,
-        private userService: UserService
+        private userService: UserService,
+        private eventService: EventService
     ) {}
 
     ngOnInit() {
@@ -38,7 +44,9 @@ export class ServicePage implements OnInit {
         this.isLoggedIn = this.sessionService.isLoggedIn();
         if (this.isLoggedIn) {
             this.currentUser = this.sessionService.getCurrentUser();
+            this.getCurrentUserEvents();
         }
+
         this.route.data.subscribe(
             (data: {service: Service}) => {
                 this.service = data.service;
@@ -73,6 +81,33 @@ export class ServicePage implements OnInit {
                 this.serviceUser = data;
             }
         );
+    }
+
+    getCurrentUserEvents() {
+        this.eventService.getEventsOfUser(this.currentUser.id).subscribe(
+            data => {
+                this.currentUserEvents = data;
+            }
+        );
+    }
+
+    addToExistingEvent() {
+        this.selectedEventId = +this.selectedEventId; // unary selector to cast to number type
+        const selectedEvent: Event = this.currentUserEvents.find(event => {
+            console.log(event.id);
+            return (this.selectedEventId === event.id);
+        })
+        selectedEvent.services.push(this.service);
+        console.log(selectedEvent);
+        this.eventService.update(selectedEvent).subscribe(
+            data => {
+                this.router.navigate(['/event/' + selectedEvent.id]);
+            }
+        )
+    }
+
+    openEventSelect() {
+        this.eventSelect.open();
     }
 
     editService() {
