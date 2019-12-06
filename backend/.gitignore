@@ -1,4 +1,3 @@
 /build/
 *.sqlite
 *db*
-public/images/*
