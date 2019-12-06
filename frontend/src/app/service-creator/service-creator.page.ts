@@ -56,7 +56,6 @@ export class ServiceCreatorPage implements OnInit {
         this.service.price = this.serviceForm.get('price').value;
         this.service.tags = this.chips;
         this.service.userId = this.sessionService.getCurrentUser().id;
-        console.log(this.image)
         this.serviceForm.reset();
 
         // this.serviceService.create(this.service).subscribe(
@@ -76,9 +75,9 @@ export class ServiceCreatorPage implements OnInit {
         // );
     }
 
-    processImage(image: File) {
-        console.log(image);
-        //this.image = image.files[0];
+    processImage(event) {
+         this.image = (event.target as HTMLInputElement).files[0];
+         console.log(this.image);
     }
 
     createChip(chipToAdd) {
