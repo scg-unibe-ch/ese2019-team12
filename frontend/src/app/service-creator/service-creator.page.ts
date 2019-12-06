@@ -17,7 +17,8 @@ export class ServiceCreatorPage implements OnInit {
     isLoggedIn: boolean;
     currentUser: User;
     serviceForm: FormGroup;
-    service = new Service(null, null, '', '', null, []);
+    service = new Service(null, null, '', '', '', null, []);
+    image: File;
     chips = [];
 
     constructor(
@@ -36,7 +37,8 @@ export class ServiceCreatorPage implements OnInit {
             title: new FormControl('', [Validators.required, Validators.minLength(1)]),
             description: new FormControl('', [Validators.required]),
             price: new FormControl('', [Validators.required]),
-            tagInput: new FormControl(''),
+            file: new FormControl(''),
+            tagInput: new FormControl('')
         });
     }
 
@@ -54,18 +56,29 @@ export class ServiceCreatorPage implements OnInit {
         this.service.price = this.serviceForm.get('price').value;
         this.service.tags = this.chips;
         this.service.userId = this.sessionService.getCurrentUser().id;
+        console.log(this.image)
         this.serviceForm.reset();
 
-        this.serviceService.create(this.service).subscribe(
-            (data: Service) => {
-                console.log("created service:");
-                console.log(data);
-                this.router.navigate(['/profile/me']);
-            },
-            (err: any) => {
-                console.log('error message: ' + err.message);
-            }
-        );
+        // this.serviceService.create(this.service).subscribe(
+        //     (data: Service) => {
+        //         console.log("created service:");
+        //         console.log(data);
+        //         this.serviceService.uploadImage(this.service.id, this.image).subscribe(
+        //             (data) => {
+        //                 console.log(data);
+        //                 this.router.navigate(['/profile/me']);
+        //             }
+        //         )
+        //     },
+        //     (err: any) => {
+        //         console.log('error message: ' + err.message);
+        //     }
+        // );
+    }
+
+    processImage(image: File) {
+        console.log(image);
+        //this.image = image.files[0];
     }
 
     createChip(chipToAdd) {

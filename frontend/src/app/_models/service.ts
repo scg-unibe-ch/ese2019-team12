@@ -7,6 +7,7 @@ export class Service {
     public userId: number,
     public title: string,
     public description: string,
+    public image: string,
     public price: number,
     public tags: string[]
 ) {}

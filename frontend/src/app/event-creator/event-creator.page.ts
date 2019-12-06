@@ -7,7 +7,6 @@ import { Service } from '../_models/service';
 import { User } from '../_models/user';
 import { Event } from '../_models/event';
 import { Role } from '../_models/role';
-import { Event } from '../_models/event';
 
 @Component({
     selector: 'app-event-creator',

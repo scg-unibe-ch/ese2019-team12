@@ -62,7 +62,6 @@ router.get('/user/:id', async (req, res) => {
                 }
             }
       }).then(events => {
-    console.log(events);
     res.send(jsonFromEvents(events));
   }).catch(err => {
     console.log(err);

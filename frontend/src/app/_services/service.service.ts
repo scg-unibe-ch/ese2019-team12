@@ -48,6 +48,12 @@ export class ServiceService {
         });
     }
 
+    uploadImage(id: number, file: File): Observable<any> {
+        return this.httpClient.post<File>(this.apiUrl + '/services/' + id + '/image', {
+            service_image: file
+        });
+    }
+
     delete(id: number): Observable<any> {
         return this.httpClient.delete(this.apiUrl + '/services/' + id);
     }
