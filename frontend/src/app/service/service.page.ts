@@ -64,7 +64,7 @@ export class ServicePage implements OnInit {
                 }
 
                 this.editForm = new FormGroup({
-                    title: new FormControl(this.service.title, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
+                    title: new FormControl(this.service.title, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
                     description: new FormControl(this.service.description, [Validators.required, Validators.maxLength(200)]),
                     price: new FormControl(this.service.price, [Validators.required]),
                     tagInput: new FormControl('')
