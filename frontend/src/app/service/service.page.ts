@@ -22,6 +22,7 @@ export class ServicePage implements OnInit {
 
     isLoggedIn: boolean;
     isMyService: boolean;
+    flag: boolean = false;
     currentUser: User;
     currentUserEvents = [];
     selectedEventId;
@@ -92,25 +93,27 @@ export class ServicePage implements OnInit {
     }
 
     addToExistingEvent() {
-        this.selectedEventId = +this.selectedEventId; // unary selector to cast to number type
-        let selectedEvent: Event = this.currentUserEvents.find(event => {
-            console.log()
-            return (this.selectedEventId === event.id);
-        })
+        this.flag = !this.flag;
+        if (this.flag) {
+            this.selectedEventId = +this.selectedEventId; // unary selector to cast to number type
+            let selectedEvent: Event = this.currentUserEvents.find(event => {
+                return (this.selectedEventId === event.id);
+            })
 
-        selectedEvent = selectedEvent.services.map(service => {
-            return service.id;
-        });
+            let serviceIds: number[] = selectedEvent.services.map(service => {
+                return service.id;
+            });
 
-        selectedEvent.services.push(this.service.id);
-        console.log("event:");
-        console.log(selectedEvent);
+            serviceIds.push(this.service.id);
+            selectedEvent.services = serviceIds;
 
-        // this.eventService.update(selectedEvent).subscribe(
-        //     data => {
-        //         this.router.navigate(['/event/' + selectedEvent.id]);
-        //     }
-        // )
+            console.log(selectedEvent);
+            this.eventService.update(selectedEvent).subscribe(
+                data => {
+                    this.router.navigate(['/event/' + selectedEvent.id]);
+                }
+            )
+        }
     }
 
     openEventSelect() {
