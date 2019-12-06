@@ -62,12 +62,12 @@ export class ServiceCreatorPage implements OnInit {
             (data: Service) => {
                 console.log("created service:");
                 console.log(data);
-                this.serviceService.uploadImage(this.service.id, this.image).subscribe(
-                    (data) => {
-                        console.log(data);
-                        this.router.navigate(['/profile/me']);
-                    }
-                )
+                // this.serviceService.uploadImage(this.service.id, this.image).subscribe(
+                //     (data) => {
+                //         console.log(data);
+                //         this.router.navigate(['/profile/me']);
+                //     }
+                // )
             },
             (err: any) => {
                 console.log('error message: ' + err.message);
