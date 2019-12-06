@@ -46,7 +46,6 @@ export class ExplorePage implements OnInit {
         this.serviceService.getServices().subscribe(
             (data) => {
                 this.services = data;
-                console.log(data);
 
                 // wrapping service into an object which 'adds' the username field
                 // to optimize backend calls.
@@ -79,7 +78,6 @@ export class ExplorePage implements OnInit {
     // filters our Array and then sets the services array to the services that are left matching the search
     // for now only compares on title
     filterByTitle (){
-        console.log("filtering by title");
 
         this.searchTerm = this.searchForm.get('query').value;
         if (this.searchTerm === "") {
@@ -95,7 +93,6 @@ export class ExplorePage implements OnInit {
 
     // funtction to filter our list by given tags.
     filterByTags(){
-        console.log("filtering by tags");
 
         if (this.chips.length === 0) {
             // reset the filtered list if no tags are selected.

@@ -6,7 +6,7 @@ module.exports = {
         {
             name: "My Birthday Party",
             description: "I am planning my birthday party",
-            date: "March 1st",
+            date: "2020.03.01",
             userId: 11
         }
     ])

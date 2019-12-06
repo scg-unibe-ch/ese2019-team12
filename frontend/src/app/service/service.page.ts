@@ -52,7 +52,6 @@ export class ServicePage implements OnInit {
             (data: {service: Service}) => {
                 this.service = data.service;
                 this.serviceTags = this.service.tags;
-                console.log(this.service);
 
                 // if its yours, its true
                 this.isMyService = (this.isLoggedIn) ? (this.service.userId === this.currentUser.id) : false;
@@ -94,17 +93,24 @@ export class ServicePage implements OnInit {
 
     addToExistingEvent() {
         this.selectedEventId = +this.selectedEventId; // unary selector to cast to number type
-        const selectedEvent: Event = this.currentUserEvents.find(event => {
-            console.log(event.id);
+        let selectedEvent: Event = this.currentUserEvents.find(event => {
+            console.log()
             return (this.selectedEventId === event.id);
         })
-        selectedEvent.services.push(this.service);
+
+        selectedEvent = selectedEvent.services.map(service => {
+            return service.id;
+        });
+
+        selectedEvent.services.push(this.service.id);
+        console.log("event:");
         console.log(selectedEvent);
-        this.eventService.update(selectedEvent).subscribe(
-            data => {
-                this.router.navigate(['/event/' + selectedEvent.id]);
-            }
-        )
+
+        // this.eventService.update(selectedEvent).subscribe(
+        //     data => {
+        //         this.router.navigate(['/event/' + selectedEvent.id]);
+        //     }
+        // )
     }
 
     openEventSelect() {

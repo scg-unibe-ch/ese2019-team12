@@ -35,7 +35,16 @@
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Date</ion-label>
-                        <ion-input expand="block" type="text" required formControlName="date" placeholder="Pick a date for your Event"></ion-input>
+                        <ion-datetime
+                            display-format="DDDD DD MMMM YYYY"
+                            picker-format="DD:MMM:YYYY"
+                            min="2019"
+                            max="2025"
+                            formControlName="date"
+                            placeholder="Pick a date for your Event"
+                            expand="block"
+                            required>
+                        </ion-datetime>
                     </ion-item>
                     <!-- <ion-card>
                         <ion-title>{{ serviceToAdd.title }}</ion-title>

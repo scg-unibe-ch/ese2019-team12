@@ -23,8 +23,11 @@
             <ion-col size="5">
                 <ion-card>
                     <ion-card-header  *ngIf="!isEditing">
-                        <ion-card-title>{{ event.name }} on {{ event.date }}</ion-card-title>
-                        <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
+                        <ion-card-title>{{ event.name }}</ion-card-title>
+                        <ion-card-subtitle>
+                            {{ event.description }}<br>
+                            <ion-label>on {{ dateFormatted }}</ion-label>
+                        </ion-card-subtitle>
                         <ion-button (click)="editEvent()">
                             Edit Event
                             <ion-icon name="create"></ion-icon>
@@ -52,7 +55,16 @@
                             </ion-item>
                             <ion-item>
                                 <ion-label color="primary">Date</ion-label>
-                                <ion-input name="date" formControlName="date" type="text" inputmode="text"></ion-input>
+                                <ion-datetime
+                                    display-format="DDDD DD MMMM YYYY"
+                                    picker-format="DD:MMM:YYYY"
+                                    min="2019"
+                                    max="2025"
+                                    value="{{ event.date }}"
+                                    formControlName="date"
+                                    expand="block"
+                                    required>
+                                </ion-datetime>
                             </ion-item>
                         </form>
                     </ion-card-header>

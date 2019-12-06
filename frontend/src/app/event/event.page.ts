@@ -21,6 +21,7 @@ export class EventPage implements OnInit {
   currentUser: User;
   event: Event = new Event(null, null, '', '', '', []);
   services = [];
+  dateFormatted: string;
 
   constructor(
       private route: ActivatedRoute,
@@ -42,12 +43,12 @@ export class EventPage implements OnInit {
       this.route.data.subscribe(
           (data: {event: Event}) => {
               this.event = data.event;
-              console.log(this.event);
+              this.formatDate(this.event.date);
 
               this.editForm = new FormGroup({
                   name: new FormControl(this.event.name, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9 ]*')]),
                   description: new FormControl(this.event.description, [Validators.required, Validators.maxLength(200), Validators.pattern('[A-zÄ-ü0-9 ]*')]),
-                  date: new FormControl(this.event.date, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9 ]*')])
+                  date: new FormControl(this.event.date, [Validators.required])
               });
 
               this.event.services.forEach(service => {
@@ -78,16 +79,14 @@ export class EventPage implements OnInit {
       this.event.description = this.editForm.get('description').value;
       this.event.date = this.editForm.get('date').value;
       this.event.services = this.services.map(serviceCard => {
-          return serviceCard.service;
+          return serviceCard.service.id;
       })
 
-      console.log(this.event);
+      this.eventService.update(this.event).subscribe(
+          data => {
 
-      // this.eventService.update(this.event).subscribe(
-      //     data => {
-      //         console.log(data);
-      //     }
-      // )
+          }
+      )
       this.isEditing = !this.isEditing;
   }
 
@@ -95,6 +94,15 @@ export class EventPage implements OnInit {
       this.services = this.services.filter(service => {
           return (service != serviceToRemove);
       })
+  }
+
+  formatDate(date) {
+      let tempDate = date.slice(0, 10);
+      let year = tempDate.slice(0, 4);
+      let month = tempDate.slice(5, 7);
+      let day = tempDate.slice(8, 10);
+      let newDate = day + "." + month + "." + year;
+      this.dateFormatted = newDate;
   }
 
   ionViewDidLeave() {

@@ -16,7 +16,7 @@ const eventCreatorRouting: ModuleWithProviders = RouterModule.forChild([
         path: 'event-creator/:id',
         component: EventCreatorPage,
         resolve: {
-            service: EventCreatorResolver
+            serviceId: EventCreatorResolver
         }
         // add AuthGuard if it works
     }

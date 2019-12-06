@@ -8,6 +8,6 @@ export class Event {
         public name: string,
         public description: string,
         public date: string,
-        public services: Service[]
+        public services
     ) {}
 }
