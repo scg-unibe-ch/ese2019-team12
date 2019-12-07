@@ -107,7 +107,7 @@ export class ServicePage implements OnInit {
             serviceIds.push(this.service.id);
             selectedEvent.services = serviceIds;
 
-            console.log(selectedEvent);
+            
             this.eventService.update(selectedEvent).subscribe(
                 data => {
                     this.router.navigate(['/event/' + selectedEvent.id]);
@@ -153,7 +153,7 @@ export class ServicePage implements OnInit {
         this.serviceService.update(this.service).subscribe(
             data => {
                 // this 'update' is not working either...
-                console.log(data);
+                
             }
         );
         this.isEditing = false;
