@@ -22,7 +22,7 @@
         <ion-row class="ion-justify-content-center">
             <ion-col size="5">
                 <ion-card *ngIf="!isEditing">
-                    <img [src]="serviceImage">
+                    <img [src]="serviceImage" *ngIf="serviceHasImage">
                     <ion-card-header>
                         <ion-card-title>{{ service.title }}</ion-card-title>
                         <ion-card-subtitle>{{ service.description }}</ion-card-subtitle>
@@ -62,6 +62,7 @@
                     </ion-card-content>
                 </ion-card>
                 <ion-card *ngIf="isEditing">
+                    <img [src]="serviceImage" *ngIf="serviceHasImage">
                     <ion-card-header>
                         <ion-card-title>Edit Service</ion-card-title>
                     </ion-card-header>
@@ -74,6 +75,10 @@
                             <ion-item>
                                 <ion-label color="primary">Description</ion-label>
                                 <ion-textarea name="description" formControlName="description" type="text" inputmode="text" rows="2" maxlength="200"></ion-textarea>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Upload a picture</ion-label>
+                                <ion-input formControlName="file" name="service_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
                             </ion-item>
                             <ion-item>
                                 <ion-label color="primary">Tags</ion-label>

@@ -30,6 +30,9 @@ export class ServicePage implements OnInit {
     serviceUser = new User(null, '', '', '', '', '', '', Role.User);
     service: Service;
     serviceImage: File;
+    serviceHasImage: boolean;
+    imageToUpload: File;
+    uploadedServiceImage: File;
     serviceTags: string[];
     isEditing: boolean;
     editForm: FormGroup;
@@ -59,10 +62,10 @@ export class ServicePage implements OnInit {
 
                 this.serviceService.downloadImage(this.service.id).subscribe(
                     data => {
-                        console.log(data);
+                        this.serviceHasImage = (data.size > 0);
                         let objectURL = URL.createObjectURL(data);
                         this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                    }
+                    },
                 )
 
                 // if its yours, its true
@@ -78,6 +81,7 @@ export class ServicePage implements OnInit {
                     title: new FormControl(this.service.title, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
                     description: new FormControl(this.service.description, [Validators.required, Validators.maxLength(200)]),
                     price: new FormControl(this.service.price, [Validators.required]),
+                    file: new FormControl(''),
                     tagInput: new FormControl('')
                 });
             },
@@ -135,6 +139,13 @@ export class ServicePage implements OnInit {
         this.isEditing = true;
     }
 
+    processImage(event) {
+         this.imageToUpload = (event.target as HTMLInputElement).files[0];
+         let objectURL = URL.createObjectURL(this.imageToUpload);
+         this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+         this.serviceHasImage = true;
+    }
+
     tagsParser() {
         let input = this.editForm.get('tagInput').value;
         if (input.slice(-1) === ",") {
@@ -162,7 +173,13 @@ export class ServicePage implements OnInit {
         this.service.tags = this.serviceTags;
 
         this.serviceService.update(this.service).subscribe(
-            data => {}
+            (data) => {
+                if (this.imageToUpload) {
+                    this.serviceService.uploadImage(this.service.id, this.imageToUpload).subscribe(
+                        (data) => {}
+                    )
+                }
+            }
         );
         this.isEditing = false;
     }
