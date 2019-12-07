@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonSelect } from '@ionic/angular';
 import { SessionService } from '../_services/session.service';
@@ -29,10 +29,9 @@ export class ServicePage implements OnInit {
     selectedEventId;
     serviceUser = new User(null, '', '', '', '', '', '', Role.User);
     service: Service;
-    serviceImage: File;
+    serviceImage: SafeUrl;
     serviceHasImage: boolean;
     imageToUpload: File;
-    uploadedServiceImage: File;
     serviceTags: string[];
     isEditing: boolean;
     editForm: FormGroup;
