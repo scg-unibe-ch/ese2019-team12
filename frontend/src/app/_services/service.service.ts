@@ -56,6 +56,10 @@ export class ServiceService {
         return this.httpClient.post<File>(this.apiUrl + '/services/' + id + '/image', input);
     }
 
+    downloadImage(id: number): Observable<Blob> {
+        return this.httpClient.get(this.apiUrl + '/services/' + id + '/image', { responseType: 'blob' });
+    }
+
     delete(id: number): Observable<any> {
         return this.httpClient.delete(this.apiUrl + '/services/' + id);
     }

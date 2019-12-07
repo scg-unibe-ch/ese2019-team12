@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonSelect } from '@ionic/angular';
 import { SessionService } from '../_services/session.service';
@@ -22,12 +23,13 @@ export class ServicePage implements OnInit {
 
     isLoggedIn: boolean;
     isMyService: boolean;
-    flag: boolean = false;
+    flag: boolean = false; // thank ionic for that, firing the onChange twice of select...
     currentUser: User;
     currentUserEvents = [];
     selectedEventId;
     serviceUser = new User(null, '', '', '', '', '', '', Role.User);
     service: Service;
+    serviceImage: File;
     serviceTags: string[];
     isEditing: boolean;
     editForm: FormGroup;
@@ -38,7 +40,8 @@ export class ServicePage implements OnInit {
         private sessionService: SessionService,
         private serviceService: ServiceService,
         private userService: UserService,
-        private eventService: EventService
+        private eventService: EventService,
+        private sanitizer: DomSanitizer
     ) {}
 
     ngOnInit() {
@@ -53,6 +56,14 @@ export class ServicePage implements OnInit {
             (data: {service: Service}) => {
                 this.service = data.service;
                 this.serviceTags = this.service.tags;
+
+                this.serviceService.downloadImage(this.service.id).subscribe(
+                    data => {
+                        console.log(data);
+                        let objectURL = URL.createObjectURL(data);
+                        this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                    }
+                )
 
                 // if its yours, its true
                 this.isMyService = (this.isLoggedIn) ? (this.service.userId === this.currentUser.id) : false;
@@ -107,7 +118,7 @@ export class ServicePage implements OnInit {
             serviceIds.push(this.service.id);
             selectedEvent.services = serviceIds;
 
-            
+
             this.eventService.update(selectedEvent).subscribe(
                 data => {
                     this.router.navigate(['/event/' + selectedEvent.id]);
@@ -151,10 +162,7 @@ export class ServicePage implements OnInit {
         this.service.tags = this.serviceTags;
 
         this.serviceService.update(this.service).subscribe(
-            data => {
-                // this 'update' is not working either...
-                
-            }
+            data => {}
         );
         this.isEditing = false;
     }
