@@ -3,7 +3,7 @@ import request from 'request';
 
 const endpoint = process.env.HOST + '/users';
 
-describe('POST', () => {
+describe('User Controller: POST', () => {
 
   it('should create a user', async (done) => {
     await request(endpoint, {
