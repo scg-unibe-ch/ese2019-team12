@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "test": "rm test_db.sqlite; NODE_ENV=test npx sequelize-cli db:migrate; NODE_ENV=test npx sequelize-cli db:seed:all; babel-node spec/support/run.js;",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:reset": "npx sequelize-cli db:migrate:undo:all && npm run migrate",
+    "pretest": "NODE_ENV=test npm run migrate:reset",
+    "test": "NODE_ENV=test; babel-node spec/support/run.js;",
     "db_init": "rm db.sqlite; npx sequelize-cli db:migrate; npx sequelize-cli db:seed:all;"
   },
   "keywords": [],

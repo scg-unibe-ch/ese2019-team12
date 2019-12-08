@@ -9,7 +9,7 @@
   "test": {
     "username": "root",
     "password": null,
-    "storage": "test_db.sqlite",
+    "storage": "test.sqlite",
     "dialect": "sqlite",
     "timestamps": false
   }
