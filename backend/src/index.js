@@ -5,7 +5,7 @@ import models, { sequelize } from './models';
 import controllers from './controllers';
 import { userAuthFilter } from './controllers/user';
 import { serviceAuthFilter } from './controllers/service';
-import { checkIfAuthenticated } from './helpers/session.helper';
+import { checkIfAuthenticated, handleAuthError } from './helpers/session.helper';
 import { upload } from './helpers/upload.helper';
 
 const app = express();
@@ -26,13 +26,11 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  return res.send('Received GET HTTP method');
-});
-app.use('/users', checkIfAuthenticated.unless(userAuthFilter),controllers.user);
+app.use('/users', checkIfAuthenticated.unless(userAuthFilter), controllers.user);
 app.use('/services', checkIfAuthenticated.unless(serviceAuthFilter), controllers.service);
 app.use('/events', checkIfAuthenticated, controllers.e);
 app.use('/session', controllers.session);
+app.use(handleAuthError);
 
 var server = app.listen(process.env.PORT, () => {
   console.log(`Listening on Port ${process.env.PORT}`);
