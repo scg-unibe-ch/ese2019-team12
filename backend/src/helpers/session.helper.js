@@ -17,11 +17,16 @@ function getTokenFromHeaderOrQuery(req) {
   } else if (req.query && req.query.token) {
     return req.query.token;
   }
-  var res = req.res;
-  res.status = 401;
-  res.send({});
+  return null;
 }
 export const checkIfAuthenticated = jwtExpress({
   secret: process.env.SECRET,
   getToken: getTokenFromHeaderOrQuery
 });
+
+export const handleAuthError = (err, req, res, next) => {
+  if(err.name === 'UnauthorizedError') {
+    res.status(401).send({ AuthorizationError: 'Invalid token' });
+  }
+  next();
+}
