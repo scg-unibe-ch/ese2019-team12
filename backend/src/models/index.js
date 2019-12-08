@@ -2,8 +2,7 @@ import 'dotenv/config';
 import Sequelize from 'sequelize';
 import fs from 'fs';
 
-const conf = JSON.parse(fs.readFileSync('config/config.json'));
-
+const logging = (process.env.DB_LOG === 'None' ? function(){} : console.log); // Have the possibility to disable logging (for testing)
 const sequelize = new Sequelize(
   {
     transactionType: 'IMMEDIATE',
@@ -11,6 +10,7 @@ const sequelize = new Sequelize(
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     storage: process.env.DB_STORAGE,
+    logging,
     define: { timestamps: false }
   },
 );
