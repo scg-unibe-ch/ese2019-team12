@@ -21,6 +21,9 @@ const user = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       unique: true,
+      validate: {
+        isEmail: true,
+      }
     },
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
@@ -58,6 +61,9 @@ const user = (sequelize, DataTypes) => {
     }
   });
 
+  User.prototype.isAdmin = function() {
+    return this.role === 'Admin';
+  }
 
   return User;
 };
