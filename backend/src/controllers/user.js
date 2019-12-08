@@ -24,14 +24,15 @@ router.get('/', async (req, res) => {
 router.get('/:userId', async (req, res, next) => {
   if(Object.keys(req.query).length === 0){
     let User = getUser(req);
-    const user = await User.findByPk(
-      req.params.userId,
-    );
-    if (!user) {
-      error404(res);
-      return;
-    }
-    res.send(user);
+    await User.findByPk(req.params.userId).then(user => {
+      if(!user) {
+        sendNotFoundError(res);
+      } else {
+        res.send(user);
+      }
+    }).catch(err => {
+      sendInternalError(err, res);
+    });
   }
   next();
 });
@@ -48,8 +49,7 @@ router.post('/', async (req, res) => {
     res.statusCode = 201;
     res.send(user);
   }).catch( err => {
-    console.log(err);
-    res.sendStatus(500);
+    res.send(handleErrors(err));
   });
 });
 
@@ -63,9 +63,7 @@ router.get('/:id/image', async (req, res) => {
   User.findByPk(req.params.id).then(user => {
     res.sendFile(user.image, options);
   }).catch(err => {
-    console.log(err);
-    res.status = 500;
-    res.send();
+    sendInternalError(err, res);
   });
 });
 
@@ -76,51 +74,82 @@ router.post('/:id/image', upload.single('user_image'), async (req, res) => {
     user.save().then(() => {
       res.send();
     }).catch(err => {
-      console.log('Couldn\' save new image: ', err);
-      res.status = 500;
-      res.send();
+      sendInternalError(err, res);
     });
   }).catch(err => {
-    console.log(err);
-    res.status = 500;
-    res.send();
+    sendInternalError(err, res);
   });
 });
 
 router.put('/:id', async (req, res) => {
   let User = getUser(req);
-  let toUpdate = await User.findByPk(req.params.id);
-  if (!toUpdate) {
-    error404(res);
-    return;
+  if(req.user.sub !== req.params.id) {
+    User.findByPk(req.user.sub).then(currentUser => {
+      if(currentUser.isAdmin()) {
+        updateUser(User, req, res);
+      } else {
+        sendForbiddenError(res);
+      }
+    }).catch(err => {
+      sendInternalError(err, res);
+    });
+  } else {
+    updateUser(User, req, res);
   }
-  let keys = Object.keys(req.body); // Find all transmitted attributes
-  keys.forEach((key) => {           // For each attribute name,
-    if(toUpdate[key] !== undefined) {
-      toUpdate[key] = req.body[key];
-    }
-  });
-
-  toUpdate.save().then((user) => {
-    res.statusCode = 200;
-    res.send(user);
-  }).catch(err => {
-    console.log(err);
-    res.sendStatus(500);
-  });
 });
 
 router.delete('/:id', async (req, res) => {
   let User = getUser(req);
-  let toDelete = await User.findByPk(req.params.id);
-  if(!toDelete) {
-    error404(res);
-    return;
+  if(req.user.sub !== req.params.id) {
+    await User.findByPk(req.user.sub).then(user => {
+      if(user.isAdmin()){
+        deleteUser(req.params.id, User, res);
+      } else {
+        sendForbiddenError(res);
+      }
+    }).catch(err => {
+      sendInternalError(err, res);
+    });;
+  } else {
+    deleteUser(req.params.id, User, res);
   }
-  await toDelete.destroy();
-  res.statusCode = 204;
-  res.send();
 });
+
+function updateUser(User, req, res) {
+  User.findByPk(req.params.id).then(user => {
+    if(!user) {
+      sendNotFoundError(res);
+    }
+
+    let keys = Object.keys(req.body); // Find all transmitted attributes
+    keys.forEach((key) => {           // For each attribute name,
+      if(key !== 'id' && user[key] !== undefined) {
+        user[key] = req.body[key];
+      }
+    });
+    user.save().then(user => {
+      res.statusCode = 200;
+      res.send(user);
+    }).catch(err => {
+      sendInternalError(err, res);
+    });
+  }).catch(err => {
+    sendInternalError(err, res);
+  });
+}
+function deleteUser(id, User, res) {
+  User.findByPk(id).then(user => {
+    if(!user) {
+      sendNotFoundError(res);
+    }
+    user.destroy();
+    res.statusCode = 204;
+    res.send();
+  }).catch(err => {
+    sendInternalError(err, res);
+  });
+};
+
 
 router.get('/search', async (req, res) => {
   let User = getUser(req);
@@ -151,11 +180,37 @@ function getUser(req) {
   return req.context.models.User;
 }
 
-function error404(res){
+function sendNotFoundError(res){
   res.statusCode = 404;
-  res.json({
-    'message': 'not found'
-  });
-  return;
+  res.send({ 'message': 'not found' });
 }
+
+function sendInternalError(err, res){
+  console.log(err);
+  res.statusCode = 500;
+  res.send();
+}
+
+function sendForbiddenError(res) {
+  res.statusCode = 403;
+  res.send({ 'AuthorizationError': 'Insufficient privileges' });
+}
+
+function handleErrors(err) {
+  let msg = {};
+  err.errors.forEach(e => {
+    const errorType = e.type;
+    const errorMsg = e.message;
+
+    if(errorType !== 'Validation error' && errorType !== 'unique violation') {
+      console.log(e);
+    }
+    if(msg[e.type] === undefined){
+      msg[e.type] = [];
+    }
+    msg[e.type].push(e.message);
+  });
+  return msg;
+}
+
 export default router;
