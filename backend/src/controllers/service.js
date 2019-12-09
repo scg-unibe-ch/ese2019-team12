@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { upload } from '../helpers/upload.helper';
 import  'dotenv/config';
+import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper';
 var path = require('path');
 
 const router = Router();
@@ -80,13 +81,16 @@ router.post('/', async (req, res) => {
 
   // Service creation
   Service.create(serviceData).then(service => {
-    service.setTags(serviceData.tags);
-    res.statusCode = 201;
-    res.send(service);
+    if (hasTags) {
+      service.setTags(serviceData.tags);
+    }
+    let result = service.simplified();
+    result.tags = serviceData.tags;
+    res.status(201).send(result);
   }).catch(err => {
-    console.log(err);
-    res.sendStatus(500);
-  });
+    sendInternalError(res, err);
+  }); 
+
 });
 
 router.get('/:id/image', async (req, res) => {
@@ -103,9 +107,7 @@ router.get('/:id/image', async (req, res) => {
       res.send();
     }
   }).catch(err => {
-    console.log(err);
-    res.status = 500;
-    res.send();
+    sendInternalError(res, err);
   });
 });
 
@@ -127,7 +129,6 @@ router.post('/:id/image', upload.single('service_image'), async (req, res) => {
   });
 });
 
-
 router.put('/:id', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
@@ -144,7 +145,7 @@ router.put('/:id', async (req, res) => {
     }
   });
   if(req.body.tags !== undefined) {
-    findOrCreateTags(Tag, req.body.tags).then(() => {
+    await findOrCreateTags(Tag, req.body.tags).then(() => {
       toUpdate.getTags().then((tags) => {
         toUpdate.removeTags(tags);
         toUpdate.setTags(req.body.tags);
@@ -172,21 +173,36 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   let Service = getService(req);
-  let toDelete = await Service.findByPk(req.params.id);
-  if(!toDelete) {
-    error404(res);
-    return;
-  }
-  await toDelete.destroy();
-  res.statusCode = 204;
-  res.send();
+  let User = getUser(req);
+  let serviceId = req.params.id;
+  let userId = req.user.sub;
+
+  Service.findByPk(serviceId).then( service => {
+    User.findByPk(userId).then( user => {
+      if(isAllowedToDelete(user, service)) {
+        service.destroy();
+        res.statusCode = 204;
+        res.send();
+      } else {
+        sendForbiddenError(res);
+      }
+    }).catch(err => {
+      sendInternalError(res, err);
+    });
+  }).catch(err => {
+    sendInternalError(res, err);
+  });
 });
+
+function isAllowedToDelete(user, service) {
+  return service.userId === user.id || user.isAdmin();
+}
 
 async function findOrCreateTags(model, tags){
   if(!tags || tags === undefined) {
     return;
   }
-  for (const tag of tags) {
+  for (let tag of tags) {
     await model.findOrCreate({ where: { name: tag } });
   }
 }
