@@ -61,7 +61,11 @@ router.get('/:id/image', async (req, res) => {
     dotfiles: 'deny',
   }
   User.findByPk(req.params.id).then(user => {
-    res.sendFile(user.image, options);
+    if(user.image){
+      res.sendFile(user.image, options);
+    } else {
+      res.send();
+    }
   }).catch(err => {
     sendInternalError(err, res);
   });

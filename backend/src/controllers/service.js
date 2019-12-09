@@ -92,7 +92,11 @@ router.get('/:id/image', async (req, res) => {
     dotfiles: 'deny',
   }
   Service.findByPk(req.params.id).then(service => {
-    res.sendFile(service.image, options);
+    if(service.image) {
+      res.sendFile(service.image, options);
+    } else {
+      res.send();
+    }
   }).catch(err => {
     console.log(err);
     res.status = 500;
