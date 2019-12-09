@@ -44,6 +44,7 @@ export class EventPage implements OnInit {
       this.route.data.subscribe(
           (data: {event: Event}) => {
               this.event = data.event;
+              this.services = this.event.services;
               this.formatDate(this.event.date);
 
               this.editForm = new FormGroup({
@@ -71,8 +72,8 @@ export class EventPage implements OnInit {
       this.event.description = this.editForm.get('description').value;
       this.event.date = this.editForm.get('date').value;
       this.formatDate(this.event.date);
-      this.event.services = this.services.map(serviceCard => {
-          return serviceCard.service.id;
+      this.event.services = this.services.map(service => {
+          return service.id;
       });
 
       this.eventService.update(this.event).subscribe(
@@ -98,9 +99,5 @@ export class EventPage implements OnInit {
       const formattedDate = year + '-' + month + '-' + day;
       this.displayDate = displayDate;
       this.formattedDate = formattedDate;
-  }
-
-  ionViewDidLeave() {
-      this.services = [];
   }
 }
