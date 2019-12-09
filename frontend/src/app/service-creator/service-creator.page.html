@@ -31,13 +31,13 @@
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Description</ion-label>
-                        <ion-textarea type="text" required  formControlName="description" placeholder="Describe your Service in a few words" rows="4" maxlength="200"></ion-textarea>
+                        <ion-textarea type="text" required  formControlName="description" placeholder="Describe your service in a few words" rows="4" maxlength="200"></ion-textarea>
                     </ion-item>
                     <ion-item>
                         <ion-label color="primary">Upload a picture</ion-label>
                         <ion-input formControlName="file" name="service_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
                     </ion-item>
-                    <p class="ion-text-center">Help peope to find your service by adding tags:</p>
+                    <p class="ion-text-center">Help people find your service by adding tags:</p>
                     <ion-item>
                         <ion-label color="primary">Tags</ion-label>
                         <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
