@@ -12,6 +12,6 @@ export class EventCreatorResolver implements Resolve<number> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<number> {
-        return route.params['id'];
+        return route.params.id;
     }
 }

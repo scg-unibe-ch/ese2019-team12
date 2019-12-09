@@ -40,12 +40,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-    it('should have menu labels', async () => {
-      const fixture = await TestBed.createComponent(AppComponent);
-      await fixture.detectChanges();
+  it('should have menu labels', async () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
       const app = fixture.nativeElement;
       const menuItems = app.querySelectorAll('ion-label');
-      if (this.role == 'Admin') {
+      if (this.role === 'Admin') {
         expect(menuItems.length).toEqual(5);
         expect(menuItems[0].textContent).toContain('Admin');
         expect(menuItems[1].textContent).toContain('Explore');
@@ -55,9 +55,9 @@ describe('AppComponent', () => {
       }
     });
 
-    it('should have urls', async () => {
-      const fixture = await TestBed.createComponent(AppComponent);
-      await fixture.detectChanges();
+  it('should have urls', async () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
       const app = fixture.nativeElement;
       const menuItems = app.querySelectorAll('ion-item');
       expect(menuItems.length).toEqual(2);

@@ -11,8 +11,8 @@ export class AsyncValidators {
                     return (res.isUsed) ? {emailTaken: true} : null;
                 }
             ));
-        }
-    };
+        };
+    }
 
     static checkUsername(userService: UserService) {
         return (control: FormControl) => {
@@ -21,6 +21,6 @@ export class AsyncValidators {
                     return (res.isUsed) ? {usernameTaken: true} : null;
                 }
             ));
-        }
-    };
+        };
+    }
 }

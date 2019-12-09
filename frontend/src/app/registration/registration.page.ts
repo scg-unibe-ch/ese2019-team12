@@ -20,6 +20,7 @@ export class RegistrationPage implements OnInit {
     passwordForm: FormGroup;
     user = new User(null, '', '', '', '', '', '', Role.User);
     password = '';
+    event: Event;
 
     constructor(
         public userService: UserService,
@@ -75,13 +76,13 @@ export class RegistrationPage implements OnInit {
                     },
                     (err: any) => {
                         if (err.status === 401) {
-                            console.log("Error message: " + err.message);
+                            console.log('Error message: ' + err.message);
                         }
                     }
                 );
             },
             (err: any) => {
-                console.log("Error message: " + err.message)
+                console.log('Error message: ' + err.message);
             }
         );
     }

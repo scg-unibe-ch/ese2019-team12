@@ -23,10 +23,10 @@ export class ServiceCardComponent implements OnInit {
       this.serviceService.downloadImage(this.service.id).subscribe(
           data => {
               this.serviceHasImage = (data.size > 0);
-              let objectURL = URL.createObjectURL(data);
+              const objectURL = URL.createObjectURL(data);
               this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
           },
-      )
+      );
   }
 
 }

@@ -25,7 +25,7 @@
                 </ion-col>
                 <ion-col>
                     <form [formGroup]="searchForm">
-                        <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" (ionClear)="clearSearch" placeholder="Search services by Title"></ion-searchbar>
+                        <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" (ionClear)="clearSearch()" placeholder="Search services by Title"></ion-searchbar>
                         <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="clearTags()" (ionChange)="tagsParser(event)"></ion-searchbar>
                     </form>
                 </ion-col>
@@ -52,14 +52,10 @@
 <ion-content class="ion-padding">
     <ion-grid>
         <ion-row class="ion-justify-content-center">
-            <div *ngFor="let service of servicesToDisplay">
-                <ion-col size="auto">
+                <ion-col size="auto" *ngFor="let service of servicesToDisplay">
                     <app-service-card [service]="service"></app-service-card>
                 </ion-col>
-            </div>
-            <div *ngIf="servicesToDisplay.length === 0">
-                <p>No results were found for your search. But here, have a slice of pizza...<ion-icon name="pizza" size="large"></ion-icon></p>
-            </div>
+                <p *ngIf="servicesToDisplay.length === 0">No results were found for your search. But here, have a slice of pizza...<ion-icon name="pizza" size="large"></ion-icon></p>
         </ion-row>
     </ion-grid>
 </ion-content>

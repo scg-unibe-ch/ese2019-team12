@@ -56,7 +56,7 @@ export class EventPage implements OnInit {
                   this.userService.getUser(service.userId).subscribe(data => {
                       this.services.push({
                           username: data.username,
-                          service: service
+                          service: Service
                       });
                   });
               });
@@ -72,7 +72,7 @@ export class EventPage implements OnInit {
       this.eventService.delete(this.event.id).subscribe(() => {
               this.router.navigate(['/profile/me']);
           }
-      )
+      );
   }
 
   saveEvent(event) {
@@ -82,29 +82,29 @@ export class EventPage implements OnInit {
       this.formatDate(this.event.date);
       this.event.services = this.services.map(serviceCard => {
           return serviceCard.service.id;
-      })
+      });
 
       this.eventService.update(this.event).subscribe(
           data => {
 
           }
-      )
+      );
       this.isEditing = !this.isEditing;
   }
 
   removeService(serviceToRemove) {
       this.services = this.services.filter(service => {
-          return (service != serviceToRemove);
-      })
+          return (service !== serviceToRemove);
+      });
   }
 
   formatDate(date) {
-      let tempDate = date.slice(0, 10);
-      let year = tempDate.slice(0, 4);
-      let month = tempDate.slice(5, 7);
-      let day = tempDate.slice(8, 10);
-      let displayDate = day + "." + month + "." + year;
-      let formattedDate = year + "-" + month + "-" + day;
+      const tempDate = date.slice(0, 10);
+      const year = tempDate.slice(0, 4);
+      const month = tempDate.slice(5, 7);
+      const day = tempDate.slice(8, 10);
+      const displayDate = day + '.' + month + '.' + year;
+      const formattedDate = year + '-' + month + '-' + day;
       this.displayDate = displayDate;
       this.formattedDate = formattedDate;
   }

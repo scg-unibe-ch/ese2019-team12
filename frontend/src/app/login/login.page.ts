@@ -11,11 +11,12 @@ import { SessionService } from '../_services/session.service';
 export class LoginPage implements OnInit {
   loginFailed: boolean;
   loginForm: FormGroup;
+  event: Event;
 
   constructor(
-      private sessionService : SessionService,
+      private sessionService: SessionService,
       public formBuilder: FormBuilder,
-      private router : Router
+      private router: Router
   ) {
       this.loginFailed = false;
       this.loginForm = new FormGroup({
@@ -27,8 +28,8 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   login(event) {
-    let login = this.loginForm.get('login').value;
-    let password = this.loginForm.get('password').value;
+    const login = this.loginForm.get('login').value;
+    const password = this.loginForm.get('password').value;
 
     // test user: username 'Jony', password 'hello'
     this.sessionService.login(login, password).subscribe(
@@ -38,7 +39,7 @@ export class LoginPage implements OnInit {
         (err: any) => {
             if (err.status === 401) {
                 this.loginFailed = true;
-                console.log("Error message: " + err.message);
+                console.log('Error message: ' + err.message);
             }
         }
     );

@@ -8,16 +8,16 @@ import { Observable } from 'rxjs';
 })
 export class RoleGuard {
 
-  constructor(private _session: SessionService, private _router: Router) { }
+  constructor(private session: SessionService, private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const user = this._session.getCurrentUser();
+    const user = this.session.getCurrentUser();
 
     if (user && user.role === next.data.role) {
       return true;
     }
 
-    this._router.navigate(['/404']);
+    this.router.navigate(['/404']);
     return false;
   }
 }

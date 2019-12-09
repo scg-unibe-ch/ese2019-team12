@@ -51,7 +51,7 @@ export class ServiceService {
     }
 
     uploadImage(id: number, file: File): Observable<any> {
-        let input = new FormData();
+        const input = new FormData();
         input.append('service_image', file);
         return this.httpClient.post<File>(this.apiUrl + '/services/' + id + '/image', input);
     }

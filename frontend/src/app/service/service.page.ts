@@ -35,6 +35,7 @@ export class ServicePage implements OnInit {
     serviceTags: string[];
     isEditing: boolean;
     editForm: FormGroup;
+    event: Event;
 
     constructor(
         private route: ActivatedRoute,
@@ -62,10 +63,10 @@ export class ServicePage implements OnInit {
                 this.serviceService.downloadImage(this.service.id).subscribe(
                     data => {
                         this.serviceHasImage = (data.size > 0);
-                        let objectURL = URL.createObjectURL(data);
+                        const objectURL = URL.createObjectURL(data);
                         this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                     },
-                )
+                );
 
                 // if its yours, its true
                 this.isMyService = (this.isLoggedIn) ? (this.service.userId === this.currentUser.id) : false;
@@ -110,11 +111,11 @@ export class ServicePage implements OnInit {
         this.flag = !this.flag;
         if (this.flag) {
             this.selectedEventId = +this.selectedEventId; // unary selector to cast to number type
-            let selectedEvent: Event = this.currentUserEvents.find(event => {
+            const selectedEvent: Event = this.currentUserEvents.find(event => {
                 return (this.selectedEventId === event.id);
-            })
+            });
 
-            let serviceIds: number[] = selectedEvent.services.map(service => {
+            const serviceIds: number[] = selectedEvent.services.map(service => {
                 return service.id;
             });
 
@@ -126,7 +127,7 @@ export class ServicePage implements OnInit {
                 data => {
                     this.router.navigate(['/event/' + selectedEvent.id]);
                 }
-            )
+            );
         }
     }
 
@@ -140,16 +141,16 @@ export class ServicePage implements OnInit {
 
     processImage(event) {
          this.imageToUpload = (event.target as HTMLInputElement).files[0];
-         let objectURL = URL.createObjectURL(this.imageToUpload);
+         const objectURL = URL.createObjectURL(this.imageToUpload);
          this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
          this.serviceHasImage = true;
     }
 
     tagsParser() {
-        let input = this.editForm.get('tagInput').value;
-        if (input.slice(-1) === ",") {
+        const input = this.editForm.get('tagInput').value;
+        if (input.slice(-1) === ',') {
             this.createChip(input.slice(0, -1));
-            this.editForm.get('tagInput').setValue("");
+            this.editForm.get('tagInput').setValue('');
         }
     }
 
@@ -161,8 +162,8 @@ export class ServicePage implements OnInit {
 
     deleteChip(chipToDelete) {
         this.serviceTags = this.serviceTags.filter(chip => {
-            return chip != chipToDelete;
-        })
+            return chip !== chipToDelete;
+        });
     }
 
     saveService(event) {
@@ -176,7 +177,7 @@ export class ServicePage implements OnInit {
                 if (this.imageToUpload) {
                     this.serviceService.uploadImage(this.service.id, this.imageToUpload).subscribe(
                         (data) => {}
-                    )
+                    );
                 }
             }
         );
@@ -186,7 +187,7 @@ export class ServicePage implements OnInit {
     deleteService() {
         this.serviceService.delete(this.service.id).subscribe( () => {
             this.router.navigate(['/profile/me']);
-        })
+        });
     }
 
 }

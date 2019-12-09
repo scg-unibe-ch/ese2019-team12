@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { EventPage } from './event.page';
-import { EventResolver } from '../_services/event-resolver.service'
+import { EventResolver } from '../_services/event-resolver.service';
 
 const eventRouting: ModuleWithProviders = RouterModule.forChild([
     {

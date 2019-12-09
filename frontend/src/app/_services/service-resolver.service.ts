@@ -19,6 +19,6 @@ export class ServiceResolver implements Resolve<Service> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<Service> {
-        return this.serviceService.getService(route.params['id']);
+        return this.serviceService.getService(route.params.id);
     }
 }

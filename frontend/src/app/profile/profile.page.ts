@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit {
     editForm: FormGroup;
     services: Service[] = [];
     events: Event[] = [];
+    event: Event;
 
     constructor(
       private route: ActivatedRoute,
@@ -52,10 +53,10 @@ export class ProfilePage implements OnInit {
                 this.userService.downloadImage(this.profile.id).subscribe(
                     data => {
                         this.userHasImage = (data.size > 0);
-                        let objectURL = URL.createObjectURL(data);
+                        const objectURL = URL.createObjectURL(data);
                         this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
                     }
-                )
+                );
 
                 // if its you, its true :)
                 this.isMe = (this.isLoggedIn) ? (this.profile.id === this.currentUser.id) : false;
@@ -91,7 +92,7 @@ export class ProfilePage implements OnInit {
             (data) => {
                 this.events = data;
             }
-        )
+        );
     }
 
     editProfilePage() {
@@ -108,7 +109,7 @@ export class ProfilePage implements OnInit {
                 if (this.imageToUpload) {
                     this.userService.uploadImage(this.currentUser.id, this.imageToUpload).subscribe(
                         (data) => {}
-                    )
+                    );
                 }
             }
         );
@@ -117,7 +118,7 @@ export class ProfilePage implements OnInit {
 
     processImage(event) {
         this.imageToUpload = (event.target as HTMLInputElement).files[0];
-        let objectURL = URL.createObjectURL(this.imageToUpload);
+        const objectURL = URL.createObjectURL(this.imageToUpload);
         this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         this.userHasImage = true;
     }

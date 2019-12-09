@@ -22,8 +22,8 @@ export class SessionService {
 
   login(login: string, password: string) {
     return this.httpClient.post<any>(this.apiUrl + `/session/login`, {
-        "login": login,
-        "password": password
+        login,
+        password
       }).pipe(tap((res) => this.setSession(res)));
   }
 
@@ -39,7 +39,7 @@ export class SessionService {
   }
 
   getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
+    const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration);
     return expiresAt;
   }
@@ -63,8 +63,8 @@ export class SessionService {
   }
 
   getCurrentRole() {
-    let currentUser = this.getCurrentUser();
-    if(currentUser) {
+    const currentUser = this.getCurrentUser();
+    if (currentUser) {
       return currentUser.role;
     }
     return 'None';

@@ -20,6 +20,7 @@ export class ServiceCreatorPage implements OnInit {
     service = new Service(null, null, '', '', '', '', null, []);
     image: File;
     chips = [];
+    event: Event;
 
     constructor(
         private sessionService: SessionService,
@@ -43,10 +44,10 @@ export class ServiceCreatorPage implements OnInit {
     }
 
     tagsParser() {
-        let input = this.serviceForm.get('tagInput').value;
-        if (input.slice(-1) === ",") {
+        const input = this.serviceForm.get('tagInput').value;
+        if (input.slice(-1) === ',') {
             this.createChip(input.slice(0, -1));
-            this.serviceForm.get('tagInput').setValue("");
+            this.serviceForm.get('tagInput').setValue('');
         }
     }
 
@@ -64,7 +65,7 @@ export class ServiceCreatorPage implements OnInit {
                     (data) => {
                         this.router.navigate(['/profile/me']);
                     }
-                )
+                );
             },
             (err: any) => {
                 console.log('error message: ' + err.message);
@@ -84,7 +85,7 @@ export class ServiceCreatorPage implements OnInit {
 
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
-            return chip != chipToDelete;
-        })
+            return chip !== chipToDelete;
+        });
     }
 }

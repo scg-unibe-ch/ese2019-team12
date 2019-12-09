@@ -43,7 +43,7 @@ export class UserService {
   }
 
   uploadImage(id: number, file: File): Observable<any> {
-      let input = new FormData();
+      const input = new FormData();
       input.append('user_image', file);
       return this.httpClient.post<File>(this.apiUrl + '/users/' + id + '/image', input);
   }

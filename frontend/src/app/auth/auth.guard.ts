@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard {
 
-  constructor(private _session: SessionService, private _router: Router) { }
+  constructor(private session: SessionService, private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this._session.isLoggedIn()) {
+    if (this.session.isLoggedIn()) {
       return true;
     }
-    this._router.navigate(['/explore']);
+    this.router.navigate(['/explore']);
     return false;
   }
 }

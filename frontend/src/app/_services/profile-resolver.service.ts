@@ -19,8 +19,8 @@ export class ProfileResolver implements Resolve<User> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<User> {
-        let currentUser = this.sessionService.getCurrentUser();
-        let userId = (route.params['id'] === "me") ? currentUser.id : route.params['id'];
+        const currentUser = this.sessionService.getCurrentUser();
+        const userId = (route.params.id === 'me') ? currentUser.id : route.params.id;
         return this.userService.getUser(userId);
     }
 }

@@ -53,7 +53,7 @@ export class EventCreatorPage implements OnInit {
 
         this.servicesToAdd = this.event.services.map(service => {
             return service.id;
-        })
+        });
 
         if (this.serviceIdToAdd > 0) {
             this.servicesToAdd.push(this.serviceIdToAdd);
@@ -65,7 +65,7 @@ export class EventCreatorPage implements OnInit {
             data => {
                 this.router.navigate(['/profile/me']);
             }
-        )
+        );
 
     }
 
