@@ -31,6 +31,7 @@ describe('Service Controller: GET', () => {
       expect(body).toContain('title');
       expect(body).toContain('description');
       expect(body).toContain('price');
+      expect(body).toContain('username');
       done();
     });
   });
@@ -44,6 +45,7 @@ describe('Service Controller: GET', () => {
       expect(json.userId).toEqual(1);
       expect(json.description).toEqual('got it');
       expect(json.price).toEqual(500);
+      expect(json.username).toEqual('admin');
       done();
     });
   });

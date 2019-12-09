@@ -25,10 +25,38 @@ describe('Service Controller: PUT', () => {
         method: 'PUT',
         headers: {
           'Authorization': auth
+        },
+        json: {
+          title: 'a new title'
         }
       }, (err, res, body) => {
-        //console.log(body);
+        expect(res.statusCode).toBe(202);
+        expect(body.title).toBe('a new title');
         done();
+      });
+    });
+  });
+
+  it('should allow owner to add tags to service', async (done) => {
+    await getToken('user', (err, res, body) => {
+      let auth = 'Bearer ' + body.token;
+      request(user_service, {
+        method: 'PUT',
+        headers: {
+          'Authorization': auth
+        },
+        json: {
+          tags: ['fresh', 'fuzzy']
+        }
+      }, (err, res, body) => {
+        expect(res.statusCode).toBe(202);
+
+        request(user_service, { method: 'GET' }, (err, res, body) => {
+          let json = JSON.parse(body);
+          expect(json.tags[0]).toBe('fresh');
+          expect(json.tags[1]).toBe('fuzzy');
+          done();
+        });
       });
     });
   });
@@ -40,10 +68,13 @@ describe('Service Controller: PUT', () => {
         method: 'PUT',
         headers: {
           'Authorization': auth
+        },
+        json: {
+          title: 'should not work'
         }
       }, function(err, res, body) {
         expect(res.statusCode).toBe(403);
-        //expect(JSON.parse(body)['AuthorizationError']).toBe('Insufficient privileges');
+        expect(body['AuthorizationError']).toBe('Insufficient privileges');
         done();
         }
       );
@@ -57,8 +88,13 @@ describe('Service Controller: PUT', () => {
         method: 'PUT',
         headers: {
           'Authorization': auth
+        },
+        json: {
+          title: 'admin was here'
         }
       }, (err, res, body) => {
+        expect(res.statusCode).toBe(202);
+        expect(body.title).toBe('admin was here');
         done();
       });
     });
