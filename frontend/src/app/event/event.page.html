@@ -20,27 +20,29 @@
 <ion-content>
     <ion-grid>
         <ion-row class="ion-justify-content-center">
-            <ion-col size="5">
+            <ion-col size="auto">
                 <ion-card>
                     <ion-card-header  *ngIf="!isEditing">
-                        <ion-card-title>{{ event.name }}</ion-card-title>
+                        <ion-card-title>
+                            {{ event.name }}
+                            <ion-button (click)="editEvent()" class="ion-float-right">
+                                Edit Event
+                                <ion-icon name="create"></ion-icon>
+                            </ion-button>
+                        </ion-card-title>
                         <ion-card-subtitle>
-                            {{ event.description }}<br>
-                            <ion-label>on {{ dateFormatted }}</ion-label>
+                            {{ event.description }}<br><br>
+                            <ion-label>on {{ displayDate }}</ion-label>
                         </ion-card-subtitle>
-                        <ion-button (click)="editEvent()">
-                            Edit Event
-                            <ion-icon name="create"></ion-icon>
-                        </ion-button>
                     </ion-card-header>
                     <ion-card-header  *ngIf="isEditing">
                         <form (ngSubmit)="saveEvent(event)" novalidate [formGroup]="editForm">
                             <ion-title>
                                 Edit Event
-                                <ion-button type="submit" [disabled]="editForm.invalid">
+                                <ion-button type="submit" [disabled]="editForm.invalid" class="ion-float-right">
                                     Save Event
                                 </ion-button>
-                                <ion-button (click)="deleteEvent()" color="danger">
+                                <ion-button (click)="deleteEvent()" color="danger" class="ion-float-right">
                                     Delete Event
                                     <ion-icon name="trash" class="ion-padding"></ion-icon>
                                 </ion-button>
@@ -60,32 +62,40 @@
                                     picker-format="DD:MMM:YYYY"
                                     min="2019"
                                     max="2025"
-                                    value="{{ event.date }}"
                                     formControlName="date"
                                     expand="block"
-                                    required>
+                                    required
+                                >
                                 </ion-datetime>
                             </ion-item>
                         </form>
                     </ion-card-header>
-                    <ion-card-content >
-                        <ion-title>Services</ion-title>
-                        <ion-card *ngFor="let serviceCard of services">
-                            <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
-                                <ion-card-title>{{ serviceCard.service.title }}</ion-card-title>
-                                <ion-card-subtitle>{{ serviceCard.service.description }}</ion-card-subtitle>
-                            </ion-card-header>
-                            <ion-card-content>
-                                <p>by <a routerLink="/profile/{{ serviceCard.service.userId }}">{{ serviceCard.username }}</a></p>
-                                <p>Price: {{serviceCard.service.price}}</p>
-                                <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
-                                    <ion-label>{{ tag }}</ion-label>
-                                </ion-chip>
-                                <ion-button (click)="removeService(serviceCard)" *ngIf="isEditing" color="danger" expand="block">
-                                    Remove Service from Event
-                                </ion-button>
-                            </ion-card-content>
-                        </ion-card>
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-title>Services</ion-title>
+                            </ion-row>
+                            <ion-row class="ion-justify-content-center">
+                                <ion-col size="auto" *ngFor="let serviceCard of services">
+                                    <ion-card class="custom-ion-card">
+                                        <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
+                                            <ion-card-title>{{ serviceCard.service.title }}</ion-card-title>
+                                            <ion-card-subtitle>{{ serviceCard.service.description }}</ion-card-subtitle>
+                                        </ion-card-header>
+                                        <ion-card-content>
+                                            <p>by <a routerLink="/profile/{{ serviceCard.service.userId }}">{{ serviceCard.username }}</a></p>
+                                            <p>Price: {{serviceCard.service.price}}</p>
+                                            <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                                                <ion-label>{{ tag }}</ion-label>
+                                            </ion-chip>
+                                            <ion-button (click)="removeService(serviceCard)" *ngIf="isEditing" color="danger" expand="block">
+                                                Remove Service from Event
+                                            </ion-button>
+                                        </ion-card-content>
+                                    </ion-card>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
