@@ -41,11 +41,11 @@
                             Delete
                             <ion-icon name="trash" class="ion-padding"></ion-icon>
                         </ion-button>
-                        <ion-button *ngIf="!isMyService" size="default" expand="block" color="light" routerLink="/event-creator/{{ service.id }}">
+                        <ion-button *ngIf="!isMyService && isLoggedIn" size="default" expand="block" color="light" routerLink="/event-creator/{{ service.id }}">
                             Add to new Event
                             <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
                         </ion-button>
-                        <ion-button *ngIf="!isMyService && currentUserEvents.length > 0" size="default" expand="block" color="light" (click)="openEventSelect()">
+                        <ion-button *ngIf="!isMyService && currentUserEvents.length > 0 && isLoggedIn" size="default" expand="block" color="light" (click)="openEventSelect()">
                             <ion-label>Add to existing Event</ion-label>
                             <ion-select [(ngModel)]="selectedEventId" (ionChange)="addToExistingEvent()" #eventSelect>
                                 <ion-select-option *ngFor="let event of currentUserEvents" value="{{ event.id }}">
