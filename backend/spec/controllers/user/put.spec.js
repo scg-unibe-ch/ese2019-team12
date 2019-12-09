@@ -9,6 +9,15 @@ const admin_route = endpoint + '/1';
 
 describe('User Controller: PUT', () => {
 
+  it('should not allow unauthenticated requests', async (done) => {
+    await request(endpoint, { method: 'PUT' },
+      function(error, response, body) {
+        expect(response.statusCode).toBe(401);
+        expect(JSON.parse(body)['AuthorizationError']).toBe('Invalid token');
+        done();
+      });
+  });
+
   it('should allow user to update his profile', async (done) => {
     await getToken('bob', (error, response, body) => {
       let auth = 'Bearer ' + body.token;
@@ -69,4 +78,5 @@ describe('User Controller: PUT', () => {
       );
     });
   });
+
 });

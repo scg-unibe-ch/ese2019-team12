@@ -131,45 +131,70 @@ router.post('/:id/image', upload.single('service_image'), async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   let Service = getService(req);
+  let User = getUser(req);
   let Tag = getTag(req);
-  let toUpdate = await Service.findByPk(req.params.id);
-  if (!toUpdate) {
-    error404(res);
-    return;
-  }
-  let keys = Object.keys(req.body);
-  console.log(keys);
-  keys.forEach((key) => {
-    if(toUpdate[key] !== undefined) {
-      toUpdate[key] = req.body[key];
+
+  Promise.all([
+    Service.findByPk(req.params.id, { include: { model: Tag } }),
+    User.findByPk(req.user.sub)
+  ]).then(values => {
+    let service = values[0];
+    let user = values[1];
+
+    if(service == null) {
+      sendNotFoundError(res);
+    }
+    if(canUpdate(user, service)) {
+      update(service, req.body, res, Tag);
+    } else {
+      sendForbiddenError(res);
+    }
+  }).catch(err => {
+    sendInternalError(res, err);
+  });
+
+});
+
+function update(service, data, res, Tag) {
+  let keys = Object.keys(data);
+  keys.forEach(key => {
+    if(service[key] !== undefined && key !== 'tags'
+      && key !== 'id' && key !== 'userId') {
+      service[key] = data[key];
     }
   });
-  if(req.body.tags !== undefined) {
-    await findOrCreateTags(Tag, req.body.tags).then(() => {
-      toUpdate.getTags().then((tags) => {
-        toUpdate.removeTags(tags);
-        toUpdate.setTags(req.body.tags);
-        toUpdate.save();
-        res.status = 202;
-        res.send();
-      }).catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-      });
-    }).catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
+  if(data.tags !== undefined) {
+    updateTags(service, data.tags, res, Tag);
   } else {
-    console.log(toUpdate);
-    toUpdate.save().then(() => {
-      res.sendStatus(202);
-    }).catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
+    service.save().then((s) => {
+      res.status(202).send(s);
+    }).catch(err => {
+      sendInternalError(res, err);
     });
   }
-});
+}
+
+function updateTags(service, tags, res, Tag) {
+  findOrCreateTags(Tag, tags).then(() => {
+    service.getTags().then(t => {
+      service.removeTags(t);
+      service.setTags(tags);
+      service.save().then((s) => {
+        res.status(202).send(s);
+      }).catch(err => {
+        sendInternalError(res, err);
+      });
+    }).catch(err => {
+      sendInternalError(res, err);
+    });
+  }).catch(err => {
+    sendInternalError(res, err);
+  });
+}
+
+function canUpdate(user, service) {
+  return service.userId === user.id || user.isAdmin();
+}
 
 router.delete('/:id', async (req, res) => {
   let Service = getService(req);
