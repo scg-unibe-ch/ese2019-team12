@@ -60,10 +60,7 @@ describe('User Controller: GET', () => {
   it('should return \'not found\' for invalid user id', async (done) => {
     await request(endpoint + '/-1', { method: 'GET' }, 
       function (error, response, body) {
-        const json = JSON.parse(body);
-
-        expect(json['message']).toEqual('not found');
-        
+        expect(body).toContain('not found');
         done();
       }
     );
