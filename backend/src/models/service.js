@@ -20,18 +20,23 @@ const service = (sequelize, DataTypes) => {
   };
   Service.prototype.simplified = function() {
     let tags = [];
-    this.tags.forEach(tag => {
-      tags.push(tag.dataValues.name);
-    });
-    return {
+    if(this.tags !== undefined) {
+      this.tags.forEach(tag => {
+        tags.push(tag.dataValues.name);
+      });
+    }
+    result = {
       id: this.id,
       title: this.title,
       description: this.description,
       price: this.price,
       userId: this.userId,
-      username: this.user.username,
       tags
     }
+    if(this.user) {
+      result.username = this.username;
+    }
+    return result;
   }
   return Service;
 };

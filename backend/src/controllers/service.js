@@ -49,9 +49,11 @@ router.get('/user/:id', async (req, res) => {
     where: {
       userId: req.params.id
     },
-    include: {
+    include: [{
       model: Tag
-    }
+    }, {
+      model: User
+    }]
   }).then((services) => {
     if(!services) {
       res.send();
