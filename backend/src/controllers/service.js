@@ -44,6 +44,7 @@ router.get('/:id', async (req, res, next) => {
 router.get('/user/:id', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
+  let User = getUser(req);
 
   const services = await Service.findAll({
     where: {

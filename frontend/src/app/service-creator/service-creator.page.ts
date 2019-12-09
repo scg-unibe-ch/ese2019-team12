@@ -17,7 +17,7 @@ export class ServiceCreatorPage implements OnInit {
     isLoggedIn: boolean;
     currentUser: User;
     serviceForm: FormGroup;
-    service = new Service(null, null, '', '', '', null, []);
+    service = new Service(null, null, '', '', '', '', null, []);
     image: File;
     chips = [];
 

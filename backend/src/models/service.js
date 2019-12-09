@@ -25,7 +25,7 @@ const service = (sequelize, DataTypes) => {
         tags.push(tag.dataValues.name);
       });
     }
-    result = {
+    let result = {
       id: this.id,
       title: this.title,
       description: this.description,

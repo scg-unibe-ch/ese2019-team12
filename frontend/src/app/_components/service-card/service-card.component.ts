@@ -10,7 +10,7 @@ import { Service } from '../../_models/service';
 })
 
 export class ServiceCardComponent implements OnInit {
-  @Input() serviceCard;
+  @Input() service;
   serviceImage: SafeUrl;
   serviceHasImage: boolean;
 
@@ -20,7 +20,7 @@ export class ServiceCardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-      this.serviceService.downloadImage(this.serviceCard.service.id).subscribe(
+      this.serviceService.downloadImage(this.service.id).subscribe(
           data => {
               this.serviceHasImage = (data.size > 0);
               let objectURL = URL.createObjectURL(data);

@@ -54,7 +54,7 @@
         <ion-row class="ion-justify-content-center">
             <div *ngFor="let service of servicesToDisplay">
                 <ion-col size="auto">
-                    <app-service-card [serviceCard]="service"></app-service-card>
+                    <app-service-card [service]="service"></app-service-card>
                 </ion-col>
             </div>
             <div *ngIf="servicesToDisplay.length === 0">

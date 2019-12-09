@@ -14,7 +14,6 @@ import { User } from "../_models/user";
 export class ExplorePage implements OnInit {
 
     services: Service[];
-    optimizedServices = [];
     servicesToDisplay = [];
     searchForm: FormGroup;
     searchTerm: string;
@@ -46,19 +45,9 @@ export class ExplorePage implements OnInit {
         this.serviceService.getServices().subscribe(
             (data) => {
                 this.services = data;
-
-                // wrapping service into an object which 'adds' the username field
-                // to optimize backend calls.
-                // optimizedServices.username now holds the username of the service-provider.
-                // optimizedServices.service holds the service.
-                this.services.forEach(service => {
-                    this.userService.getUser(service.userId).subscribe(data => {
-                        this.optimizedServices.push({ username: data.username, service: service });
-                        this.searchedByTitle = this.optimizedServices;
-                        this.searchedByTags = this.optimizedServices;
-                        this.displayServices();
-                    });
-                });
+                this.searchedByTitle = this.services;
+                this.searchedByTags = this.services;
+                this.displayServices();
             },
             (err) => {
                 console.log("error message: " + err);
@@ -81,10 +70,10 @@ export class ExplorePage implements OnInit {
 
         this.searchTerm = this.searchForm.get('query').value;
         if (this.searchTerm === "") {
-            this.searchedByTitle = this.optimizedServices;
+            this.searchedByTitle = this.services;
         } else {
-            this.searchedByTitle = this.optimizedServices.filter(serviceCard => {
-                return (serviceCard.service.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1);
+            this.searchedByTitle = this.services.filter(service => {
+                return (service.title.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1);
             });
         }
 
@@ -96,12 +85,12 @@ export class ExplorePage implements OnInit {
 
         if (this.chips.length === 0) {
             // reset the filtered list if no tags are selected.
-            this.searchedByTags = this.optimizedServices;
+            this.searchedByTags = this.services;
         } else {
-            this.searchedByTags = this.optimizedServices.filter(serviceCard => {
+            this.searchedByTags = this.services.filter(service => {
                 let hasChip = false;
                 this.chips.forEach((chip) =>{
-                    if (serviceCard.service.tags.includes(chip)) {
+                    if (service.tags.includes(chip)) {
                         hasChip = true;
                     }
                 });
