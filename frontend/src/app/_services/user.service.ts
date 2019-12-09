@@ -42,6 +42,16 @@ export class UserService {
     return this.httpClient.get<any>(this.apiUrl + '/users/search/?email=' + email);
   }
 
+  uploadImage(id: number, file: File): Observable<any> {
+      let input = new FormData();
+      input.append('user_image', file);
+      return this.httpClient.post<File>(this.apiUrl + '/users/' + id + '/image', input);
+  }
+
+  downloadImage(id: number): Observable<Blob> {
+      return this.httpClient.get(this.apiUrl + '/users/' + id + '/image', { responseType: 'blob' });
+  }
+
   update(user: User): Observable<any> {
     return this.httpClient.put(this.apiUrl + '/users/' + user.id, {
       firstname: user.firstname,

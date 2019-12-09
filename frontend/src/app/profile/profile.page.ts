@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SessionService } from '../_services/session.service';
 import { UserService } from '../_services/user.service';
@@ -20,6 +21,9 @@ export class ProfilePage implements OnInit {
     profile: User;
     isMe: boolean;
     currentUser: User;
+    userImage: SafeUrl;
+    userHasImage: boolean;
+    imageToUpload: File;
     isLoggedIn: boolean;
     isEditing: boolean;
     editForm: FormGroup;
@@ -32,7 +36,8 @@ export class ProfilePage implements OnInit {
       private sessionService: SessionService,
       private userService: UserService,
       private serviceService: ServiceService,
-      private eventService: EventService
+      private eventService: EventService,
+      private sanitizer: DomSanitizer
     ) {}
 
     ngOnInit() {
@@ -44,6 +49,13 @@ export class ProfilePage implements OnInit {
         this.route.data.subscribe(
             (data: {profile: User}) => {
                 this.profile = data.profile;
+                this.userService.downloadImage(this.profile.id).subscribe(
+                    data => {
+                        this.userHasImage = (data.size > 0);
+                        let objectURL = URL.createObjectURL(data);
+                        this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                    }
+                )
 
                 // if its you, its true :)
                 this.isMe = (this.isLoggedIn) ? (this.profile.id === this.currentUser.id) : false;
@@ -51,7 +63,8 @@ export class ProfilePage implements OnInit {
                 this.editForm = new FormGroup({
                     firstname: new FormControl(this.profile.firstname, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
                     lastname: new FormControl(this.profile.lastname, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü ]*')]),
-                    bio: new FormControl(this.profile.bio, [Validators.maxLength(500)])
+                    bio: new FormControl(this.profile.bio, [Validators.maxLength(200)]),
+                    file: new FormControl('')
                 });
 
                 this.getServicesOfUser();
@@ -92,9 +105,20 @@ export class ProfilePage implements OnInit {
 
         this.userService.update(this.profile).subscribe(
             data => {
-
+                if (this.imageToUpload) {
+                    this.userService.uploadImage(this.currentUser.id, this.imageToUpload).subscribe(
+                        (data) => {}
+                    )
+                }
             }
         );
         this.isEditing = false;
+    }
+
+    processImage(event) {
+        this.imageToUpload = (event.target as HTMLInputElement).files[0];
+        let objectURL = URL.createObjectURL(this.imageToUpload);
+        this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        this.userHasImage = true;
     }
 }

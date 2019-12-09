@@ -26,7 +26,8 @@
                         <ion-row class="ion-padding">
                             <ion-col size="auto">
                                 <ion-avatar class="useravatar ion-padding">
-                                    <img src="../../assets/defaultAvatar.png">
+                                    <img [src]="userImage" *ngIf="userHasImage">
+                                    <img src="../../assets/defaultAvatar.png" *ngIf="!userHasImage">
                                 </ion-avatar>
                             </ion-col>
                             <ion-col size="auto" *ngIf="!isEditing">
@@ -48,6 +49,10 @@
                                     <ion-item>
                                         <ion-label color="primary">Last Name</ion-label>
                                         <ion-input name="lastname" formControlName="lastname" type="text" inputmode="text" required></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label color="primary">Upload a picture</ion-label>
+                                        <ion-input formControlName="file" name="user_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
                                     </ion-item>
                                     <ion-item>
                                         <ion-label color="primary">Bio</ion-label>
