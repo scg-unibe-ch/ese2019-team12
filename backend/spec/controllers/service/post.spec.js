@@ -28,10 +28,10 @@ describe('Service Controller: POST', () => {
         }
       }, (err, res, body) => {
         expect(res.statusCode).toBe(201);
-        //expect(body.userId).toEqual('2');
-        //expect(body.title).toEqual('service101');
-        //expect(body.description).toEqual('a new service');
-        //expect(body.price).toEqual('5000000000000000000');
+        expect(body.userId).toEqual('2');
+        expect(body.title).toEqual('service101');
+        expect(body.description).toEqual('a new service');
+        expect(body.price).toEqual('5000000000000000000');
         done();
       });
     });

@@ -4,7 +4,7 @@ export function sendNotFoundError(res){
 }
 
 export function sendInternalError(res, err){
-  console.log(err);
+  console.log('Internal Error: ', err);
   res.statusCode = 500;
   res.send();
 }
@@ -21,7 +21,7 @@ export function handleSequelizeErrors(res, err) {
     const errorMsg = e.message;
 
     if(errorType !== 'Validation error' && errorType !== 'unique violation') {
-      console.log(e);
+      console.log('Internal Error: ', e);
     }
     if(msg[e.type] === undefined){
       msg[e.type] = [];

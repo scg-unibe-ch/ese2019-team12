@@ -1,21 +1,13 @@
 import { Router } from 'express';
+import { Sequelize } from 'sequelize';
+import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper';
 
 const router = Router();
+const Op = Sequelize.Op;
 
-router.get('/', async (req, res) => {
-  let Event = getEvent(req);
-  let Service = getService(req);
-  let Tag = getTag(req);
-
-  // Include service model and include the tags but exclude the model which links tags and services
-  Event.findAll({ include: { model: Service, through: { attributes: [] },
-                    include: { model: Tag, through: { attributes: [] }}}}).then(events => {
-    res.send(jsonFromEvents(events));
-  }).catch(err => {
-    console.log(err);
-    res.status = 500;
-    res.send();
-  });
+router.get('/', async (req, res) => { 
+  // Nobody can see all events
+  res.send({});
 });
 
 router.get('/:id', async (req, res) => {
@@ -23,20 +15,25 @@ router.get('/:id', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
 
-  Event.findByPk(req.params.id, {
-    include: { model: Service, through: { attributes: [] },
-        include: { model: Tag, through: { attributes: [] }}}}).then(e => {
-    if(!e) {
-      error404(res);
-      return;
-    }
-    res.status = 200;
-    res.send(e.simplified());
-  }).catch(err => {
-    console.log(err);
-    res.status = 500;
-    res.send();
-  });
+  Event.findOne(
+    { 
+      where: {
+        [Op.and]: [{ id: req.params.id }, { userId: req.user.sub }]
+      },
+      include: { model: Service, through: { attributes: [] },
+        include: { model: Tag, through: { attributes: [] }}
+      }
+    }).then(e => {
+      
+      if(e === null) {
+        sendNotFoundError(res);
+      } else {
+        res.status(200).send(e.simplified());
+      }
+    }).catch(err => {
+      sendInternalError(res, err);
+      res.send();
+    });
 });
 
 router.get('/user/:id', async (req, res) => {
@@ -47,7 +44,7 @@ router.get('/user/:id', async (req, res) => {
   Event.findAll(
       {
           where: {
-              userId: req.params.id
+              userId: req.user.sub
           },
           include: {
               model: Service,
@@ -64,8 +61,7 @@ router.get('/user/:id', async (req, res) => {
       }).then(events => {
     res.send(jsonFromEvents(events));
   }).catch(err => {
-    console.log(err);
-    res.sendStatus(500);
+    sendInternalError(res, err);
   });
 });
 
@@ -78,11 +74,9 @@ router.post('/', async (req, res) => {
     if(hasServices(req)) {
       e.setServices(req.body.services);
     }
-    res.status = 201;
-    res.send();
+    res.status(201).send(e);
   }).catch(err => {
-    console.log(err);
-    res.sendStatus(500);
+    sendInternalError(res, err);
   });
 });
 
@@ -90,53 +84,73 @@ router.put('/:id', async (req, res) => {
   let Event = getEvent(req);
   Event.findByPk(req.params.id).then(e => {
     if (!e) {
-      error404(res);
-      return
+      sendNotFoundError(res);
     }
-    let keys = Object.keys(req.body);
-    keys.forEach(key => {
-      if(e[key] !== undefined) {
-        e[key] = req.body[key];
+
+    if(canWrite(req.user.sub, e)) {
+      let keys = Object.keys(req.body);
+      keys.forEach(key => {
+        if(e[key] !== undefined) {
+          e[key] = req.body[key];
+        }
+      });
+      if(hasServices(req)) {
+        e.setServices(req.body.services);
       }
-    });
-    if(hasServices(req)) {
-      e.setServices(req.body.services);
+      e.save().then(() => {
+        res.status(202).send(e);
+      }).catch(err => {
+        sendInternalError(res, err);
+      });
+    } else {
+      sendForbiddenError(res);
     }
-    e.save().then(() => {
-      res.send();
-    }).catch(err => {
-      console.log(err);
-      res.sendStatus(500);
-    });
   }).catch(err => {
-    console.log(err);
-    res.sendStatus(500)
+    sendInternalError(res, err);
   });
 });
+
 router.delete('/:id', async (req, res) => {
   let Event = getEvent(req);
-  let toDelete = await Event.findByPk(req.params.id);
-  if(!toDelete) {
-    error404(res);
-    return;
-  }
-  await toDelete.destroy();
-  res.statusCode = 204;
-  res.send();
+  let User = getUser(req);
+  Event.findByPk(req.params.id).then(e => {
+    if(!e) {
+      sendNotFoundError(res);
+    }
+    if(canWrite(req.user.sub, e)) {
+      e.destroy().then(() => {
+        res.status(204).send();
+      }).catch(err => {
+        sendInternalError(res, err);
+      });
+    } else {
+      sendForbiddenError(res);
+    }
+  }).catch(err => {
+    sendInternalError(res, err);
+  });
 });
+
+function canWrite(userId, event) {
+  return Number(userId) === event.userId;
+}
 
 function getEvent(req) {
   return req.context.models.Event;
 }
+
 function getService(req) {
   return req.context.models.Service;
 }
+
 function getTag(req) {
   return req.context.models.Tag;
 }
+
 function hasServices(req) {
   return req.body.services !== undefined;
 }
+
 function jsonFromEvents(events) {
   if (!events) {
     return [];
@@ -147,10 +161,9 @@ function jsonFromEvents(events) {
   }
   return result;
 }
-function error404(res){
-  res.statusCode = 404;
-  res.json({
-    'message': 'not found'
-  });
+
+function getUser(req) {
+  return req.context.models.User;
 }
+
 export default router;
