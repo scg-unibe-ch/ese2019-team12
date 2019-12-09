@@ -54,13 +54,13 @@ export class EventPage implements OnInit {
                         data => {
                             if (data.size > 0) {
                                 const objectURL = URL.createObjectURL(data);
-                                let serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: service});
+                                const serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: Service});
                             } else {
-                                this.optimizedServices.push({hasImage: false, service: service});
+                                this.optimizedServices.push({hasImage: false, service: Service});
                             }
                         }
-                    )
+                    );
                 });
 
                 this.editForm = new FormGroup({
@@ -69,7 +69,7 @@ export class EventPage implements OnInit {
                     date: new FormControl(this.formattedDate, [Validators.required])
                 });
             }
-        )
+        );
     }
 
     editEvent() {
