@@ -89,14 +89,14 @@ export class ProfilePage implements OnInit {
                         data => {
                             if (data.size > 0) {
                                 const objectURL = URL.createObjectURL(data);
-                                let serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: service});
+                                const serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                this.optimizedServices.push({hasImage: true, image: serviceImage, service});
                             } else {
-                                this.optimizedServices.push({hasImage: false, service: service});
+                                this.optimizedServices.push({hasImage: false, service});
                             }
                         }
-                    )
-                })
+                    );
+                });
             }
         );
     }
