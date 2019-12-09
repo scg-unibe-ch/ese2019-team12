@@ -12,7 +12,8 @@ export const serviceAuthFilter = ((req) => {
 router.get('/', async (req, res) => {
   let Service = getService(req);
   let Tag = getTag(req);
-  Service.findAll({ include: { model: Tag } }).then((services) => {
+  let User = getUser(req);
+  Service.findAll({ include: [{ model: Tag }, { model: User }] }).then((services) => {
     if(!services) {
       res.send([]);
     }
@@ -27,7 +28,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res, next) => {
   let Service = getService(req);
   let Tag = getTag(req);
-  await Service.findByPk(req.params.id, { include: { model: Tag }}).then(service => {
+  let User = getUser(req);
+  await Service.findByPk(req.params.id, { include: [{ model: Tag }, { model: User }]}).then(service => {
     if(!service) {
       error404(res);
       return;
