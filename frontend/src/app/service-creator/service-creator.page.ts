@@ -35,7 +35,7 @@ export class ServiceCreatorPage implements OnInit {
         }
 
         this.serviceForm = new FormGroup({
-            title: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
+            title: new FormControl('', [Validators.required, Validators.maxLength(30)]),
             description: new FormControl('', [Validators.required]),
             price: new FormControl('', [Validators.required]),
             tagInput: new FormControl(''),
