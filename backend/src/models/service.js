@@ -34,7 +34,7 @@ const service = (sequelize, DataTypes) => {
       tags
     }
     if(this.user) {
-      result.username = this.username;
+      result.username = this.user.username;
     }
     return result;
   }
