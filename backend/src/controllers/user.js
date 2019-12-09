@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { Sequelize } from 'sequelize';
 import { upload } from '../helpers/upload.helper';
 import  'dotenv/config';
+import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper';
 var path = require('path');
 
 const Op = Sequelize.Op;
@@ -31,7 +32,7 @@ router.get('/:userId', async (req, res, next) => {
         res.send(user);
       }
     }).catch(err => {
-      sendInternalError(err, res);
+      sendInternalError(res, err);
     });
   }
   next();
@@ -49,7 +50,7 @@ router.post('/', async (req, res) => {
     res.statusCode = 201;
     res.send(user);
   }).catch( err => {
-    res.send(handleErrors(err));
+    res.send(handleSequelizeErrors(res, err));
   });
 });
 
@@ -67,7 +68,7 @@ router.get('/:id/image', async (req, res) => {
       res.send();
     }
   }).catch(err => {
-    sendInternalError(err, res);
+    sendInternalError(res, err);
   });
 });
 
@@ -78,10 +79,10 @@ router.post('/:id/image', upload.single('user_image'), async (req, res) => {
     user.save().then(() => {
       res.send();
     }).catch(err => {
-      sendInternalError(err, res);
+      sendInternalError(res, err);
     });
   }).catch(err => {
-    sendInternalError(err, res);
+    sendInternalError(res, err);
   });
 });
 
@@ -95,7 +96,7 @@ router.put('/:id', async (req, res) => {
         sendForbiddenError(res);
       }
     }).catch(err => {
-      sendInternalError(err, res);
+      sendInternalError(res, err);
     });
   } else {
     updateUser(User, req, res);
@@ -112,7 +113,7 @@ router.delete('/:id', async (req, res) => {
         sendForbiddenError(res);
       }
     }).catch(err => {
-      sendInternalError(err, res);
+      sendInternalError(res, err);
     });;
   } else {
     deleteUser(req.params.id, User, res);
@@ -135,10 +136,10 @@ function updateUser(User, req, res) {
       res.statusCode = 200;
       res.send(user);
     }).catch(err => {
-      sendInternalError(err, res);
+      sendInternalError(res, err);
     });
   }).catch(err => {
-    sendInternalError(err, res);
+    sendInternalError(res, err);
   });
 }
 function deleteUser(id, User, res) {
@@ -150,7 +151,7 @@ function deleteUser(id, User, res) {
     res.statusCode = 204;
     res.send();
   }).catch(err => {
-    sendInternalError(err, res);
+    sendInternalError(res, err);
   });
 };
 
@@ -182,39 +183,6 @@ router.get('/search', async (req, res) => {
 
 function getUser(req) {
   return req.context.models.User;
-}
-
-function sendNotFoundError(res){
-  res.statusCode = 404;
-  res.send({ 'message': 'not found' });
-}
-
-function sendInternalError(err, res){
-  console.log(err);
-  res.statusCode = 500;
-  res.send();
-}
-
-function sendForbiddenError(res) {
-  res.statusCode = 403;
-  res.send({ 'AuthorizationError': 'Insufficient privileges' });
-}
-
-function handleErrors(err) {
-  let msg = {};
-  err.errors.forEach(e => {
-    const errorType = e.type;
-    const errorMsg = e.message;
-
-    if(errorType !== 'Validation error' && errorType !== 'unique violation') {
-      console.log(e);
-    }
-    if(msg[e.type] === undefined){
-      msg[e.type] = [];
-    }
-    msg[e.type].push(e.message);
-  });
-  return msg;
 }
 
 export default router;
