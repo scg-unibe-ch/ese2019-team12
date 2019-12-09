@@ -23,10 +23,10 @@ export class ServicePage implements OnInit {
 
     isLoggedIn: boolean;
     isMyService: boolean;
-    flag: boolean = false; // thank ionic for that, firing the onChange twice of select...
+    flag = false; // thank ionic for that, firing the onChange twice of select...
     currentUser: User;
     currentUserEvents = [];
-    selectedEventId;
+    selectedEventId: number;
     serviceUser = new User(null, '', '', '', '', '', '', Role.User);
     service: Service;
     serviceImage: SafeUrl;

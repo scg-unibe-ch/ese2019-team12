@@ -108,7 +108,7 @@ export class ProfilePage implements OnInit {
             data => {
                 if (this.imageToUpload) {
                     this.userService.uploadImage(this.currentUser.id, this.imageToUpload).subscribe(
-                        (data) => {}
+                        data => {}
                     );
                 }
             }
