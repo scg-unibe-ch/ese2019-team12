@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { AuthGuard } from '../auth/auth.guard'
 
 import { EventCreatorPage } from './event-creator.page';
 import { EventCreatorResolver } from '../_services/event-creator-resolver.service';
@@ -10,15 +11,16 @@ import { EventCreatorResolver } from '../_services/event-creator-resolver.servic
 const eventCreatorRouting: ModuleWithProviders = RouterModule.forChild([
     {
         path: 'event-creator',
-        component: EventCreatorPage
+        component: EventCreatorPage,
+        canActivate: [AuthGuard]
     },
     {
         path: 'event-creator/:id',
         component: EventCreatorPage,
+        canActivate: [AuthGuard],
         resolve: {
             serviceId: EventCreatorResolver
         }
-        // add AuthGuard if it works
     }
 ]);
 

@@ -76,19 +76,19 @@
                                 <ion-title>Services</ion-title>
                             </ion-row>
                             <ion-row class="ion-justify-content-center">
-                                <ion-col size="auto" *ngFor="let serviceCard of services">
+                                <ion-col size="auto" *ngFor="let service of services">
                                     <ion-card class="custom-ion-card">
-                                        <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
-                                            <ion-card-title>{{ serviceCard.service.title }}</ion-card-title>
-                                            <ion-card-subtitle>{{ serviceCard.service.description }}</ion-card-subtitle>
+                                        <ion-card-header routerLink="/service/{{ service.id }}">
+                                            <ion-card-title>{{ service.title }}</ion-card-title>
+                                            <ion-card-subtitle>{{ service.description }}</ion-card-subtitle>
                                         </ion-card-header>
                                         <ion-card-content>
-                                            <p>by <a routerLink="/profile/{{ serviceCard.service.userId }}">{{ serviceCard.username }}</a></p>
-                                            <p>Price: {{serviceCard.service.price}}</p>
-                                            <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                                            <p>by <a routerLink="/profile/{{ service.userId }}">{{ service.username }}</a></p>
+                                            <p>Price: {{ service.price }}</p>
+                                            <ion-chip outline color="primary" *ngFor="let tag of service.tags">
                                                 <ion-label>{{ tag }}</ion-label>
                                             </ion-chip>
-                                            <ion-button (click)="removeService(serviceCard)" *ngIf="isEditing" color="danger" expand="block">
+                                            <ion-button (click)="removeService(service)" *ngIf="isEditing" color="danger" expand="block">
                                                 Remove Service from Event
                                             </ion-button>
                                         </ion-card-content>
