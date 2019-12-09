@@ -28,6 +28,7 @@ export class ProfilePage implements OnInit {
     isEditing: boolean;
     editForm: FormGroup;
     services: Service[] = [];
+    optimizedServices = [];
     events: Event[] = [];
     event: Event;
 
@@ -83,6 +84,19 @@ export class ProfilePage implements OnInit {
         this.serviceService.getServicesOfUser(this.profile.id).subscribe(
             (data) => {
                 this.services = data;
+                this.services.forEach(service => {
+                    this.serviceService.downloadImage(service.id).subscribe(
+                        data => {
+                            if (data.size > 0) {
+                                const objectURL = URL.createObjectURL(data);
+                                let serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: service});
+                            } else {
+                                this.optimizedServices.push({hasImage: false, service: service});
+                            }
+                        }
+                    )
+                })
             }
         );
     }

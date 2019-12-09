@@ -20,7 +20,7 @@ export class EventPage implements OnInit {
   editForm: FormGroup;
   currentUser: User;
   event: Event = new Event(null, null, '', '', '', []);
-  services = [];
+  services: Service[];
   displayDate: string;
   formattedDate: string;
 
@@ -44,21 +44,13 @@ export class EventPage implements OnInit {
       this.route.data.subscribe(
           (data: {event: Event}) => {
               this.event = data.event;
+              this.services = this.event.services;
               this.formatDate(this.event.date);
 
               this.editForm = new FormGroup({
                   name: new FormControl(this.event.name, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
                   description: new FormControl(this.event.description, [Validators.required, Validators.maxLength(200), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
                   date: new FormControl(this.formattedDate, [Validators.required])
-              });
-
-              this.event.services.forEach(service => {
-                  this.userService.getUser(service.userId).subscribe(data => {
-                      this.services.push({
-                          username: data.username,
-                          service: Service
-                      });
-                  });
               });
           }
       )
@@ -80,8 +72,8 @@ export class EventPage implements OnInit {
       this.event.description = this.editForm.get('description').value;
       this.event.date = this.editForm.get('date').value;
       this.formatDate(this.event.date);
-      this.event.services = this.services.map(serviceCard => {
-          return serviceCard.service.id;
+      this.event.services = this.services.map(service => {
+          return service.id;
       });
 
       this.eventService.update(this.event).subscribe(
@@ -107,9 +99,5 @@ export class EventPage implements OnInit {
       const formattedDate = year + '-' + month + '-' + day;
       this.displayDate = displayDate;
       this.formattedDate = formattedDate;
-  }
-
-  ionViewDidLeave() {
-      this.services = [];
   }
 }
