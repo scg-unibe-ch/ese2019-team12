@@ -4,7 +4,7 @@ import { upload } from '../helpers/upload.helper'
 import 'dotenv/config'
 import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper'
 import { getUser, deleteUser, updateUser } from '../helpers/user.helper'
-import path from 'path'
+import * as path from 'path'
 
 const Op = Sequelize.Op
 
