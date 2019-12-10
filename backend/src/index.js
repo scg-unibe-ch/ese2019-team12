@@ -6,7 +6,6 @@ import controllers from './controllers'
 import { userAuthFilter } from './helpers/user.helper'
 import { serviceAuthFilter } from './helpers/service.helper'
 import { checkIfAuthenticated, handleAuthError } from './helpers/session.helper'
-import { upload } from './helpers/upload.helper'
 
 const app = express()
 
@@ -20,8 +19,7 @@ app.use(function (req, res, next) {
 app.use(express.json())
 app.use(async (req, res, next) => {
   req.context = {
-    models,
-    upload
+    models
   }
   next()
 })
