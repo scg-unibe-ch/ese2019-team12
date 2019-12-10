@@ -80,13 +80,24 @@
                                 <ion-col size="auto" *ngFor="let serviceCard of optimizedServices">
                                     <ion-card class="custom-ion-card">
                                         <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage">
-                                        <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
-                                            <ion-card-title>{{ serviceCard.service.title }}</ion-card-title>
-                                            <ion-card-subtitle>{{ serviceCard.service.description }}</ion-card-subtitle>
+                                        <ion-card-header>
+                                            <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
+                                            <ion-card-subtitle>
+                                                <p class="byUser">by:
+                                                    <ion-chip routerLink="/profile/{{ service.userId }}"color="primary">
+                                                        <ion-icon name="contact"></ion-icon>
+                                                        <ion-label>
+                                                            {{ serviceCard.service.username }}
+                                                        </ion-label>
+                                                    </ion-chip>
+                                                </p>
+                                            </ion-card-subtitle>
                                         </ion-card-header>
                                         <ion-card-content>
-                                            <p>by <a routerLink="/profile/{{ serviceCard.service.userId }}">{{ serviceCard.service.username }}</a></p>
-                                            <p>Price: {{ serviceCard.service.price }}</p>
+                                            {{ serviceCard.service.description }}
+                                            <br><br>
+                                            Price: {{ serviceCard.service.price }}.-
+                                            <br>
                                             <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
                                                 <ion-label>{{ tag }}</ion-label>
                                             </ion-chip>
