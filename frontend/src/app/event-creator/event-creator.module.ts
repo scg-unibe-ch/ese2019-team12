@@ -1,9 +1,9 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { AuthGuard } from '../auth/auth.guard'
+import { AuthGuard } from '../auth/auth.guard';
 
 import { EventCreatorPage } from './event-creator.page';
 import { EventCreatorResolver } from '../_services/event-creator-resolver.service';

@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
@@ -76,7 +76,6 @@ export class AppComponent implements OnInit {
         private platform: Platform,
         private splashScreen: SplashScreen,
         private statusBar: StatusBar,
-        private httpClient: HttpClient,
         private session: SessionService,
     ) {
         this.initializeApp();

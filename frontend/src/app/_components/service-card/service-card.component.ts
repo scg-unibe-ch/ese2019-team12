@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ServiceService } from '../../_services/service.service';
-import { Service } from '../../_models/service';
 
 @Component({
   selector: 'app-service-card',

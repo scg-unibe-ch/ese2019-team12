@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { UserService } from './user.service';
-import { SessionService } from './session.service';
 import { ServiceService } from './service.service';
 
 import { Service } from '../_models/service';

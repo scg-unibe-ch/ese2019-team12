@@ -1,6 +1,5 @@
-import { FormControl, ValidationErrors } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { UserService } from '../_services/user.service';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export class AsyncValidators {

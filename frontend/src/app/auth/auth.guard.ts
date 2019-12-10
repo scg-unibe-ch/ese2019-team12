@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SessionService } from '../_services/session.service';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, Route } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({

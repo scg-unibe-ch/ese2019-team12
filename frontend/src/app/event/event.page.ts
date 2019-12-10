@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EventService } from '../_services/event.service';
 import { SessionService } from '../_services/session.service';
 import { ServiceService } from '../_services/service.service';
@@ -30,7 +30,6 @@ export class EventPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private sessionService: SessionService,
-        private userService: UserService,
         private serviceService: ServiceService,
         private eventService: EventService,
         private sanitizer: DomSanitizer
@@ -55,10 +54,10 @@ export class EventPage implements OnInit {
                             if (data.size > 0) {
                                 const objectURL = URL.createObjectURL(data);
                                 const serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: service});
+                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: Service});
                                 console.log(this.optimizedServices);
                             } else {
-                                this.optimizedServices.push({hasImage: false, service: service});
+                                this.optimizedServices.push({hasImage: false, service: Service});
                                 console.log(this.optimizedServices);
                             }
                         }

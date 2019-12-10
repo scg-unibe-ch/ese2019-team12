@@ -5,9 +5,7 @@ import { SessionService } from '../_services/session.service';
 import { EventService } from '../_services/event.service';
 import { User } from '../_models/user';
 import { Event } from '../_models/event';
-import { Role } from '../_models/role';
 import { AlertController } from '@ionic/angular';
-import { Service } from '../_models/service';
 
 @Component({
     selector: 'app-event-creator',

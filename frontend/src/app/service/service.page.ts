@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonSelect } from '@ionic/angular';
 import { SessionService } from '../_services/session.service';
 import { ServiceService } from '../_services/service.service';
@@ -13,7 +12,6 @@ import { Role } from '../_models/role';
 import { Service } from '../_models/service';
 import { Event } from '../_models/event';
 import { AlertController } from '@ionic/angular';
-import { present } from '@ionic/core/dist/types/utils/overlays';
 
 @Component({
   selector: 'app-service',
