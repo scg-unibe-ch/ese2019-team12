@@ -188,7 +188,7 @@ export class ProfilePage implements OnInit {
      * @return  the color to paint the label as.
      */
     getColorOfTab(id) {
-        return (id === this.cardsView) ? 'primary' : 'dark';
+        return (id === this.cardsView) ? '' : 'primary';
     }
 
     /**
