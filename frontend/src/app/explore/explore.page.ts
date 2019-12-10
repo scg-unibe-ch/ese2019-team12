@@ -32,6 +32,11 @@ export class ExplorePage implements OnInit {
     ) {}
 
     ngOnInit() {
+        // checking if logged in.
+        this.isLoggedIn = this.sessionService.isLoggedIn();
+        if (this.isLoggedIn) {
+            this.currentUser = this.sessionService.getCurrentUser();
+        }
 
         // initalizing searchbars
         this.searchForm = new FormGroup({
@@ -56,12 +61,6 @@ export class ExplorePage implements OnInit {
 
         this.searchType = 'Title';
         this.tagsSearch = false;
-
-        // checking if logged in.
-        this.isLoggedIn = this.sessionService.isLoggedIn();
-        if (this.isLoggedIn) {
-            this.currentUser = this.sessionService.getCurrentUser();
-        }
     }
 
     // filters our Array and then sets the services array to the services that are left matching the search

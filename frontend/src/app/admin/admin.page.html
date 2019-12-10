@@ -1,10 +1,8 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="end">
-            <ion-chip outline routerLink="/profile/me" *ngIf="isLoggedIn && !isMe">
-                <ion-avatar>
-                    <img src="../../assets/defaultAvatar.png">
-                </ion-avatar>
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-icon name="contact"></ion-icon>
                 <ion-label>
                     {{ currentUser.username }}
                 </ion-label>
@@ -12,12 +10,12 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            Profile
+            Admin Panel
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-
+    <h1 class="ion-padding">Enjoy your good-for-nothing privileges :)</h1>
 </ion-content>

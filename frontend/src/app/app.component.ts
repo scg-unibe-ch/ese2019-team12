@@ -39,6 +39,10 @@ export class AppComponent implements OnInit {
             url: '/service-creator',
         },
         {
+            title: 'Add Event',
+            url: '/event-creator',
+        },
+        {
             title: 'Log Out',
             url: '/logout',
         }

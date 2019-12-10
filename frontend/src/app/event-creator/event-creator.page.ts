@@ -63,7 +63,7 @@ export class EventCreatorPage implements OnInit {
 
         this.eventService.create(this.event).subscribe(
             data => {
-                this.router.navigate(['/profile/me']);
+                this.router.navigate(['/event/' + data.id]);
             }
         );
 

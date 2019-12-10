@@ -5,9 +5,7 @@
         </ion-title>
         <ion-buttons slot="end">
             <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
-                <ion-avatar>
-                    <img src="../../assets/defaultAvatar.png">
-                </ion-avatar>
+                <ion-icon name="contact"></ion-icon>
                 <ion-label>
                     {{ currentUser.username }}
                 </ion-label>

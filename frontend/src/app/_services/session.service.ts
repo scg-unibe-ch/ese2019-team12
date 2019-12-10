@@ -1,8 +1,10 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { UserService } from './user.service';
 
 import { User } from '../_models/user';
 
@@ -13,11 +15,14 @@ export class SessionService {
   @Output()
   currentRole: EventEmitter<any> = new EventEmitter();
   currentUser: User;
+  currentUserProfilePicture: SafeUrl;
 
   apiUrl = 'http://localhost:3000';
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private userService: UserService,
+    private sanitizer: DomSanitizer
   ) {}
 
   login(login: string, password: string) {

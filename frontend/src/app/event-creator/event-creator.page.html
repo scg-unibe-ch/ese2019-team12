@@ -1,10 +1,8 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="end">
-            <ion-chip outline routerLink="/profile/me" *ngIf="isLoggedIn">
-                <ion-avatar>
-                    <img src="../../assets/defaultAvatar.png">
-                </ion-avatar>
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-icon name="contact"></ion-icon>
                 <ion-label>
                     {{ currentUser.username }}
                 </ion-label>
