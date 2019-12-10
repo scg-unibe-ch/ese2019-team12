@@ -69,8 +69,10 @@ export class EventCreatorPage implements OnInit {
                 this.router.navigate(['/event/' + data.id]);
             }
         );
-        this.presentAlert(this.event);
 
+        if (this.serviceIdToAdd > 0) {
+            this.presentAlert(this.event);
+        }
     }
 
     async presentAlert(selectedEvent: Event) {
