@@ -31,6 +31,7 @@ export class ProfilePage implements OnInit {
     optimizedServices = [];
     events: Event[] = [];
     event: Event;
+    cardsView: number = 0;
     updateMasonryLayout: boolean;
 
     constructor(
@@ -108,6 +109,7 @@ export class ProfilePage implements OnInit {
         this.eventService.getEventsOfUser(this.profile.id).subscribe(
             (data) => {
                 this.events = data;
+                this.updateMasonryLayout = true;
             }
         );
     }
@@ -138,6 +140,15 @@ export class ProfilePage implements OnInit {
         const objectURL = URL.createObjectURL(this.imageToUpload);
         this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         this.userHasImage = true;
+    }
+
+    changeViewedCards(id) {
+        this.cardsView = id;
+        this.updateMasonryLayout = true;
+    }
+
+    getColorOfTab(id) {
+        return (id === this.cardsView) ? 'primary' : 'dark';
     }
 
     ionViewDidLeave() {

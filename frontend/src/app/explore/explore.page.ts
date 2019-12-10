@@ -49,7 +49,12 @@ export class ExplorePage implements OnInit {
 
         this.searchTerm = this.searchForm.get('query').value;
 
-        // getting all services from backend (not suitable for the future)
+        this.searchType = 'Title';
+        this.tagsSearch = false;
+    }
+
+    // getting all services from backend (not suitable for the future)
+    getServices() {
         this.serviceService.getServices().subscribe(
             (data) => {
                 this.services = data;
@@ -61,9 +66,6 @@ export class ExplorePage implements OnInit {
                 console.log('error message: ' + err);
             }
         );
-
-        this.searchType = 'Title';
-        this.tagsSearch = false;
     }
 
     // filters our Array and then sets the services array to the services that are left matching the search
@@ -153,5 +155,10 @@ export class ExplorePage implements OnInit {
     switchSearch() {
         this.tagsSearch = !this.tagsSearch;
         this.searchType = (this.tagsSearch) ? 'Tags' : 'Title';
+    }
+
+    ionViewDidEnter() {
+        this.updateMasonryLayout = true;
+        this.getServices();
     }
 }

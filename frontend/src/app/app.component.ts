@@ -18,54 +18,66 @@ export class AppComponent implements OnInit {
     public publicPages = [
         {
             title: 'Explore',
+            icon: 'planet',
             url: '/explore',
         },
         {
             title: 'Login or Register',
+            icon: 'log-in',
             url: '/login',
         }
     ];
     public userPages = [
         {
             title: 'Explore',
+            icon: 'planet',
             url: '/explore',
         },
         {
             title: 'Profile',
+            icon: 'contact',
             url: '/profile/me',
         },
         {
             title: 'Add Service',
+            icon: 'add-circle-outline',
             url: '/service-creator',
         },
         {
             title: 'Add Event',
+            icon: 'add-circle-outline',
             url: '/event-creator',
         },
         {
             title: 'Log Out',
+            icon: 'power',
             url: '/logout',
         }
     ];
     public adminPages = [
         {
             title: 'Admin',
+            icon: 'code-working',
             url: '/admin'
         },
         {
             title: 'Explore',
+            icon: 'planet',
             url: '/explore',
         },
         {
             title: 'Profile',
+            icon: 'contact',
             url: '/profile/me',
         },
         {
             title: 'Add Service',
+            icon: 'add-circle-outline',
             url: '/service-creator',
         },
         {
             title: 'Log Out',
+            icon: 'power',
             url: '/logout',
         }
     ];

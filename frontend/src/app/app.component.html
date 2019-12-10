@@ -12,6 +12,7 @@
             <ion-list *ngIf="role == 'Admin'">
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of adminPages">
                     <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon name="{{p.icon}}" class="ion-padding" color="primary"></ion-icon>
                         <ion-label>
                             {{p.title}}
                         </ion-label>
@@ -21,6 +22,7 @@
             <ion-list *ngIf="role == 'User'">
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of userPages">
                     <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon name="{{p.icon}}" class="ion-padding" color="primary"></ion-icon>
                         <ion-label>
                             {{p.title}}
                         </ion-label>
@@ -30,6 +32,7 @@
             <ion-list *ngIf="role == 'None'">
                 <ion-menu-toggle auto-hide="false" *ngFor="let p of publicPages">
                     <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon name="{{p.icon}}" class="ion-padding" color="primary"></ion-icon>
                         <ion-label>
                             {{p.title}}
                         </ion-label>

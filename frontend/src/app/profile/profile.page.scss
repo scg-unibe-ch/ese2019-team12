@@ -27,3 +27,15 @@
 .masonryGrids {
     margin-bottom: 30px;
 }
+
+.tabs > ion-label {
+    width: 50px;
+    padding: 0 20px;
+}
+.tabs > ion-label:hover {
+    cursor: pointer;
+}
+.tabs {
+    width: 280px;
+    margin: 30px auto;
+}
