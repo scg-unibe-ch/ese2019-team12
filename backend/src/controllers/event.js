@@ -5,7 +5,6 @@ import { getEvent, isAllowedToWrite, jsonFromEvents } from '../helpers/event.hel
 import { getService, hasServices } from '../helpers/service.helper'
 import { getUser } from '../helpers/user.helper'
 import { getTag } from '../helpers/tag.helper'
-import * as path from 'path'
 
 /**
  * Express controller providing user related routes

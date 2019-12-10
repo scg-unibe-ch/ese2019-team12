@@ -1,11 +1,12 @@
 # Back-End NodeJS
 To use ES6 Syntax, babel is being used. .babelrc defines its version.
 
+## Getting started
 First run `npm install` to install all dependencies.
 
 If you want to have some test data, execute `npm run db_init`.
 
-`npm start` will start the server with the correct configuration.
+`npm start` will start the server with the correct configuration and serve it on `localhost:3000`
 
 ## The Server
 The server is an express Server, defined in src/index.js

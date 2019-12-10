@@ -1,5 +1,4 @@
 import { generateSalt, encryptPassword } from '../helpers/crypt.helper'
-import * as path from 'path'
 
 /**
  * User model to be imported by sequelize

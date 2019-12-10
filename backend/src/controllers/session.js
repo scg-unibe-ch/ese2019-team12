@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { Sequelize } from 'sequelize'
 import { checkPassword } from '../helpers/crypt.helper'
 import { getSessionToken } from '../helpers/session.helper'
-import * as path from 'path'
 
 /**
  * Express controller user authentication service
