@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-icon name="contact"></ion-icon>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Add a Service
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                <form (ngSubmit)="createService(event)" novalidate [formGroup]="serviceForm" enctype="multipart/form-data">
+                    <div class="ion-text-center">
+                        <h3>Add a Service</h3>
+                    </div>
+                    <ion-item>
+                        <ion-label color="primary">Title</ion-label>
+                        <ion-input expand="block" type="text" required formControlName="title" placeholder="Enter the title of your service"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Description</ion-label>
+                        <ion-textarea type="text" required  formControlName="description" placeholder="Describe your service in a few words" rows="4" maxlength="200"></ion-textarea>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Upload a picture</ion-label>
+                        <ion-input formControlName="file" name="service_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
+                    </ion-item>
+                    <p class="ion-text-center">Help people find your service by adding tags:</p>
+                    <ion-item>
+                        <ion-label color="primary">Tags</ion-label>
+                        <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Marked tags:</ion-label>
+                        <ion-chip outline color="primary" *ngFor="let c of chips">
+                            <ion-label>{{c}}</ion-label>
+                            <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
+                        </ion-chip>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary">Price</ion-label>
+                        <ion-input expand="block" type="number" required formControlName="price" placeholder="Enter the price of your service"></ion-input>
+                    </ion-item>
+                    <ion-button type="submit" [disabled]="serviceForm.invalid" expand="block">Add Service</ion-button>
+                </form>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

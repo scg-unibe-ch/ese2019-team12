@@ -1,0 +1,120 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-icon name="contact"></ion-icon>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Event
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+                <ion-card>
+                    <ion-card-header  *ngIf="!isEditing">
+                        <ion-card-title>
+                            {{ event.name }}
+                            <ion-button (click)="editEvent()" class="ion-float-right">
+                                Edit Event
+                                <ion-icon name="create"></ion-icon>
+                            </ion-button>
+                        </ion-card-title>
+                        <ion-card-subtitle>
+                            {{ event.description }}<br><br>
+                            <ion-icon name="calendar" color="primary"></ion-icon>
+                            <ion-label>
+                                {{ displayDate }}
+                            </ion-label>
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-header  *ngIf="isEditing">
+                        <form (ngSubmit)="saveEvent(event)" novalidate [formGroup]="editForm">
+                            <ion-title>
+                                Edit Event
+                                <ion-button type="submit" [disabled]="editForm.invalid" class="ion-float-right">
+                                    Save Event
+                                </ion-button>
+                                <ion-button (click)="deleteEvent()" color="danger" class="ion-float-right">
+                                    Delete Event
+                                    <ion-icon name="trash" class="ion-padding"></ion-icon>
+                                </ion-button>
+                            </ion-title>
+                            <ion-item>
+                                <ion-label color="primary">Name</ion-label>
+                                <ion-input name="name" formControlName="name" type="text" inputmode="text"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Description</ion-label>
+                                <ion-textarea name="description" formControlName="description" type="text" inputmode="text" rows="2" maxlength="200"></ion-textarea>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Date</ion-label>
+                                <ion-datetime
+                                    display-format="DDDD DD MMMM YYYY"
+                                    picker-format="DD:MMM:YYYY"
+                                    min="2019"
+                                    max="2025"
+                                    formControlName="date"
+                                    expand="block"
+                                    required
+                                >
+                                </ion-datetime>
+                            </ion-item>
+                        </form>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-title>Services</ion-title>
+                            </ion-row>
+                            <ion-row class="ion-justify-content-center">
+                                <ion-col *ngIf="optimizedServices.length === 0">
+                                    <p>You have not currently added any services to this event. Browse for services <a routerLink="/explore">here!</a></p>
+                                </ion-col>
+                                <ion-col size="auto" *ngFor="let serviceCard of optimizedServices">
+                                    <ion-card class="custom-ion-card">
+                                        <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage">
+                                        <ion-card-header>
+                                            <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
+                                            <ion-card-subtitle>
+                                                <p class="byUser">by:
+                                                    <ion-chip routerLink="/profile/{{ serviceCard.service.userId }}"color="primary">
+                                                        <ion-icon name="contact"></ion-icon>
+                                                        <ion-label>
+                                                            {{ serviceCard.service.username }}
+                                                        </ion-label>
+                                                    </ion-chip>
+                                                </p>
+                                            </ion-card-subtitle>
+                                        </ion-card-header>
+                                        <ion-card-content>
+                                            {{ serviceCard.service.description }}
+                                            <br><br>
+                                            Price: {{ serviceCard.service.price }}.-
+                                            <br>
+                                            <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                                                <ion-label>{{ tag }}</ion-label>
+                                            </ion-chip>
+                                            <ion-button (click)="removeService(serviceCard)" *ngIf="isEditing" color="danger" expand="block">
+                                                Remove Service from Event
+                                            </ion-button>
+                                        </ion-card-content>
+                                    </ion-card>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

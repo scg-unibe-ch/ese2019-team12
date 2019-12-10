@@ -1,0 +1,41 @@
+.useravatar {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.custom-ion-card-subtitle {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+.custom-ion-card {
+     width: 300px !important;
+}
+
+.custom-ion-card > img:hover {
+    cursor: pointer
+}
+
+.custom-ion-card > ion-card-header:hover {
+    cursor: pointer;
+}
+
+.masonryGrid {
+    margin: 0 auto;
+}
+
+.masonryGrids {
+    margin-bottom: 30px;
+}
+
+.tabs > ion-label {
+    width: 50px;
+    padding: 0 20px;
+}
+.tabs > ion-label:hover {
+    cursor: pointer;
+}
+.tabs {
+    width: 280px;
+    margin: 30px auto;
+}

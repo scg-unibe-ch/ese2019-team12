@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: controllers/user.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: controllers/user.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Router } from 'express'
+import { Sequelize } from 'sequelize'
+import { upload } from '../helpers/upload.helper'
+import 'dotenv/config'
+import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper'
+import { getUser, deleteUser, updateUser } from '../helpers/user.helper'
+import * as path from 'path'
+
+/**
+ * Express controller providing user related routes
+ * @module controllers/user
+ * @requires express
+ * @requires sequelize
+ */
+
+/**
+ * Express controller
+ * @type {object}
+ * @const
+ * @namespace userController
+ */
+const router = Router()
+
+/**
+ * Sequelize Operation Tag used to perform amongst other things 'and' and 'or' queries.
+ * @type {object}
+ * @const
+ */
+const Op = Sequelize.Op
+
+/**
+ * Route serving all users.
+ * @name get/
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/', async (req, res) => {
+  const User = getUser(req)
+  const users = await User.findAll()
+  res.send(users)
+})
+
+/**
+ * Route serving a specifi user.
+ * @name get/:id
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/:id', async (req, res, next) => {
+  if (Object.keys(req.query).length === 0) {
+    const User = getUser(req)
+    await User.findByPk(req.params.id).then(user => {
+      if (!user) {
+        sendNotFoundError(res)
+      } else {
+        res.send(user)
+      }
+    }).catch(err => {
+      sendInternalError(res, err)
+    })
+  }
+  next()
+})
+
+/**
+ * Route creating an user.
+ * @name post/
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.post('/', async (req, res) => {
+  const User = getUser(req)
+  var userData = req.body
+
+  // Every User will at first be a normal User
+  // - only Admins will be able to assign new admins
+  userData.role = 'User'
+
+  await User.create(userData).then(user => {
+    res.statusCode = 201
+    res.send(user)
+  }).catch(err => {
+    res.send(handleSequelizeErrors(res, err))
+  })
+})
+
+/**
+ * Route serving the profile picture.
+ * @name get/:id/image
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/:id/image', async (req, res) => {
+  const User = getUser(req)
+  const imageRoot = path.join(__dirname, process.env.IMAGE_DIR)
+  var options = {
+    root: imageRoot,
+    dotfiles: 'deny'
+  }
+  User.findByPk(req.params.id).then(user => {
+    if (user.image) {
+      res.sendFile(user.image, options)
+    } else {
+      res.send()
+    }
+  }).catch(err => {
+    sendInternalError(res, err)
+  })
+})
+
+/**
+ * Route setting the profile picture.
+ * @name get/:id/image
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.post('/:id/image', upload.single('user_image'), async (req, res) => {
+  const User = getUser(req)
+  User.findByPk(req.params.id).then((user) => {
+    user.image = req.file.filename
+    user.save().then(() => {
+      res.send()
+    }).catch(err => {
+      sendInternalError(res, err)
+    })
+  }).catch(err => {
+    sendInternalError(res, err)
+  })
+})
+
+/**
+ * Route updating the user.
+ * @name put/:id
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.put('/:id', async (req, res) => {
+  const User = getUser(req)
+  if (req.user.sub !== req.params.id) {
+    User.findByPk(req.user.sub).then(currentUser => {
+      if (currentUser.isAdmin()) {
+        updateUser(req, res)
+      } else {
+        sendForbiddenError(res)
+      }
+    }).catch(err => {
+      sendInternalError(res, err)
+    })
+  } else {
+    updateUser(req, res)
+  }
+})
+
+/**
+ * Route deleting the user.
+ * @name delete/:id
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.delete('/:id', async (req, res) => {
+  const User = getUser(req)
+  if (req.user.sub !== req.params.id) {
+    await User.findByPk(req.user.sub).then(user => {
+      if (user.isAdmin()) {
+        deleteUser(req, res)
+      } else {
+        sendForbiddenError(res)
+      }
+    }).catch(err => {
+      sendInternalError(res, err)
+    })
+  } else {
+    deleteUser(req, res)
+  }
+})
+
+/**
+ * Route searching for a user by login (username and email).
+ * @name get/search
+ * @function
+ * @memberof module:controllers/user~userController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/search', async (req, res) => {
+  const User = getUser(req)
+  let criteria = ''
+  if (req.query.username !== undefined) {
+    criteria = req.query.username
+  } else if (req.query.email !== undefined) {
+    criteria = req.query.email
+  } else {
+    res.send('Please submit a proper search')
+  }
+  await User.findOne({
+    where: {
+      [Op.or]: [{ username: criteria }, { email: criteria }]
+    }
+  }).then((user) => {
+    res.statusCode = 200
+    if (user !== null) {
+      res.send({ isUsed: true })
+    } else {
+      res.send({ isUsed: false })
+    }
+  }).catch((err) => {
+    console.log(err)
+  })
+})
+
+export default router
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-controllers_event.html">controllers/event</a></li><li><a href="module-controllers_service.html">controllers/service</a></li><li><a href="module-controllers_session.html">controllers/session</a></li><li><a href="module-controllers_user.html">controllers/user</a></li><li><a href="module-helper_crypt.html">helper/crypt</a></li><li><a href="module-helper_error.html">helper/error</a></li><li><a href="module-helper_event.html">helper/event</a></li><li><a href="module-helper_session.html">helper/session</a></li><li><a href="module-helper_upload.html">helper/upload</a></li><li><a href="module-index_sequelize.html">index/sequelize</a></li><li><a href="module-models_event.html">models/event</a></li><li><a href="module-models_service.html">models/service</a></li><li><a href="module-models_user.html">models/user</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-controllers_event-eventController.html">eventController</a></li><li><a href="module-controllers_service-serviceController.html">serviceController</a></li><li><a href="module-controllers_session-sessionController.html">sessionController</a></li><li><a href="module-controllers_user-userController.html">userController</a></li><li><a href="module-models_event-Event.html">Event</a></li><li><a href="module-models_service-Service.html">Service</a></li><li><a href="module-models_service-Tag.html">Tag</a></li><li><a href="module-models_user.User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#server">server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Dec 10 2019 19:36:15 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

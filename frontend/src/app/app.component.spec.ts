@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -20,6 +21,7 @@ describe('AppComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule.withRoutes([]),
         HttpClientTestingModule,
     ],
       declarations: [AppComponent],
@@ -38,6 +40,26 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  it('should have menu labels', async () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
+      const app = fixture.nativeElement;
+      const menuItems = app.querySelectorAll('ion-label');
+      expect(menuItems.length).toEqual(2);
+      expect(menuItems[0].textContent).toContain('Explore');
+      expect(menuItems[1].textContent).toContain('Login or Register');
+    });
+
+  it('should have urls', async () => {
+      const fixture = TestBed.createComponent(AppComponent);
+      fixture.detectChanges();
+      const app = fixture.nativeElement;
+      const menuItems = app.querySelectorAll('ion-item');
+      expect(menuItems.length).toEqual(2);
+      expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/explore');
+      expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/login');
+    });
+
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
@@ -45,7 +67,5 @@ describe('AppComponent', () => {
     expect(statusBarSpy.styleDefault).toHaveBeenCalled();
     expect(splashScreenSpy.hide).toHaveBeenCalled();
   });
-
-  // TODO: add more tests!
 
 });

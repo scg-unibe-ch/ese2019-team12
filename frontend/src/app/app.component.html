@@ -1,22 +1,45 @@
 <ion-app>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        ToDo-List
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-card>
-      <ion-row>
-        <ion-col size="6">
-          <ion-input placeholder="List Name" name="name" [(ngModel)]="todoList.name"></ion-input>
-        </ion-col>
-        <ion-col size="2">
-          <ion-button (click)="onTodoListCreate()">Create List</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <app-todo-list [todoList]="todoList" (destroy)="onTodoListDestroy($event)" *ngFor="let todoList of todoLists"></app-todo-list>
-  </ion-content>
+    <ion-menu contentId="main-content" type="overlay" side="end">
+        <ion-header>
+            <ion-toolbar>
+                <ion-title class="ion-float-left">Menu</ion-title>
+                <ion-menu-toggle slot="end">
+                    <ion-icon class="ion-padding" name="close" size="large"></ion-icon>
+                </ion-menu-toggle>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <ion-list *ngIf="role == 'Admin'">
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of adminPages">
+                    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon name="{{p.icon}}" class="ion-padding" color="primary"></ion-icon>
+                        <ion-label>
+                            {{p.title}}
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+            <ion-list *ngIf="role == 'User'">
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of userPages">
+                    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon name="{{p.icon}}" class="ion-padding" color="primary"></ion-icon>
+                        <ion-label>
+                            {{p.title}}
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+            <ion-list *ngIf="role == 'None'">
+                <ion-menu-toggle auto-hide="false" *ngFor="let p of publicPages">
+                    <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                        <ion-icon name="{{p.icon}}" class="ion-padding" color="primary"></ion-icon>
+                        <ion-label>
+                            {{p.title}}
+                        </ion-label>
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

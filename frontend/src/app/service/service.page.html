@@ -1,0 +1,115 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-icon name="contact"></ion-icon>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Service
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="5">
+                <ion-card *ngIf="!isEditing">
+                    <img [src]="serviceImage" *ngIf="serviceHasImage">
+                    <ion-card-header>
+                        <ion-card-title>{{ service.title }}</ion-card-title>
+                        <ion-card-subtitle>
+                            <p class="byUser">by:
+                                <ion-chip routerLink="/profile/{{ service.userId }}"color="primary">
+                                    <ion-icon name="contact"></ion-icon>
+                                    <ion-label>
+                                        {{ service.username }}
+                                    </ion-label>
+                                </ion-chip>
+                            </p>
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        {{ service.description }}
+                        <br><br>
+                        Price: {{ service.price }}.-
+                        <br>
+                        <ion-chip outline color="primary" *ngFor="let tag of service.tags">
+                            <ion-label>{{ tag }}</ion-label>
+                        </ion-chip>
+                        <br><br>
+                        <ion-button *ngIf="isMyService" color="light" (click)="editService()">
+                            Edit
+                            <ion-icon name="create" class="ion-padding"></ion-icon>
+                        </ion-button>
+                        <ion-button *ngIf="isMyService" color="danger" (click)="deleteService()">
+                            Delete
+                            <ion-icon name="trash" class="ion-padding"></ion-icon>
+                        </ion-button>
+                        <ion-button *ngIf="!isMyService && isLoggedIn" size="default" expand="block" color="light" routerLink="/event-creator/{{ service.id }}">
+                            Add to new Event
+                            <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>
+                        </ion-button>
+                        <ion-button *ngIf="!isMyService && currentUserEvents.length > 0 && isLoggedIn" size="default" expand="block" color="light" (click)="openEventSelect()">
+                            <ion-label>Add to existing Event</ion-label>
+                            <ion-select [(ngModel)]="selectedEventId" (ionChange)="addToExistingEvent()" #eventSelect>
+                                <ion-select-option *ngFor="let event of currentUserEvents" value="{{ event.id }}">
+                                    {{ event.name }}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-button>
+                        <!-- <ion-list class="eventSelector" *ngIf="showUserEvents" color="light">
+                            <ion-item *ngFor="let event of currentUserEvents">
+                                <ion-label (click)="addToExistingEvent(event)">{{ event.name }}</ion-label>
+                                <ion-icon name="add-circle"class="ion-padding"></ion-icon>
+                            </ion-item>
+                        </ion-list> -->
+                    </ion-card-content>
+                </ion-card>
+                <ion-card *ngIf="isEditing">
+                    <img [src]="serviceImage" *ngIf="serviceHasImage">
+                    <ion-card-header>
+                        <ion-card-title>Edit Service</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <form (ngSubmit)="saveService(event)" novalidate [formGroup]="editForm">
+                            <ion-item>
+                                <ion-label color="primary">Title</ion-label>
+                                <ion-input name="title" formControlName="title" type="text" inputmode="text"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Description</ion-label>
+                                <ion-textarea name="description" formControlName="description" type="text" inputmode="text" rows="2" maxlength="200"></ion-textarea>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Upload a picture</ion-label>
+                                <ion-input formControlName="file" name="service_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Tags</ion-label>
+                                <ion-input name="tags" placeholder="separate tags with a comma ','" formControlName="tagInput" (keyup)="tagsParser()"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Marked tags:</ion-label>
+                                <ion-chip outline color="primary" *ngFor="let c of serviceTags">
+                                    <ion-label>{{c}}</ion-label>
+                                    <ion-icon name="close-circle" (click)="deleteChip(c)"></ion-icon>
+                                </ion-chip>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label color="primary">Price</ion-label>
+                                <ion-input expand="block" type="number" required formControlName="price" placeholder="Enter the price of your service"></ion-input>
+                            </ion-item>
+                            <ion-button type="submit" expand="block" class="submitButton" [disabled]="editForm.invalid">Save</ion-button>
+                        </form>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

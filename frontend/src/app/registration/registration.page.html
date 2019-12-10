@@ -1,0 +1,97 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Registration
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+                <form (ngSubmit)="processForm(event)" novalidate [formGroup]="registrationForm">
+                    <h3 class="ion-text-center">Register a new account</h3>
+                    <ion-item>
+                        <ion-label color="primary">First Name</ion-label>
+                        <ion-input name="firstname" formControlName="firstname" type="text" inputmode="text" required></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label color="primary">Last Name</ion-label>
+                        <ion-input name="lastname" formControlName="lastname" type="text" inputmode="text" required></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label color="primary">E-Mail</ion-label>
+                        <ion-input name="email" formControlName="email" type="email" inputmode="email" required></ion-input>
+                        <ion-label *ngIf="registrationForm.get('email').errors && registrationForm.get('email').errors.emailTaken" color="danger">
+                            already taken
+                            <ion-icon name="close-circle" color="danger"></ion-icon>
+                        </ion-label>
+                        <ion-label *ngIf="!registrationForm.get('email').errors">
+                            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                        </ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label color="primary">Choose a username</ion-label>
+                        <ion-input name="username" formControlName="username" type="text"></ion-input>
+                        <ion-label *ngIf="registrationForm.get('username').errors && registrationForm.get('username').errors.usernameTaken" color="danger">
+                            already taken
+                            <ion-icon name="close-circle" color="danger"></ion-icon>
+                        </ion-label>
+                        <ion-label *ngIf="!registrationForm.get('username').errors">
+                            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                        </ion-label>
+                    </ion-item>
+                        <!-- <ion-item>
+                        <ion-label position="stacked">Address</ion-label>
+                        <ion-input  placeholder="Address"></ion-input>
+                        <ion-input  placeholder="City"></ion-input>
+                        <ion-input  placeholder="State"></ion-input>
+                        <ion-input  placeholder="Zip Code"></ion-input>
+                    </ion-item> -->
+                </form>
+                <form (ngSubmit)="processForm(event)" novalidate  [formGroup]="passwordForm">
+                    <ion-item>
+                        <ion-label color="primary">Enter Password</ion-label>
+                        <ion-input id="password" formControlName="password" name="password" type="password" required></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label color="primary">Confirm Password</ion-label>
+                        <ion-input id="confirmpassword" formControlName="confirmPassword" name="confirmPassword" type="password" required="true" class="form-control"></ion-input>
+                        <ion-label *ngIf="passwordForm.errors && passwordForm.get('confirmPassword').value !== '' && passwordForm.errors.areEqual" color="danger">
+                            does not match
+                            <ion-icon name="close-circle" color="danger"></ion-icon>
+                        </ion-label>
+                        <ion-label *ngIf="!passwordForm.errors && passwordForm.get('confirmPassword').value !== ''">
+                            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                        </ion-label>
+                        <ion-button class="showPassword" (click)="showPassword()" >
+                            <ion-icon name="eye-off" id="eye"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+
+                    <div class="ion-text-center ion-padding">
+                        Enter a password between 8 and 12 characters, containing at least one number and one special character.
+                    </div>
+                    <!-- <ion-item>
+                    <ion-label position="stacked">Notes</ion-label>
+                    <ion-textarea></ion-textarea>
+                    </ion-item> -->
+                    <ion-button type="submit" expand="block" class="submitButton" [disabled]="passwordForm.invalid || registrationForm.invalid">Sign Up</ion-button>
+                </form>
+                <ion-row class="ion-justify-content-center">
+                    <p class="ion-text-center">
+                        If you already have an account, <a routerLink='/login'>log in here</a>.
+                    </p>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

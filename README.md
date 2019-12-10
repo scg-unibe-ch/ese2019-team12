@@ -1,5 +1,6 @@
 # ACARA
 
+<<<<<<< HEAD
 ACARA (malay for 'event') is a platform for event organisers on one end and event service providers on the other. It is a web-based app designed to run on any device.
 
 Our goal is to provide our registered users an interactive interface where they can either login as an event organiser or as a service provider.
@@ -9,6 +10,17 @@ Event organisers will be able to create their upcoming events and the required s
 ## Installation
 
 Before you can do anything with our app you will have to download
+=======
+ACARA (malay for 'event') is a platform for event organisers on one end and event service providers on the other. It is a web-based app designed to run on any device. 
+
+Our goal is to provide our registered users an interactive interface where they can either login as an event organiser or as a service provider. 
+
+Event organisers will be able to create their upcoming events and the required services that come with it, and they will be able to browse our provider database in order to find the ones best suited for the tasks at hand. The organisers can then establish contact with said providers. 
+
+## Installation
+
+Before you can do anything with our app you will have to download 
+>>>>>>> develop
 
 ### `node.js`
 
@@ -18,7 +30,11 @@ For the installation follow the instructions on the site or from the installer.
 
 After installing node.js  and before running the script to this application you have to install the different modules used. Open your desired Terminal and go to the directory, where you have saved the application. Now you will have to enter the frontend and backend folder, each individually and enter:
 
+<<<<<<< HEAD
 ### `npm -g install`
+=======
+### `npm install`
+>>>>>>> develop
 
 Wait for the terminal to load the different modules.
 
@@ -28,7 +44,11 @@ Wait for the terminal to load the different modules.
 
 This server uses an sqlite3 database. It is stored in the file `db.sqlite`
 
+<<<<<<< HEAD
 To create a new database enter:
+=======
+To fill the database with test data enter:
+>>>>>>> develop
 
 ### `npm run db_init`
 
@@ -46,6 +66,7 @@ Wait for the code to be compiled and your standard browser to open a new page on
 
 The page will reload if you make edits.
 
+<<<<<<< HEAD
 Alternatively, you can run just
 
 ### `ng serve`
@@ -55,6 +76,20 @@ for a dev server. Navigate to http://localhost:4200/.
 ### Backend
 
 
+=======
+Alternatively, you can run just 
+
+### `ng serve` 
+
+for a dev server. Navigate to http://localhost:4200/. 
+
+### Backend
+
+Run
+
+##  `npm start`.
+
+The server will be served on `localhost:3000`
 
 ## Further available scripts
 
@@ -136,7 +171,7 @@ The `ADD SERVICE` button can be used to create new services you would like to of
 
 ## Authors
 
-This application has been made by CS students of the university Bern.
+This application has been made by CS students of the university Bern. 
 
 Created by:
 

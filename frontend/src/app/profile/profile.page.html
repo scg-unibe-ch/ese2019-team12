@@ -1,0 +1,125 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Profile
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="auto">
+                <ion-card>
+                    <ion-grid>
+                        <ion-row class="ion-padding">
+                            <ion-col size="auto">
+                                <ion-avatar class="useravatar ion-padding">
+                                    <img [src]="userImage" *ngIf="userHasImage">
+                                    <img src="../../assets/defaultAvatar.svg" *ngIf="!userHasImage">
+                                </ion-avatar>
+                            </ion-col>
+                            <ion-col size="auto" *ngIf="!isEditing">
+                                <h2>{{profile.firstname + " " + profile.lastname}}</h2>
+                                <p>{{profile.username}}</p>
+                                <p>Bio:<br><br> {{profile.bio}}</p>
+                                <ion-button *ngIf="isMe" expand="block" color="light" (click)="editProfilePage()">
+                                    Edit
+                                    <ion-icon name="create" class="ion-padding"></ion-icon>
+                                </ion-button>
+                                <a href="mailto:{{ profile.email }}?subject=feedback" *ngIf="!isMe && isLoggedIn">
+                                    <ion-button>
+                                        Send {{ profile.firstname }} an email
+                                        <ion-icon name="mail" class="ion-padding"></ion-icon>
+                                    </ion-button>
+                                </a>
+                            </ion-col>
+                            <ion-col size="auto" *ngIf="isEditing">
+                                <form (ngSubmit)="saveProfile(event)" novalidate [formGroup]="editForm">
+                                    <p>Edit user information:</p>
+                                    <ion-item>
+                                        <ion-label color="primary">First Name</ion-label>
+                                        <ion-input name="firstname" formControlName="firstname" type="text" inputmode="text" required></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label color="primary">Last Name</ion-label>
+                                        <ion-input name="lastname" formControlName="lastname" type="text" inputmode="text" required></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label color="primary">Upload a picture</ion-label>
+                                        <ion-input formControlName="file" name="user_image" type="file" accept="image/*" (change)="processImage($event)"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                        <ion-label color="primary">Bio</ion-label>
+                                        <ion-textarea name="bio" formControlName="bio" type="text" inputmode="text" rows="2" maxlength="500"></ion-textarea>
+                                    </ion-item>
+                                    <ion-button type="submit" expand="block" class="submitButton" [disabled]="editForm.invalid">Save</ion-button>
+                                </form>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <div class="tabs" *ngIf="isMe">
+        <ion-label (click)="changeViewedCards(0)" color="{{ getColorOfTab(0) }}">My Services</ion-label>
+        <ion-label (click)="changeViewedCards(1)" color="{{ getColorOfTab(1) }}">My Events</ion-label>
+    </div>
+    <div class="masonryGrids">
+        <ngx-masonry class="masonryGrid" [options]="{ fitWidth: true }" [updateLayout]="updateMasonryLayout">
+            <ion-card ngxMasonryItem routerLink="/service-creator" *ngIf="isMe && cardsView === 0" class="custom-ion-card">
+                <ion-card-header color="primary">
+                    <p class="ion-text-center">
+                        Add a Service<br>
+                        <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                    </p>
+                </ion-card-header>
+            </ion-card>
+            <div *ngIf="cardsView === 0">
+                <ion-card ngxMasonryItem class="custom-ion-card" *ngFor="let serviceCard of optimizedServices">
+                    <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
+                    <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
+                        <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
+                        <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        {{ serviceCard.service.description }}
+                        <br><br>
+                        Price: {{ serviceCard.service.price }}.-
+                        <br>
+                        <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                            <ion-label>{{ tag }}</ion-label>
+                        </ion-chip>
+                    </ion-card-content>
+                </ion-card>
+            </div>
+            <ion-card ngxMasonryItem routerLink="/event-creator" class="custom-ion-card masonryGridItem" *ngIf="cardsView === 1">
+                <ion-card-header color="primary">
+                    <p class="ion-text-center">
+                        Add an Event<br>
+                        <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                    </p>
+                </ion-card-header>
+            </ion-card>
+            <div *ngIf="isMe && cardsView === 1">
+                <ion-card ngxMasonryItem class="custom-ion-card" *ngFor="let event of events">
+                    <ion-card-header routerLink="/event/{{ event.id }}">
+                        <ion-card-title>{{ event.name }}</ion-card-title>
+                        <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-card *ngFor="let service of event.services">
+                            <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
+                        </ion-card>
+                    </ion-card-content>
+                </ion-card>
+            </div>
+        </ngx-masonry>
+        <p *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
+    </div>
+</ion-content>
