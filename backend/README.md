@@ -1,13 +1,14 @@
 # Back-End NodeJS
 To use ES6 Syntax, babel is being used. .babelrc defines its version.
+
+First run `npm install` to install all dependencies.
+
+If you want to have some test data, execute `npm run db_init`.
+
 `npm start` will start the server with the correct configuration.
 
 ## The Server
 The server is an express Server, defined in src/index.js
-
-### CORS
-CORS are handled by the npm module cors.
-The express app loads the module with `app.use(cors());`.
 
 ### REST-API
 The Server's replies are always of the format JSON as specified in the index file with `app.use(express.json());`
