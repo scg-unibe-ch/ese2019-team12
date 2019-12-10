@@ -150,5 +150,4 @@ export class ExplorePage implements OnInit {
         this.tagsSearch = !this.tagsSearch;
         this.searchType = (this.tagsSearch) ? 'Tags' : 'Title';
     }
-
 }

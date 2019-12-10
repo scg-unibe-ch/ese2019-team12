@@ -48,12 +48,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ion-grid>
-        <ion-row class="ion-justify-content-center">
-                <ion-col size="auto" *ngFor="let service of servicesToDisplay">
-                    <app-service-card [service]="service" (event)="createChip($event)"></app-service-card>
-                </ion-col>
-                <p *ngIf="servicesToDisplay.length === 0">No results were found for your search. But here, have a slice of pizza...<ion-icon name="pizza" size="large"></ion-icon></p>
-        </ion-row>
-    </ion-grid>
+    <ngx-masonry class="masonryGrid" [options]="{ gutter: 10, fitWidth: true }">
+        <app-service-card [service]="service" (event)="createChip($event)" ngxMasonryItem *ngFor="let service of servicesToDisplay"></app-service-card>
+    </ngx-masonry>
 </ion-content>

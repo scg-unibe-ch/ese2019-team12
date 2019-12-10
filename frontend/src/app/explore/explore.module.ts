@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
+import { NgxMasonryModule } from 'ngx-masonry';
 import { ExplorePage } from './explore.page';
 import { ServiceCardComponent} from '../_components/service-card/service-card.component';
 
@@ -21,6 +21,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    NgxMasonryModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ExplorePage, ServiceCardComponent]

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
+import { NgxMasonryModule } from 'ngx-masonry';
 import { ProfilePage } from './profile.page';
 import { ProfileResolver } from '../_services/profile-resolver.service';
 
@@ -23,6 +23,7 @@ const profileRouting: ModuleWithProviders = RouterModule.forChild([
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
+        NgxMasonryModule,
         profileRouting
     ],
     declarations: [ProfilePage],

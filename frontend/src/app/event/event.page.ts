@@ -54,11 +54,9 @@ export class EventPage implements OnInit {
                             if (data.size > 0) {
                                 const objectURL = URL.createObjectURL(data);
                                 const serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: Service});
-                                console.log(this.optimizedServices);
+                                this.optimizedServices.push({hasImage: true, image: serviceImage, service: service});
                             } else {
-                                this.optimizedServices.push({hasImage: false, service: Service});
-                                console.log(this.optimizedServices);
+                                this.optimizedServices.push({hasImage: false, service: service});
                             }
                         }
                     );

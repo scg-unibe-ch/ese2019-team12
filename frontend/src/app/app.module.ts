@@ -24,7 +24,7 @@ import { RoleGuard } from './auth/role.guard';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthGuard,

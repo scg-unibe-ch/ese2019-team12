@@ -2,7 +2,6 @@
     <a href="/service/{{ service.id }}">
         <img [src]="serviceImage" *ngIf="serviceHasImage"/>
     </a>
-    <img [src]="serviceImage" *ngIf="serviceHasImage" routerLink="/service/{{ service.id }}">
     <ion-card-header>
         <ion-card-title routerLink="/service/{{ service.id }}">
             {{ service.title }}

@@ -4,16 +4,12 @@
     border-radius: 50%;
 }
 
-.horizontalScroll {
-    overflow-x: auto;
-}
-
 .custom-ion-card-subtitle {
     display: flex !important;
     flex-wrap: wrap !important;
 }
 .custom-ion-card {
-     // width: 300px !important;
+     width: 300px !important;
 }
 
 .custom-ion-card > img:hover {
@@ -22,4 +18,12 @@
 
 .custom-ion-card > ion-card-header:hover {
     cursor: pointer;
+}
+
+.masonryGrid {
+    margin: 0 auto;
+}
+
+.masonryGrids {
+    margin-bottom: 30px;
 }
