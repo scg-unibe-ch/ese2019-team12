@@ -78,6 +78,8 @@ export class ServiceCreatorPage implements OnInit {
                             this.router.navigate(['/profile/me']);
                         }
                     );
+                } else {
+                    this.router.navigate(['/profile/me']);
                 }
             },
             (err: any) => {
