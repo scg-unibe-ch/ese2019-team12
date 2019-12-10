@@ -6,6 +6,8 @@ Our goal is to provide our registered users an interactive interface where they 
 
 Event organisers will be able to create their upcoming events and the required services that come with it, and they will be able to browse our provider database in order to find the ones best suited for the tasks at hand. The organisers can then establish contact with said providers.
 
+**Note**: For a more detailed explanation of the code and its features, as well as information on its creative process, the challenges its creators faced and the learning outcomes they had, and any recommendations concerning this project/similar projects in general, please refer to the Wiki.
+
 ## Installation
 
 Before you can do anything with our app you will have to download
