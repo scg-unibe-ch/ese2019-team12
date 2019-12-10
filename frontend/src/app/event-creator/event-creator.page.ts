@@ -14,11 +14,16 @@ import { AlertController } from '@ionic/angular';
 })
 export class EventCreatorPage implements OnInit {
 
-    isLoggedIn: boolean;
+    /**
+     * currentUser: User, the user currently logged in.
+     * serviceIdToAdd: number, the number of the services to add
+     * servicesToAdd: number[],
+     * event: Event, the event created by this page.
+     */
     currentUser: User;
     eventForm: FormGroup;
     serviceIdToAdd: number;
-    servicesToAdd: number[];
+    servicesToAdd: number[] = [];
     event = new Event(null, null, '', '', '', []);
 
     constructor(
@@ -30,14 +35,12 @@ export class EventCreatorPage implements OnInit {
     ) { }
 
     ngOnInit() {
+        // either 0 if not set, or route.param.id if set in route.
         this.route.data.subscribe(data => {
             this.serviceIdToAdd = (data.serviceId) ? data.serviceId : 0;
         });
 
-        this.isLoggedIn = this.sessionService.isLoggedIn();
-        if (this.isLoggedIn) {
-            this.currentUser = this.sessionService.getCurrentUser();
-        }
+        this.currentUser = this.sessionService.getCurrentUser();
 
         this.eventForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
@@ -46,15 +49,14 @@ export class EventCreatorPage implements OnInit {
         });
     }
 
+    /**
+     * Creates a new event based on the users imput / the selected route.
+     */
     createEvent(event) {
         this.event.name = this.eventForm.get('name').value;
         this.event.description = this.eventForm.get('description').value;
         this.event.date = this.eventForm.get('date').value;
         this.event.userId = this.currentUser.id;
-
-        this.servicesToAdd = this.event.services.map(service => {
-            return service.id;
-        });
 
         if (this.serviceIdToAdd > 0) {
             this.servicesToAdd.push(this.serviceIdToAdd);
@@ -73,6 +75,10 @@ export class EventCreatorPage implements OnInit {
         }
     }
 
+    /**
+     * Alerts the user if event has been created with a service.
+     * @param  selectedEvent the Event created.
+     */
     async presentAlert(selectedEvent: Event) {
         const alert = await this.alertController.create({
         header: 'New Service added',

@@ -1,7 +1,11 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export class Passwordvalidator {
-// Inspired on: http://plnkr.co/edit/Zcbg2T3tOxYmhxs7vaAm?p=preview
+    /**
+     * Validates that the two inputted passwords are identical
+     * @param  formGroup the passwordForm.
+     * @return  areEqual: true if they don't match, null if they match. (formcontrol logic, not by choice)
+     */
     static areEqual(formGroup: FormGroup) {
         let val;
         let valid = true;

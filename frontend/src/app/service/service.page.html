@@ -22,7 +22,16 @@
                 <ion-card *ngIf="!isEditing">
                     <img [src]="serviceImage" *ngIf="serviceHasImage">
                     <ion-card-header>
-                        <ion-card-title>{{ service.title }}</ion-card-title>
+                        <ion-card-title>{{ service.title }}
+                            <ion-button *ngIf="isMyService" color="light" (click)="editService()" class="ion-float-right">
+                                Edit
+                                <ion-icon name="create" class="ion-padding"></ion-icon>
+                            </ion-button>
+                            <ion-button *ngIf="isMyService" color="danger" (click)="deleteService()" class="ion-float-right">
+                                Delete
+                                <ion-icon name="trash" class="ion-padding"></ion-icon>
+                            </ion-button>
+                        </ion-card-title>
                         <ion-card-subtitle>
                             <p class="byUser">by:
                                 <ion-chip routerLink="/profile/{{ service.userId }}"color="primary">
@@ -43,14 +52,6 @@
                             <ion-label>{{ tag }}</ion-label>
                         </ion-chip>
                         <br><br>
-                        <ion-button *ngIf="isMyService" color="light" (click)="editService()">
-                            Edit
-                            <ion-icon name="create" class="ion-padding"></ion-icon>
-                        </ion-button>
-                        <ion-button *ngIf="isMyService" color="danger" (click)="deleteService()">
-                            Delete
-                            <ion-icon name="trash" class="ion-padding"></ion-icon>
-                        </ion-button>
                         <ion-button *ngIf="!isMyService && isLoggedIn" size="default" expand="block" color="light" routerLink="/event-creator/{{ service.id }}">
                             Add to new Event
                             <ion-icon name="add-circle" color="primary" class="ion-padding"></ion-icon>

@@ -17,7 +17,14 @@ import { User } from '../_models/user';
 })
 export class EventPage implements OnInit {
 
-    isLoggedIn: boolean;
+    /**
+     * isEditing: boolean, is true if the event data is being edited.
+     * editForm: FormGroup, the form used to update the event data.
+     * event: Event, the event to display on the page.
+     * optimizedServices: [], an array with the fields service, serviceHasImage and serviceImage for every entry.
+     * displayDate: string, the date formatted to be displayed to the user (ddmmyyyy);
+     * formattedDate: string, the date formatted to be fed into the date input field of the edit form.
+     */
     isEditing: boolean;
     editForm: FormGroup;
     currentUser: User;
@@ -38,17 +45,15 @@ export class EventPage implements OnInit {
     ngOnInit() {
 
         this.isEditing = false;
+        this.currentUser = this.sessionService.getCurrentUser();
 
-        this.isLoggedIn = this.sessionService.isLoggedIn();
-        if (this.isLoggedIn) {
-            this.currentUser = this.sessionService.getCurrentUser();
-        }
-
+        // fetching the event from the api.
         this.route.data.subscribe(
             (data: {event: Event}) => {
                 this.event = data.event;
                 this.formatDate(this.event.date);
                 this.event.services.forEach(service => {
+                    // fetching the images of the services of the event from the api.
                     this.serviceService.downloadImage(service.id).subscribe(
                         data => {
                             if (data.size > 0) {
@@ -71,10 +76,16 @@ export class EventPage implements OnInit {
         );
     }
 
+    /**
+     * Toggles the editForm.
+     */
     editEvent() {
         this.isEditing = !this.isEditing;
     }
 
+    /**
+     * Deletes the loaded event.
+     */
     deleteEvent() {
         this.eventService.delete(this.event.id).subscribe(() => {
                 this.router.navigate(['/profile/me']);
@@ -82,6 +93,9 @@ export class EventPage implements OnInit {
         );
     }
 
+    /**
+     * Saves the edited event to the server.
+     */
     saveEvent(event) {
         this.event.name = this.editForm.get('name').value;
         this.event.description = this.editForm.get('description').value;
@@ -97,12 +111,20 @@ export class EventPage implements OnInit {
         this.isEditing = !this.isEditing;
     }
 
+    /**
+     * Removes a service from the loaded event.
+     * @param  serviceToRemove the service to remove.
+     */
     removeService(serviceToRemove) {
         this.optimizedServices = this.optimizedServices.filter(service => {
             return (service !== serviceToRemove);
         });
     }
 
+    /**
+     * Parses the dates to display to the user and feed to the input field.
+     * @param  date the date in ISO 8601 format.
+     */
     formatDate(date) {
         const tempDate = date.slice(0, 10);
         const year = tempDate.slice(0, 4);
@@ -114,6 +136,9 @@ export class EventPage implements OnInit {
         this.formattedDate = formattedDate;
     }
 
+    /**
+     * Resets the services after leaving the view.
+     */
     ionViewDidLeave() {
         this.optimizedServices = [];
     }

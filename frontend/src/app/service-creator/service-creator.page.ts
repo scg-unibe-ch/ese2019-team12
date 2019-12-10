@@ -14,13 +14,19 @@ import { Role } from '../_models/role';
 })
 export class ServiceCreatorPage implements OnInit {
 
-    isLoggedIn: boolean;
+    /**
+     * currentUser: User, the current logged-in user.
+     * serviceForm: FormGroup, the form to create a new service.
+     * image: File, the image to be uploaded, if provided.
+     * hasImage: boolean, true if an image is provided.
+     * chips: [], an array of strings with the parsed tags.
+     */
     currentUser: User;
     serviceForm: FormGroup;
     service = new Service(null, null, '', '', '', '', null, []);
     image: File;
+    hasImage: boolean = false;
     chips = [];
-    event: Event;
 
     constructor(
         private sessionService: SessionService,
@@ -29,10 +35,8 @@ export class ServiceCreatorPage implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.isLoggedIn = this.sessionService.isLoggedIn();
-        if (this.isLoggedIn) {
-            this.currentUser = this.sessionService.getCurrentUser();
-        }
+
+        this.currentUser = this.sessionService.getCurrentUser();
 
         this.serviceForm = new FormGroup({
             title: new FormControl('', [Validators.required, Validators.maxLength(30)]),
@@ -43,6 +47,9 @@ export class ServiceCreatorPage implements OnInit {
         });
     }
 
+    /**
+     * parses tags from the tagInput FormControl.
+     */
     tagsParser() {
         const input = this.serviceForm.get('tagInput').value;
         if (input.slice(-1) === ',') {
@@ -51,6 +58,9 @@ export class ServiceCreatorPage implements OnInit {
         }
     }
 
+    /**
+     * Creates a new service with the inputted data.
+     */
     createService() {
         this.service.title = this.serviceForm.get('title').value;
         this.service.description = this.serviceForm.get('description').value;
@@ -61,11 +71,14 @@ export class ServiceCreatorPage implements OnInit {
 
         this.serviceService.create(this.service).subscribe(
             (data: Service) => {
-                this.serviceService.uploadImage(data.id, this.image).subscribe(
-                    (data) => {
-                        this.router.navigate(['/profile/me']);
-                    }
-                );
+                // uploads image if provided
+                if (this.hasImage) {
+                    this.serviceService.uploadImage(data.id, this.image).subscribe(
+                        (data) => {
+                            this.router.navigate(['/profile/me']);
+                        }
+                    );
+                }
             },
             (err: any) => {
                 console.log('error message: ' + err.message);
@@ -74,15 +87,24 @@ export class ServiceCreatorPage implements OnInit {
     }
 
     processImage(event) {
-         this.image = (event.target as HTMLInputElement).files[0];
+        this.hasImage = true;
+        this.image = (event.target as HTMLInputElement).files[0];
     }
 
+    /**
+     * Creates a chip to be displayed.
+     * @param  chipToAdd the chip to add.
+     */
     createChip(chipToAdd) {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
         }
     }
 
+    /**
+     * Deletes a chip.
+     * @param  chipToDelete the chip to delete.
+     */
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
             return chip !== chipToDelete;

@@ -1,6 +1,12 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="end">
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn && !isMe" color="primary">
+                <ion-icon name="contact"></ion-icon>
+                <ion-label>
+                    {{ currentUser.username }}
+                </ion-label>
+            </ion-chip>
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
@@ -38,7 +44,7 @@
                                 </a>
                             </ion-col>
                             <ion-col size="auto" *ngIf="isEditing">
-                                <form (ngSubmit)="saveProfile(event)" novalidate [formGroup]="editForm">
+                                <form (ngSubmit)="saveProfile()" novalidate [formGroup]="editForm">
                                     <p>Edit user information:</p>
                                     <ion-item>
                                         <ion-label color="primary">First Name</ion-label>
