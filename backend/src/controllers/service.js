@@ -5,8 +5,7 @@ import { sendNotFoundError, sendInternalError, sendForbiddenError } from '../hel
 import { getUser } from '../helpers/user.helper'
 import { getService, updateService, jsonFromServices, isAllowedWrite } from '../helpers/service.helper'
 import { getTag, findOrCreateTags } from '../helpers/tag.helper'
-
-var path = require('path')
+import { path } from 'path'
 
 const router = Router()
 
