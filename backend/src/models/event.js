@@ -1,9 +1,17 @@
-// Event model:
-//
-// name:          string
-// description:   string
-// date:          string
-//
+/**
+ * Event model to be imported by sequelize
+ *
+ * @param {object} sequelize - Sequelize instance
+ * @param {object} DataTypes - Sequelize Datatypes
+ *
+ * Event belongs to a User
+ * Event belongs to many Services
+ *
+ * @typedef {Object} Event
+ * @property {string} name          -   name of the event
+ * @property {string} description   -   description of the event
+ * @property {date} date            -   date of the event
+ */
 const e = (sequelize, DataTypes) => {
   const Event = sequelize.define('event', {
     name: DataTypes.STRING,

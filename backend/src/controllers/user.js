@@ -6,23 +6,61 @@ import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequeli
 import { getUser, deleteUser, updateUser } from '../helpers/user.helper'
 import * as path from 'path'
 
-const Op = Sequelize.Op
+/**
+ * Express controller providing user related routes
+ * 
+ * @module controllers/event
+ * @requires express
+ * @requires sequelize
+ */
 
+/**
+ * Express controller
+ *
+ * @type {object}
+ * @const
+ * @namespace eventController
+ */
 const router = Router()
 
-// Only allow admins to call /users/
-// Allow not authenticated Users to create an account and to view profile pages
+/**
+ * Sequelize Operation Tag used to perform amongst other things 'and' and 'or' queries.
+ *
+ * @type {object}
+ * @const
+ */
+const Op = Sequelize.Op
 
+/**
+ * Route serving all users.
+ *
+ * @name get/
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/', async (req, res) => {
   const User = getUser(req)
   const users = await User.findAll()
   res.send(users)
 })
 
-router.get('/:userId', async (req, res, next) => {
+/**
+ * Route serving a specifi user.
+ *
+ * @name get/:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
+router.get('/:id', async (req, res, next) => {
   if (Object.keys(req.query).length === 0) {
     const User = getUser(req)
-    await User.findByPk(req.params.userId).then(user => {
+    await User.findByPk(req.params.id).then(user => {
       if (!user) {
         sendNotFoundError(res)
       } else {
@@ -35,6 +73,16 @@ router.get('/:userId', async (req, res, next) => {
   next()
 })
 
+/**
+ * Route creating an user.
+ *
+ * @name post/
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/', async (req, res) => {
   const User = getUser(req)
   var userData = req.body
@@ -51,6 +99,16 @@ router.post('/', async (req, res) => {
   })
 })
 
+/**
+ * Route serving the profile picture.
+ *
+ * @name get/:id/image
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/:id/image', async (req, res) => {
   const User = getUser(req)
   const imageRoot = path.join(__dirname, process.env.IMAGE_DIR)
@@ -69,6 +127,16 @@ router.get('/:id/image', async (req, res) => {
   })
 })
 
+/**
+ * Route setting the profile picture.
+ *
+ * @name get/:id/image
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/:id/image', upload.single('user_image'), async (req, res) => {
   const User = getUser(req)
   User.findByPk(req.params.id).then((user) => {
@@ -83,6 +151,16 @@ router.post('/:id/image', upload.single('user_image'), async (req, res) => {
   })
 })
 
+/**
+ * Route updating the user.
+ *
+ * @name put/:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.put('/:id', async (req, res) => {
   const User = getUser(req)
   if (req.user.sub !== req.params.id) {
@@ -100,6 +178,16 @@ router.put('/:id', async (req, res) => {
   }
 })
 
+/**
+ * Route deleting the user.
+ *
+ * @name delete/:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.delete('/:id', async (req, res) => {
   const User = getUser(req)
   if (req.user.sub !== req.params.id) {
@@ -117,6 +205,16 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+/**
+ * Route searching for a user by login (username and email).
+ *
+ * @name get/search
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/search', async (req, res) => {
   const User = getUser(req)
   let criteria = ''

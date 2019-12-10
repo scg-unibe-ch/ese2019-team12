@@ -1,17 +1,27 @@
-// User model:
-//
-// username:  string (unique)
-// email:     string (unique)
-// firstname: string
-// lastname:  string
-// bio:       string
-// role:      string
-// password:  string | Treated as function by sequelize,
-// salt:      string | to prevent those values from showing up in findAll requests etc.
-// image:     string | filename of the profile picture
-
 import { generateSalt, encryptPassword } from '../helpers/crypt.helper'
 
+/**
+ * User model to be imported by sequelize
+ *
+ * @param {object} sequelize - Sequelize instance
+ * @param {object} DataTypes - Sequelize Datatypes
+ *
+ * User has many Services.
+ * User has many Events.
+ *
+ * Before each password save / update, the password is salted and hashed.
+ *
+ * @typedef {Object} User
+ * @property {string} username  - has to be unique
+ * @property {string} email     - has to be unique, has to be a valid email address
+ * @property {string} firstname
+ * @property {string} lastname
+ * @property {string} bio       - short description of the user
+ * @property {string} role      - role, can be 'Admin' or 'User'
+ * @property {string} password  - password, salted and hashed
+ * @property {string} salt      - salt of the password
+ * @property {string} image     - filename of the saved image
+ */
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     username: {
@@ -61,6 +71,11 @@ const user = (sequelize, DataTypes) => {
     }
   })
 
+  /**
+   * Is this user a admin?
+   *
+   * @returns whether or not the user is an admin
+   */
   User.prototype.isAdmin = function () {
     return this.role === 'Admin'
   }

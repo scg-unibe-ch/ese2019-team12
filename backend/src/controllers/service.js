@@ -7,8 +7,33 @@ import { getService, updateService, jsonFromServices, isAllowedWrite } from '../
 import { getTag, findOrCreateTags } from '../helpers/tag.helper'
 import * as path from 'path'
 
+/**
+ * Express controller providing user related routes
+ * 
+ * @module controllers/service
+ * @requires express
+ * @requires sequelize
+ */
+
+/**
+ * Express controller
+ *
+ * @type {object}
+ * @const
+ * @namespace serviceController
+ */
 const router = Router()
 
+/**
+ * Route serving all events
+ *
+ * @name get/
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/', async (req, res) => {
   const Service = getService(req)
   const Tag = getTag(req)
@@ -31,6 +56,16 @@ router.get('/', async (req, res) => {
   })
 })
 
+/**
+ * Route serving a specific event
+ *
+ * @name get/:id
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/:id', async (req, res, next) => {
   const Service = getService(req)
   const Tag = getTag(req)
@@ -52,6 +87,16 @@ router.get('/:id', async (req, res, next) => {
   })
 })
 
+/**
+ * Route serving all events of a specific user
+ *
+ * @name get/user/:id
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/user/:id', async (req, res) => {
   const Service = getService(req)
   const Tag = getTag(req)
@@ -76,6 +121,16 @@ router.get('/user/:id', async (req, res) => {
   })
 })
 
+/**
+ * Route updating existing services
+ *
+ * @name post/
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/', async (req, res) => {
   const Service = getService(req)
 
@@ -99,6 +154,17 @@ router.post('/', async (req, res) => {
   })
 })
 
+/**
+ * Route getting the image associate with a service
+ * Send a file to the client
+ *
+ * @name get/:id/image
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/:id/image', async (req, res) => {
   const Service = getService(req)
   const imageRoot = path.join(__dirname, process.env.IMAGE_DIR)
@@ -117,6 +183,16 @@ router.get('/:id/image', async (req, res) => {
   })
 })
 
+/**
+ * Route controlling the image upload
+ *
+ * @name post/:id/image
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/:id/image', upload.single('service_image'), async (req, res) => {
   const Service = getService(req)
   Service.findByPk(req.params.id).then((service) => {
@@ -135,6 +211,16 @@ router.post('/:id/image', upload.single('service_image'), async (req, res) => {
   })
 })
 
+/**
+ * Route updating a specific event
+ *
+ * @name put/:id
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.put('/:id', async (req, res) => {
   const Service = getService(req)
   const User = getUser(req)
@@ -160,6 +246,16 @@ router.put('/:id', async (req, res) => {
   })
 })
 
+/**
+ * Route deleting a specific event
+ *
+ * @name delete/:id
+ * @function
+ * @memberof module:controllers/service~serviceController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.delete('/:id', async (req, res) => {
   const Service = getService(req)
   const User = getUser(req)

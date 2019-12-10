@@ -6,17 +6,56 @@ import { getService, hasServices } from '../helpers/service.helper'
 import { getUser } from '../helpers/user.helper'
 import { getTag } from '../helpers/tag.helper'
 
+/**
+ * Express controller providing user related routes
+ * 
+ * @module controllers/event
+ * @requires express
+ * @requires sequelize
+ */
+
+/**
+ * Express controller
+ *
+ * @type {object}
+ * @const
+ * @namespace eventController
+ */
 const router = Router()
+
+/**
+ * Sequelize Operation Tag used to perform amongst other things 'and' and 'or' queries.
+ *
+ * @type {object}
+ * @const
+ */
 const Op = Sequelize.Op
 
 /**
+ * Route serving nothing, as nobody can see all events.
  *
+ * @name get/
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
  */
 router.get('/', async (req, res) => {
   // Nobody can see all events
   res.send({})
 })
 
+/**
+ * Route serving a specifig event.
+ *
+ * @name get/:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/:id', async (req, res) => {
   const Event = getEvent(req)
   const Service = getService(req)
@@ -49,6 +88,19 @@ router.get('/:id', async (req, res) => {
   })
 })
 
+/**
+ * Route serving all events of a specific user.
+ *
+ * The logic does not actually follow the id sent but rather the id of the current user.
+ * This is because no user can currently see another users events.
+ *
+ * @name get/user/:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.get('/user/:id', async (req, res) => {
   const Event = getEvent(req)
   const Service = getService(req)
@@ -76,6 +128,16 @@ router.get('/user/:id', async (req, res) => {
   })
 })
 
+/**
+ * Route creating new events, accepts event data 
+ *
+ * @name post/
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/', async (req, res) => {
   const Event = getEvent(req)
   const eventData = req.body
@@ -91,6 +153,16 @@ router.post('/', async (req, res) => {
   })
 })
 
+/**
+ * Route updating events, accepts event data
+ *
+ * @name put/:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.put('/:id', async (req, res) => {
   const Event = getEvent(req)
   Event.findByPk(req.params.id).then(e => {
@@ -121,6 +193,16 @@ router.put('/:id', async (req, res) => {
   })
 })
 
+/**
+ * Route deleting events
+ *
+ * @name /delete:id
+ * @function
+ * @memberof module:controllers/event~eventController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.delete('/:id', async (req, res) => {
   const Event = getEvent(req)
 

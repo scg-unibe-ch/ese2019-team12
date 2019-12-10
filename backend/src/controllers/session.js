@@ -2,12 +2,42 @@ import { Router } from 'express'
 import { Sequelize } from 'sequelize'
 import { checkPassword } from '../helpers/crypt.helper'
 import { getSessionToken } from '../helpers/session.helper'
-const Op = Sequelize.Op
 
+/**
+ * Express controller providing user related routes
+ * 
+ * @module controllers/session
+ * @requires express
+ * @requires sequelize
+ */
+
+/**
+ * Express controller
+ *
+ * @type {object}
+ * @const
+ * @namespace sessionController
+ */
 const router = Router()
 
-// Provides the JWT and it's expiration date in ms (counting from 01.01.1970 00:00:00)
-// to the legitimate User
+/**
+ * Sequelize Operation Tag used to perform amongst other things 'and' and 'or' queries.
+ *
+ * @type {object}
+ * @const
+ */
+const Op = Sequelize.Op
+
+/**
+ * Route which handles the login and provides the JWT to legitimate users
+ *
+ * @name login/
+ * @function
+ * @memberof module:controllers/session~sessionController
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 router.post('/login', async (req, res) => {
   const login = req.body.login
   const password = req.body.password

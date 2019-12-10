@@ -1,7 +1,22 @@
 import 'dotenv/config'
 import Sequelize from 'sequelize'
 
-const logging = (process.env.DB_LOG === 'None' ? function () {} : console.log) // Have the possibility to disable logging (for testing)
+/**
+ * Sequelize DB connection
+ *
+ * @requires sequelize 
+ */
+
+/**
+ * Use the environment variable to determine, whether or not to use logging.
+ * @const
+ */
+const logging = (process.env.DB_LOG === 'None' ? function () {} : console.log)
+
+/**
+ * Create a new sequelize instance
+ * @const
+ */
 const sequelize = new Sequelize(
   {
     transactionType: 'IMMEDIATE',
@@ -14,6 +29,10 @@ const sequelize = new Sequelize(
   }
 )
 
+/**
+ * Load the models and make them available
+ * @const
+ */
 const models = {
   User: sequelize.import('./user'),
   Service: sequelize.import('./service'),
@@ -21,6 +40,9 @@ const models = {
   Tag: sequelize.import('./tag')
 }
 
+/**
+ * associate all the models
+ */
 Object.keys(models).forEach(key => {
   if ('associate' in models[key]) {
     models[key].associate(models)
