@@ -13,7 +13,7 @@ const router = Router()
 // Allow not authenticated Users to create an account and to view profile pages
 export const userAuthFilter = (req) => {
   return req.method === 'OPTIONS' || req.method === 'POST' ||
-    (req.method === 'GET' && req.originalUrl != '/users/')
+    (req.method === 'GET' && req.originalUrl !== '/users/')
 }
 
 router.get('/', async (req, res) => {
@@ -56,9 +56,9 @@ router.post('/', async (req, res) => {
 
 router.get('/:id/image', async (req, res) => {
   const User = getUser(req)
-  const image_root = path.join(__dirname, process.env.IMAGE_DIR)
+  const imageRoot = path.join(__dirname, process.env.IMAGE_DIR)
   var options = {
-    root: image_root,
+    root: imageRoot,
     dotfiles: 'deny'
   }
   User.findByPk(req.params.id).then(user => {

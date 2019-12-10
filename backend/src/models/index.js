@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import Sequelize from 'sequelize'
-import fs from 'fs'
 
 const logging = (process.env.DB_LOG === 'None' ? function () {} : console.log) // Have the possibility to disable logging (for testing)
 const sequelize = new Sequelize(

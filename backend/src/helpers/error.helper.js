@@ -18,7 +18,6 @@ export function handleSequelizeErrors (res, err) {
   const msg = {}
   err.errors.forEach(e => {
     const errorType = e.type
-    const errorMsg = e.message
 
     if (errorType !== 'Validation error' && errorType !== 'unique violation') {
       console.log('Internal Error: ', e)

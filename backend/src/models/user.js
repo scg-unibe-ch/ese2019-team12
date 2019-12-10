@@ -10,7 +10,7 @@
 // salt:      string | to prevent those values from showing up in findAll requests etc.
 // image:     string | filename of the profile picture
 
-import { generateSalt, encryptPassword, checkPassword } from '../helpers/crypt.helper'
+import { generateSalt, encryptPassword } from '../helpers/crypt.helper'
 
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {

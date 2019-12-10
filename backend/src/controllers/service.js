@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { upload } from '../helpers/upload.helper'
 import 'dotenv/config'
-import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper'
+import { sendNotFoundError, sendInternalError, sendForbiddenError } from '../helpers/error.helper'
 var path = require('path')
 
 const router = Router()
@@ -21,8 +21,7 @@ router.get('/', async (req, res) => {
     res.statusCode = 200
     res.send(jsonFromServices(services))
   }).catch((err) => {
-    console.log(err)
-    res.sendStatus(500)
+    sendInternalError(res, err)
   })
 })
 
@@ -32,13 +31,12 @@ router.get('/:id', async (req, res, next) => {
   const User = getUser(req)
   await Service.findByPk(req.params.id, { include: [{ model: Tag }, { model: User }] }).then(service => {
     if (!service) {
-      error404(res)
-      return
+      sendNotFoundError(res)
+    } else {
+      res.send(service.simplified())
     }
-    res.send(service.simplified())
   }).catch(err => {
-    console.log(err)
-    res.sendStatus(500)
+    sendInternalError(res, err)
   })
 })
 
@@ -47,7 +45,7 @@ router.get('/user/:id', async (req, res) => {
   const Tag = getTag(req)
   const User = getUser(req)
 
-  const services = await Service.findAll({
+  await Service.findAll({
     where: {
       userId: req.params.id
     },
@@ -63,8 +61,7 @@ router.get('/user/:id', async (req, res) => {
 
     res.send(jsonFromServices(services))
   }).catch((err) => {
-    console.log(err)
-    res.sendStatus(500)
+    sendInternalError(res, err)
   })
 })
 
@@ -94,9 +91,9 @@ router.post('/', async (req, res) => {
 
 router.get('/:id/image', async (req, res) => {
   const Service = getService(req)
-  const image_root = path.join(__dirname, process.env.IMAGE_DIR)
+  const imageRoot = path.join(__dirname, process.env.IMAGE_DIR)
   var options = {
-    root: image_root,
+    root: imageRoot,
     dotfiles: 'deny'
   }
   Service.findByPk(req.params.id).then(service => {
@@ -248,13 +245,6 @@ function jsonFromServices (services) {
     res.push(service.simplified())
   })
   return res
-}
-
-function error404 (res) {
-  res.statusCode = 404
-  res.json({
-    message: 'not found'
-  })
 }
 
 export default router

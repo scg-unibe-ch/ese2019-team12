@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { Sequelize } from 'sequelize'
-import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper'
+import { sendNotFoundError, sendInternalError, sendForbiddenError } from '../helpers/error.helper'
 
 const router = Router()
 const Op = Sequelize.Op
@@ -113,7 +113,6 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const Event = getEvent(req)
-  const User = getUser(req)
   Event.findByPk(req.params.id).then(e => {
     if (!e) {
       sendNotFoundError(res)
@@ -161,10 +160,6 @@ function jsonFromEvents (events) {
     result.push(event.simplified())
   }
   return result
-}
-
-function getUser (req) {
-  return req.context.models.User
 }
 
 export default router
