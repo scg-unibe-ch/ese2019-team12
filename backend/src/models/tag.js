@@ -4,11 +4,11 @@ const tag = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       primaryKey: true
     }
-  }, {});
+  }, {})
   Tag.associate = models => {
-    Tag.belongsToMany(models.Service, { through:  'services_tags' });
-  };
-  return Tag;
-};
+    Tag.belongsToMany(models.Service, { through: 'services_tags' })
+  }
+  return Tag
+}
 
-export default tag;
+export default tag

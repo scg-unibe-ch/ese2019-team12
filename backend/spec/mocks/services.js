@@ -1,11 +1,11 @@
-export default function createMockServices(Service) {
+export default function createMockServices (Service) {
   return Service.bulkCreate([
     {
       id: 1,
       userId: 1,
       title: 'service to get',
       description: 'got it',
-      price: 500,
+      price: 500
     },
     {
       id: 2,
@@ -41,6 +41,6 @@ export default function createMockServices(Service) {
       title: 'bob\'s service',
       description: 'nobody deletes it',
       price: 1
-    },
-  ]);  
-}      
+    }
+  ])
+}

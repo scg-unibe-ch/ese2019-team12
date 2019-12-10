@@ -4,10 +4,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         primaryKey: true
-      },
-    });
+      }
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('tags');
+    return queryInterface.dropTable('tags')
   }
-};
+}

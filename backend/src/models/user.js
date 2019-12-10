@@ -10,19 +10,19 @@
 // salt:      string | to prevent those values from showing up in findAll requests etc.
 // image:     string | filename of the profile picture
 
-import { generateSalt, encryptPassword, checkPassword } from '../helpers/crypt.helper';
+import { generateSalt, encryptPassword, checkPassword } from '../helpers/crypt.helper'
 
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     username: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: true
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        isEmail: true,
+        isEmail: true
       }
     },
     firstname: DataTypes.STRING,
@@ -31,41 +31,41 @@ const user = (sequelize, DataTypes) => {
     role: DataTypes.STRING,
     password: {
       type: DataTypes.STRING,
-      get() {
+      get () {
         return () => this.getDataValue('password')
       }
     },
     salt: {
       type: DataTypes.STRING,
-      get() {
+      get () {
         return () => this.getDataValue('salt')
       }
     },
-    image: DataTypes.STRING,
-  }, {});
+    image: DataTypes.STRING
+  }, {})
   User.associate = models => {
-    User.hasMany(models.Service, { onDelete: 'CASCADE' });
-    User.hasMany(models.Event, { onDelete: 'CASCADE' });
-  };
+    User.hasMany(models.Service, { onDelete: 'CASCADE' })
+    User.hasMany(models.Event, { onDelete: 'CASCADE' })
+  }
 
-  function updatePassword(user) {
-    user.salt = generateSalt();
-    user.password = encryptPassword(user.password(), user.salt());
+  function updatePassword (user) {
+    user.salt = generateSalt()
+    user.password = encryptPassword(user.password(), user.salt())
   }
   User.beforeCreate((user) => {
-    updatePassword(user);
-  });
+    updatePassword(user)
+  })
   User.beforeUpdate((user) => {
-    if(user.changed('password')) {
-      updatePassword(user);
+    if (user.changed('password')) {
+      updatePassword(user)
     }
-  });
+  })
 
-  User.prototype.isAdmin = function() {
-    return this.role === 'Admin';
+  User.prototype.isAdmin = function () {
+    return this.role === 'Admin'
   }
 
-  return User;
-};
+  return User
+}
 
-export default user;
+export default user

@@ -19,9 +19,9 @@ module.exports = {
       image: {
         type: Sequelize.STRING
       }
-    });
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('services');
+    return queryInterface.dropTable('services')
   }
-};
+}

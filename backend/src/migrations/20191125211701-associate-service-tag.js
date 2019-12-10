@@ -7,12 +7,12 @@ module.exports = {
       },
       serviceId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       }
-    });
+    })
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('services_tags');
+    return queryInterface.dropTable('services_tags')
   }
-};
+}

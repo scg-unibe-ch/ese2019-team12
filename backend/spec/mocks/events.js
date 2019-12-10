@@ -1,4 +1,4 @@
-export default function createMockEvents(Event) {
+export default function createMockEvents (Event) {
   return Event.bulkCreate([
     {
       id: 1,
@@ -42,5 +42,5 @@ export default function createMockEvents(Event) {
       description: 'do update',
       date: '2011-01-01'
     }
-  ]);
+  ])
 }

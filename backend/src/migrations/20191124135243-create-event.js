@@ -16,9 +16,9 @@ module.exports = {
       date: {
         type: Sequelize.STRING
       }
-    });
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('events');
+    return queryInterface.dropTable('events')
   }
-};
+}

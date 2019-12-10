@@ -35,10 +35,10 @@ module.exports = {
       },
       image: {
         type: Sequelize.STRING
-      },
-    });
+      }
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('users')
   }
-};
+}
