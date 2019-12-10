@@ -30,7 +30,7 @@ Wait for the terminal to load the different modules.
 
 This server uses an sqlite3 database. It is stored in the file `db.sqlite`
 
-To fill the database with test data enter:
+To fill the database with test data, navigate to the backend folder and enter:
 
 ### `npm run db_init`
 
@@ -56,7 +56,7 @@ for a dev server. Navigate to http://localhost:4200/.
 
 ### Backend
 
-Run
+Navigate to the backend folder and run
 
 ##  `npm start`.
 
