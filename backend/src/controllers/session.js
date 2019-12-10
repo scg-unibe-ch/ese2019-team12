@@ -2,10 +2,10 @@ import { Router } from 'express'
 import { Sequelize } from 'sequelize'
 import { checkPassword } from '../helpers/crypt.helper'
 import { getSessionToken } from '../helpers/session.helper'
+import * as path from 'path'
 
 /**
- * Express controller providing user related routes
- * 
+ * Express controller user authentication service
  * @module controllers/session
  * @requires express
  * @requires sequelize
@@ -13,24 +13,22 @@ import { getSessionToken } from '../helpers/session.helper'
 
 /**
  * Express controller
- *
  * @type {object}
  * @const
  * @namespace sessionController
  */
 const router = Router()
 
-/**
+/*
  * Sequelize Operation Tag used to perform amongst other things 'and' and 'or' queries.
- *
  * @type {object}
+ * @memberof module:controllers/service
  * @const
  */
 const Op = Sequelize.Op
 
 /**
  * Route which handles the login and provides the JWT to legitimate users
- *
  * @name login/
  * @function
  * @memberof module:controllers/session~sessionController

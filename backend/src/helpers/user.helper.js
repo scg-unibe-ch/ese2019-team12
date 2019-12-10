@@ -11,7 +11,7 @@ import { sendNotFoundError, sendInternalError } from './error.helper'
  *
  * @function
  * @memberof module:helper/service
- * @param   {object} req   -   Express request 
+ * @param   {object} req   -   Express request
  * @returns {Object} User
  */
 export function getUser (req) {
@@ -24,8 +24,8 @@ export function getUser (req) {
  *
  * @function
  * @memberof module:helper/service
- * @param   {object} req   -   Express request 
- * @param   {object} req   -   Express response 
+ * @param   {object} req   -   Express request
+ * @param   {object} req   -   Express response
  */
 export function deleteUser (req, res) {
   const User = getUser(req)
@@ -46,8 +46,8 @@ export function deleteUser (req, res) {
  *
  * @function
  * @memberof module:helper/service
- * @param   {object} req   -   Express request 
- * @param   {object} req   -   Express response 
+ * @param   {object} req   -   Express request
+ * @param   {object} req   -   Express response
  */
 export function updateUser (req, res) {
   const User = getUser(req)

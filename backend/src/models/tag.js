@@ -1,12 +1,15 @@
 /**
  * Tag model to be imported by sequelize
- *
+ * @module models/service
  * @param {object} sequelize - Sequelize instance
  * @param {object} DataTypes - Sequelize Datatypes
+ */
+
+/**
+ * Tag model
  *
- * Tag belongs to many Services
- *
- * @typedef {Object} Tag
+ * memberof module:models/tag
+ * @namespace Tag
  * @property {string} name  -   has to be unique, is primary key
  */
 const tag = (sequelize, DataTypes) => {

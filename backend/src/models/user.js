@@ -1,17 +1,17 @@
 import { generateSalt, encryptPassword } from '../helpers/crypt.helper'
+import * as path from 'path'
 
 /**
  * User model to be imported by sequelize
- *
+ * @module models/user
  * @param {object} sequelize - Sequelize instance
  * @param {object} DataTypes - Sequelize Datatypes
+ */
+
+/**
+ * User model
  *
- * User has many Services.
- * User has many Events.
- *
- * Before each password save / update, the password is salted and hashed.
- *
- * @typedef {Object} User
+ * @memberof module:models/user
  * @property {string} username  - has to be unique
  * @property {string} email     - has to be unique, has to be a valid email address
  * @property {string} firstname
@@ -21,6 +21,7 @@ import { generateSalt, encryptPassword } from '../helpers/crypt.helper'
  * @property {string} password  - password, salted and hashed
  * @property {string} salt      - salt of the password
  * @property {string} image     - filename of the saved image
+ * @namespace User
  */
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
@@ -73,7 +74,7 @@ const user = (sequelize, DataTypes) => {
 
   /**
    * Is this user a admin?
-   *
+   * @memberof module:models/user~User
    * @returns whether or not the user is an admin
    */
   User.prototype.isAdmin = function () {

@@ -12,7 +12,7 @@ import { updateTags } from '../helpers/tag.helper'
  *
  * @function
  * @memberof module:helper/service
- * @param   {object} req   -   Express request 
+ * @param   {object} req   -   Express request
  * @returns {Object} Service
  */
 export function getService (req) {
@@ -95,7 +95,7 @@ export function isAllowedWrite (user, service) {
  *
  * @function
  * @memberof module:helper/service
- * @param   {object} req   -   Express request 
+ * @param   {object} req   -   Express request
  * @returns {boolean} hasServices
  */
 export function hasServices (req) {

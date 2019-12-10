@@ -1,13 +1,15 @@
 /**
  * Event model to be imported by sequelize
- *
+ * @module models/event
  * @param {object} sequelize - Sequelize instance
  * @param {object} DataTypes - Sequelize Datatypes
+ */
+
+/**
+ * Event model
  *
- * Event belongs to a User
- * Event belongs to many Services
- *
- * @typedef {Object} Event
+ * memberof module:models/event
+ * @namespace Event
  * @property {string} name          -   name of the event
  * @property {string} description   -   description of the event
  * @property {date} date            -   date of the event

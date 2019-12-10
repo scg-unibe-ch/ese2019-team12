@@ -1,20 +1,21 @@
-import 'dotenv/config'
 import Sequelize from 'sequelize'
 
 /**
- * Sequelize DB connection
- *
- * @requires sequelize 
+ * Sets up the sequelize database connection
+ * @module index/sequelize
+ * @requires sequelize
  */
 
 /**
  * Use the environment variable to determine, whether or not to use logging.
+ * @memberof module: index/sequelizeIndex
  * @const
  */
 const logging = (process.env.DB_LOG === 'None' ? function () {} : console.log)
 
 /**
  * Create a new sequelize instance
+ * @memberof module: index/sequelizeIndex
  * @const
  */
 const sequelize = new Sequelize(
@@ -31,6 +32,7 @@ const sequelize = new Sequelize(
 
 /**
  * Load the models and make them available
+ * @memberof module: index/sequelizeIndex
  * @const
  */
 const models = {

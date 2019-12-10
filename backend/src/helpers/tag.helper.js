@@ -11,7 +11,7 @@ import { sendInternalError } from '../helpers/error.helper'
  *
  * @function
  * @memberof module:helper/tag
- * @param   {object} req   -   Express request 
+ * @param   {object} req   -   Express request
  * @returns {Object} Tag
  */
 export function getTag (req) {
@@ -23,7 +23,7 @@ export function getTag (req) {
  *
  * @function
  * @memberof module:helper/tag
- * @param   {object} req   -   Express request 
+ * @param   {object} req   -   Express request
  * @param   {object} tags  -   json with tags
  */
 export async function findOrCreateTags (req, tags) {
@@ -44,7 +44,7 @@ export async function findOrCreateTags (req, tags) {
  * @memberof module:helper/tag
  * @param   {Service} service   -   service object
  * @param   {object} tags       -   json with tags
- * @param   {object} req        -   Express request 
+ * @param   {object} req        -   Express request
  * @param   {object} res        -   Express response
  */
 export function updateTags (service, tags, req, res) {

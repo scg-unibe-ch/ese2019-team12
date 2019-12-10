@@ -1,15 +1,15 @@
 /**
  * Service model to be imported by sequelize
- *
+ * @module models/service
  * @param {object} sequelize - Sequelize instance
  * @param {object} DataTypes - Sequelize Datatypes
+ */
+
+/**
+ * Service model
  *
- * Each Service belongs to a User
- * 
- * Service has many Tags.
- * Service has many Events.
- *
- * @typedef {Object} Service
+ * memberof module:models/service
+ * @namespace Service
  * @property {string} title         -   title of the service
  * @property {string} description   -   description of the service
  * @property {number} price         -   price set by the user
