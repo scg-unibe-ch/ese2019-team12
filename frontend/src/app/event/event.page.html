@@ -30,7 +30,10 @@
                         </ion-card-title>
                         <ion-card-subtitle>
                             {{ event.description }}<br><br>
-                            <ion-label>on {{ displayDate }}</ion-label>
+                            <ion-icon name="calendar" color="primary"></ion-icon>
+                            <ion-label>
+                                {{ displayDate }}
+                            </ion-label>
                         </ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-header  *ngIf="isEditing">
@@ -84,7 +87,7 @@
                                             <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
                                             <ion-card-subtitle>
                                                 <p class="byUser">by:
-                                                    <ion-chip routerLink="/profile/{{ service.userId }}"color="primary">
+                                                    <ion-chip routerLink="/profile/{{ serviceCard.service.userId }}"color="primary">
                                                         <ion-icon name="contact"></ion-icon>
                                                         <ion-label>
                                                             {{ serviceCard.service.username }}

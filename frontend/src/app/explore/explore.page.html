@@ -24,7 +24,7 @@
                 <ion-col>
                     <form [formGroup]="searchForm">
                         <ion-searchbar  *ngIf="!tagsSearch" formControlName="query" (ionChange)="filterByTitle(event)" (ionClear)="clearSearch()" placeholder="Search services by Title"></ion-searchbar>
-                        <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionClear)="clearTags()" (ionChange)="tagsParser(event)"></ion-searchbar>
+                        <ion-searchbar *ngIf="tagsSearch" formControlName="tags" placeholder="Search services by Tags. Separate them by a comma ','." (ionChange)="tagsParser(event)"></ion-searchbar>
                     </form>
                 </ion-col>
             </ion-row>

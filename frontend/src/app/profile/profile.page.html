@@ -1,10 +1,8 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="end">
-            <ion-chip outline routerLink="/profile/me" *ngIf="isLoggedIn && !isMe">
-                <ion-avatar>
-                    <img src="../../assets/defaultAvatar.png">
-                </ion-avatar>
+            <ion-chip routerLink="/profile/me" *ngIf="isLoggedIn" color="primary">
+                <ion-icon name="contact"></ion-icon>
                 <ion-label>
                     {{ currentUser.username }}
                 </ion-label>
@@ -19,7 +17,7 @@
 
 <ion-content>
     <ion-grid>
-        <ion-row>
+        <ion-row class="ion-justify-content-center">
             <ion-col size="auto">
                 <ion-card>
                     <ion-grid>
@@ -73,79 +71,81 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-
     <ion-grid>
         <ion-row>
-            <ion-title *ngIf="isMe">My Services</ion-title>
-            <ion-title *ngIf="!isMe">{{ profile.username }}'s Services</ion-title>
-        </ion-row>
-        <div class="horizontalScroll">
-            <ion-row class="ion-justify-content-start" nowrap>
-                <ion-col *ngIf="isMe" size="auto">
-                    <ion-card routerLink="/service-creator" class="custom-ion-card">
-                        <ion-card-header color="primary">
-                            <p class="ion-text-center">
-                                Add a Service<br>
-                                <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                            </p>
-                        </ion-card-header>
-                    </ion-card>
-                </ion-col>
-                <ion-col *ngFor="let serviceCard of optimizedServices" size="auto">
-                    <ion-card class="custom-ion-card">
-                        <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
-                        <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
-                            <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
-                            <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
-                        </ion-card-header>
-                        <ion-card-content>
-                            {{ serviceCard.service.description }}
-                            <br><br>
-                            Price: {{ serviceCard.service.price }}.-
-                            <br>
-                            <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
-                                <ion-label>{{ tag }}</ion-label>
-                            </ion-chip>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-            <ion-row class="ion-justify-content-center">
-                <p *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
-            </ion-row>
-        </div>
-    </ion-grid>
-
-    <ion-grid *ngIf="isMe">
-        <ion-row>
-            <ion-title>My Events</ion-title>
-        </ion-row>
-        <div class="horizontalScroll">
-            <ion-row class="ion-justify-content-start" nowrap>
-                <ion-col size="auto">
-                    <ion-card routerLink="/event-creator" class="custom-ion-card">
-                        <ion-card-header color="primary">
-                            <p class="ion-text-center">
-                                Add an Event<br>
-                                <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                            </p>
-                        </ion-card-header>
-                    </ion-card>
-                </ion-col>
-                <ion-col size="auto" *ngFor="let event of events">
-                    <ion-card class="custom-ion-card">
-                        <ion-card-header routerLink="/event/{{ event.id }}">
-                            <ion-card-title>{{ event.name }}</ion-card-title>
-                            <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <ion-card *ngFor="let service of event.services">
-                                <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
+            <ion-col>
+                <ion-grid>
+                    <ion-row>
+                        <ion-title *ngIf="isMe">My Services</ion-title>
+                        <ion-title *ngIf="!isMe">{{ profile.username }}'s Services</ion-title>
+                    </ion-row>
+                    <ion-row class="ion-justify-content-start">
+                        <ion-col *ngIf="isMe" size="6">
+                            <ion-card routerLink="/service-creator" class="custom-ion-card">
+                                <ion-card-header color="primary">
+                                    <p class="ion-text-center">
+                                        Add a Service<br>
+                                        <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                                    </p>
+                                </ion-card-header>
                             </ion-card>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-        </div>
+                        </ion-col>
+                        <ion-col *ngFor="let serviceCard of optimizedServices" size="6">
+                            <ion-card class="custom-ion-card">
+                                <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
+                                <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
+                                    <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
+                                    <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content>
+                                    {{ serviceCard.service.description }}
+                                    <br><br>
+                                    Price: {{ serviceCard.service.price }}.-
+                                    <br>
+                                    <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                                        <ion-label>{{ tag }}</ion-label>
+                                    </ion-chip>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="ion-justify-content-center">
+                        <p *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+            <ion-col>
+                <ion-grid *ngIf="isMe">
+                    <ion-row>
+                        <ion-title>My Events</ion-title>
+                    </ion-row>
+                    <ion-row class="ion-justify-content-start">
+                        <ion-col size="6">
+                            <ion-card routerLink="/event-creator" class="custom-ion-card">
+                                <ion-card-header color="primary">
+                                    <p class="ion-text-center">
+                                        Add an Event<br>
+                                        <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                                    </p>
+                                </ion-card-header>
+                            </ion-card>
+                        </ion-col>
+                        <ion-col size="6" *ngFor="let event of events">
+                            <ion-card class="custom-ion-card">
+                                <ion-card-header routerLink="/event/{{ event.id }}">
+                                    <ion-card-title>{{ event.name }}</ion-card-title>
+                                    <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content>
+                                    <ion-card *ngFor="let service of event.services">
+                                        <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
+                                    </ion-card>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-col>
+        </ion-row>
     </ion-grid>
 </ion-content>
