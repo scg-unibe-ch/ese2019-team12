@@ -45,14 +45,9 @@ describe('AppComponent', () => {
       fixture.detectChanges();
       const app = fixture.nativeElement;
       const menuItems = app.querySelectorAll('ion-label');
-      if (this.role === 'Admin') {
-        expect(menuItems.length).toEqual(5);
-        expect(menuItems[0].textContent).toContain('Admin');
-        expect(menuItems[1].textContent).toContain('Explore');
-        expect(menuItems[2].textContent).toContain('Profile');
-        expect(menuItems[3].textContent).toContain('Login');
-        expect(menuItems[4].textContent).toContain('Add Service');
-      }
+      expect(menuItems.length).toEqual(2);
+      expect(menuItems[0].textContent).toContain('Explore');
+      expect(menuItems[1].textContent).toContain('Login or Register');
     });
 
   it('should have urls', async () => {
@@ -63,10 +58,6 @@ describe('AppComponent', () => {
       expect(menuItems.length).toEqual(2);
       expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/explore');
       expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/login');
-      // expect(menuItems[2].getAttribute('ng-reflect-router-link')).toEqual('/profile');
-      // expect(menuItems[3].getAttribute('ng-reflect-router-link')).toEqual('/settings');
-      // expect(menuItems[4].getAttribute('ng-reflect-router-link')).toEqual('/login');
-      // expect(menuItems[5].getAttribute('ng-reflect-router-link')).toEqual('/service-creator');
     });
 
   it('should initialize the app', async () => {
@@ -76,7 +67,5 @@ describe('AppComponent', () => {
     expect(statusBarSpy.styleDefault).toHaveBeenCalled();
     expect(splashScreenSpy.hide).toHaveBeenCalled();
   });
-
-  // TODO: add more tests!
 
 });

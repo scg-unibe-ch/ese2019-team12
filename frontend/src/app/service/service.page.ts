@@ -12,6 +12,8 @@ import { User } from '../_models/user';
 import { Role } from '../_models/role';
 import { Service } from '../_models/service';
 import { Event } from '../_models/event';
+import { AlertController } from '@ionic/angular';
+import { present } from '@ionic/core/dist/types/utils/overlays';
 
 @Component({
   selector: 'app-service',
@@ -44,7 +46,8 @@ export class ServicePage implements OnInit {
         private serviceService: ServiceService,
         private userService: UserService,
         private eventService: EventService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private alertController: AlertController
     ) {}
 
     ngOnInit() {
@@ -128,6 +131,7 @@ export class ServicePage implements OnInit {
                     this.router.navigate(['/event/' + selectedEvent.id]);
                 }
             );
+            this.presentAlert(selectedEvent, this.service);
         }
     }
 
@@ -188,6 +192,16 @@ export class ServicePage implements OnInit {
         this.serviceService.delete(this.service.id).subscribe( () => {
             this.router.navigate(['/profile/me']);
         });
+    }
+
+    async presentAlert(selectedEvent: Event, selectedService: Service) {
+        const alert = await this.alertController.create({
+        header: 'New Service added',
+        subHeader: 'You just added the service "' + selectedService.title + '" to your event "' + selectedEvent.name + '".',
+        message: 'Please check your profile to view it and to send the service provider an email.',
+        buttons: ['OK']
+    });
+        await alert.present();
     }
 
 }

@@ -6,6 +6,8 @@ import { EventService } from '../_services/event.service';
 import { User } from '../_models/user';
 import { Event } from '../_models/event';
 import { Role } from '../_models/role';
+import { AlertController } from '@ionic/angular';
+import { Service } from '../_models/service';
 
 @Component({
     selector: 'app-event-creator',
@@ -25,7 +27,8 @@ export class EventCreatorPage implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private sessionService: SessionService,
-        private eventService: EventService
+        private eventService: EventService,
+        private alertController: AlertController
     ) { }
 
     ngOnInit() {
@@ -66,7 +69,17 @@ export class EventCreatorPage implements OnInit {
                 this.router.navigate(['/profile/me']);
             }
         );
+        this.presentAlert(this.event);
 
     }
 
+    async presentAlert(selectedEvent: Event) {
+        const alert = await this.alertController.create({
+        header: 'New Service added',
+        subHeader: 'You just added a service to your newly created event "' + selectedEvent.name + '".',
+        message: 'Please check your profile to view it and to send the service provider an email.',
+        buttons: ['OK']
+    });
+        await alert.present();
+    }
 }
