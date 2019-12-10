@@ -1,6 +1,6 @@
 # ACARA
 
-ACARA (malay for 'event') is platform for event organisers on one end and event service providers on the other. It is a web-based app designed to run on any device. 
+ACARA (malay for 'event') is a platform for event organisers on one end and event service providers on the other. It is a web-based app designed to run on any device. 
 
 Our goal is to provide our registered users an interactive interface where they can either login as an event organiser or as a service provider. 
 
