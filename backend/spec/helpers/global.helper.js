@@ -14,7 +14,7 @@ beforeAll(async () => {
       .catch(err => { console.log(err) })
   })
 
-  server = require('../../src/index')
+  server = require('../../src/server')
   await server.on('ready', () => {
     console.log('Server ready')
   })

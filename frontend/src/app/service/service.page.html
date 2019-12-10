@@ -23,19 +23,31 @@
                     <img [src]="serviceImage" *ngIf="serviceHasImage">
                     <ion-card-header>
                         <ion-card-title>{{ service.title }}</ion-card-title>
-                        <ion-card-subtitle>{{ service.description }}</ion-card-subtitle>
+                        <ion-card-subtitle>
+                            <p class="byUser">by:
+                                <ion-chip routerLink="/profile/{{ service.userId }}"color="primary">
+                                    <ion-icon name="contact"></ion-icon>
+                                    <ion-label>
+                                        {{ service.username }}
+                                    </ion-label>
+                                </ion-chip>
+                            </p>
+                        </ion-card-subtitle>
                     </ion-card-header>
                     <ion-card-content>
-                        <p>by <a routerLink="/profile/{{ serviceUser.id }}">{{ serviceUser.username }}</a></p>
-                        <p>Price: {{service.price}}</p>
+                        {{ service.description }}
+                        <br><br>
+                        Price: {{ service.price }}.-
+                        <br>
                         <ion-chip outline color="primary" *ngFor="let tag of service.tags">
                             <ion-label>{{ tag }}</ion-label>
                         </ion-chip>
-                        <ion-button *ngIf="isMyService" expand="block" color="light" (click)="editService()">
+                        <br><br>
+                        <ion-button *ngIf="isMyService" color="light" (click)="editService()">
                             Edit
                             <ion-icon name="create" class="ion-padding"></ion-icon>
                         </ion-button>
-                        <ion-button *ngIf="isMyService" expand="block" color="danger" (click)="deleteService()">
+                        <ion-button *ngIf="isMyService" color="danger" (click)="deleteService()">
                             Delete
                             <ion-icon name="trash" class="ion-padding"></ion-icon>
                         </ion-button>

@@ -9,6 +9,9 @@ import { getTag } from '../helpers/tag.helper'
 const router = Router()
 const Op = Sequelize.Op
 
+/**
+ *
+ */
 router.get('/', async (req, res) => {
   // Nobody can see all events
   res.send({})

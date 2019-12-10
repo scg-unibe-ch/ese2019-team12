@@ -2,17 +2,26 @@
     <a href="/service/{{ service.id }}">
         <img [src]="serviceImage" *ngIf="serviceHasImage"/>
     </a>
-    <ion-card-header routerLink="/service/{{ service.id }}">
-        <ion-card-title>{{ service.title }}</ion-card-title>
+    <img [src]="serviceImage" *ngIf="serviceHasImage" routerLink="/service/{{ service.id }}">
+    <ion-card-header>
+        <ion-card-title routerLink="/service/{{ service.id }}">
+            {{ service.title }}
+        </ion-card-title>
         <ion-card-subtitle>
-            {{ service.description }}
-            <br><br>
-            Price: {{ service.price }}.-
+            <p class="byUser">by:
+                <ion-chip routerLink="/profile/{{ service.userId }}"color="primary">
+                    <ion-icon name="contact"></ion-icon>
+                    <ion-label>
+                        {{ service.username }}
+                    </ion-label>
+                </ion-chip>
+            </p>
         </ion-card-subtitle>
     </ion-card-header>
-
     <ion-card-content>
-        <p>by <a href="/profile/{{ service.userId }}" color="primary">{{ service.username }}</a></p>
+        {{ service.description }}
+        <br><br>
+        Price: {{ service.price }}.-
         <br>
         <ion-chip outline color="primary" *ngFor="let tag of service.tags" (click)="createChip(tag)">
             <ion-label>{{ tag }}</ion-label>

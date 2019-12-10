@@ -93,18 +93,19 @@
                 </ion-col>
                 <ion-col *ngFor="let serviceCard of optimizedServices" size="auto">
                     <ion-card class="custom-ion-card">
-                        <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage">
+                        <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
                         <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
                             <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
-                            <ion-card-subtitle class="custiom-ion-card-subtitle">{{ serviceCard.service.description }}</ion-card-subtitle>
+                            <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
                         </ion-card-header>
                         <ion-card-content>
-                            <p>Price: {{ serviceCard.service.price }}</p>
-                            <p>Tags:
-                                <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
-                                    <ion-label>{{ tag }}</ion-label>
-                                </ion-chip>
-                            </p>
+                            {{ serviceCard.service.description }}
+                            <br><br>
+                            Price: {{ serviceCard.service.price }}.-
+                            <br>
+                            <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                                <ion-label>{{ tag }}</ion-label>
+                            </ion-chip>
                         </ion-card-content>
                     </ion-card>
                 </ion-col>
