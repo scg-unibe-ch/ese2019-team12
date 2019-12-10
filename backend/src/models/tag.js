@@ -1,6 +1,6 @@
 /**
  * Tag model to be imported by sequelize
- * @module models/service
+ * @module models/tag
  * @param {object} sequelize - Sequelize instance
  * @param {object} DataTypes - Sequelize Datatypes
  */
