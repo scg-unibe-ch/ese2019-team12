@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ServiceService } from '../../_services/service.service';
 import { Service } from '../../_models/service';
@@ -11,6 +11,7 @@ import { Service } from '../../_models/service';
 
 export class ServiceCardComponent implements OnInit {
   @Input() service;
+  @Output() event: EventEmitter<string> = new EventEmitter();
   serviceImage: SafeUrl;
   serviceHasImage: boolean;
 
@@ -27,6 +28,10 @@ export class ServiceCardComponent implements OnInit {
               this.serviceImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
           },
       );
+  }
+
+  createChip(chip) {
+      this.event.emit(chip);
   }
 
 }

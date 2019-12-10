@@ -1,7 +1,16 @@
-ion-card-subtitle{
+ion-card-subtitle {
    display: flex !important;
    flex-wrap: wrap !important;
- }
- ion-card{
+}
+
+ion-card {
      width: 300px !important;
- }
+}
+
+ion-card > img:hover {
+    cursor: pointer
+}
+
+ion-card-header:hover {
+    cursor: pointer;
+}

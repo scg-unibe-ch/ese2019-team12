@@ -53,7 +53,7 @@
     <ion-grid>
         <ion-row class="ion-justify-content-center">
                 <ion-col size="auto" *ngFor="let service of servicesToDisplay">
-                    <app-service-card [service]="service"></app-service-card>
+                    <app-service-card [service]="service" (event)="createChip($event)"></app-service-card>
                 </ion-col>
                 <p *ngIf="servicesToDisplay.length === 0">No results were found for your search. But here, have a slice of pizza...<ion-icon name="pizza" size="large"></ion-icon></p>
         </ion-row>

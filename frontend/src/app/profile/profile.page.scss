@@ -15,3 +15,11 @@
 .custom-ion-card {
      width: 300px !important;
 }
+
+.custom-ion-card > img:hover {
+    cursor: pointer
+}
+
+.custom-ion-card > ion-card-header:hover {
+    cursor: pointer;
+}

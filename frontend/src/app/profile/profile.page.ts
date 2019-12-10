@@ -136,4 +136,8 @@ export class ProfilePage implements OnInit {
         this.userImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         this.userHasImage = true;
     }
+
+    ionViewDidLeave() {
+        this.optimizedServices = [];
+    }
 }
