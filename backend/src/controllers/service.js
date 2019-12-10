@@ -14,10 +14,17 @@ router.get('/', async (req, res) => {
   const Service = getService(req)
   const Tag = getTag(req)
   const User = getUser(req)
-  Service.findAll({ include: [{ model: Tag }, { model: User }] }).then((services) => {
+  Service.findAll(
+    {
+      include: [
+        { model: Tag, through: { attributes: [] } },
+        { model: User }
+      ]
+    }).then((services) => {
     if (!services) {
       res.send([])
     }
+
     res.statusCode = 200
     res.send(jsonFromServices(services))
   }).catch((err) => {
@@ -29,7 +36,13 @@ router.get('/:id', async (req, res, next) => {
   const Service = getService(req)
   const Tag = getTag(req)
   const User = getUser(req)
-  await Service.findByPk(req.params.id, { include: [{ model: Tag }, { model: User }] }).then(service => {
+  await Service.findByPk(req.params.id,
+    {
+      include: [
+        { model: Tag, through: { attributes: [] } },
+        { model: User }
+      ]
+    }).then(service => {
     if (!service) {
       sendNotFoundError(res)
     } else {
@@ -49,11 +62,10 @@ router.get('/user/:id', async (req, res) => {
     where: {
       userId: req.params.id
     },
-    include: [{
-      model: Tag
-    }, {
-      model: User
-    }]
+    include: [
+      { model: Tag, through: { attributes: [] } },
+      { model: User }
+    ]
   }).then((services) => {
     if (!services) {
       res.send()

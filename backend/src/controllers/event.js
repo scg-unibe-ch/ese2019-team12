@@ -14,6 +14,7 @@ router.get('/:id', async (req, res) => {
   const Event = getEvent(req)
   const Service = getService(req)
   const Tag = getTag(req)
+  const User = getUser(req)
 
   Event.findOne(
     {
@@ -23,8 +24,12 @@ router.get('/:id', async (req, res) => {
       include: {
         model: Service,
         through: { attributes: [] },
-        include: { model: Tag, through: { attributes: [] } }
+        include: [
+          { model: Tag, through: { attributes: [] } },
+          { model: User }
+        ]
       }
+
     }).then(e => {
     if (e === null) {
       sendNotFoundError(res)
@@ -41,23 +46,21 @@ router.get('/user/:id', async (req, res) => {
   const Event = getEvent(req)
   const Service = getService(req)
   const Tag = getTag(req)
+  const User = getUser(req)
 
   Event.findAll(
     {
       where: {
         userId: req.user.sub
       },
-      include: {
+      include:
+      {
         model: Service,
-        through: {
-          attributes: []
-        },
-        include: {
-          model: Tag,
-          through: {
-            attributes: []
-          }
-        }
+        through: { attributes: [] },
+        include: [
+          { model: Tag, through: { attributes: [] } },
+          { model: User }
+        ]
       }
     }).then(events => {
     res.send(jsonFromEvents(events))
@@ -113,11 +116,11 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const Event = getEvent(req)
+
   Event.findByPk(req.params.id).then(e => {
     if (!e) {
       sendNotFoundError(res)
-    }
-    if (canWrite(req.user.sub, e)) {
+    } else if (canWrite(req.user.sub, e)) {
       e.destroy().then(() => {
         res.status(204).send()
       }).catch(err => {
@@ -145,6 +148,10 @@ function getService (req) {
 
 function getTag (req) {
   return req.context.models.Tag
+}
+
+function getUser (req) {
+  return req.context.models.User
 }
 
 function hasServices (req) {
