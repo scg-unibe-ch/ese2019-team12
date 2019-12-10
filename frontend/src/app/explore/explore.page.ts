@@ -12,6 +12,22 @@ import { User } from '../_models/user';
     styleUrls: ['./explore.page.scss'],
 })
 export class ExplorePage implements OnInit {
+
+    /**
+     * isLoggedIn: boolean, is true if a user is logged in while viewing this page.
+     * services: Service[], stores the services fetched from the API.
+     * servicesToDisplay: [], stores the services after the searchfilters have been applied.
+     * searchForm: FormGroup, the searchbar input.
+     * searchTerm: string, the string inputted into the searchbar.
+     * searchedByTitle: [], the services resulting from the title filter.
+     * searchedByTags: [], the services resulting from the tags filter.
+     * chips: [], the tags inputted to display.
+     * searchType: string, describes the type of search performed.
+     * tagsSearch: boolean, is true if searching by tags.
+     * currentUser: User, the user currently logged in.
+     * updateMasonryLayout: boolean, to trigger an update on the masonry grid.
+     */
+    isLoggedIn: boolean;
     services: Service[];
     servicesToDisplay = [];
     searchForm: FormGroup;
@@ -21,9 +37,7 @@ export class ExplorePage implements OnInit {
     chips = [];
     searchType: string;
     tagsSearch: boolean;
-    isLoggedIn: boolean;
     currentUser: User;
-    event: Event;
     updateMasonryLayout: boolean;
 
     constructor(
@@ -47,6 +61,7 @@ export class ExplorePage implements OnInit {
             tags: new FormControl('')
         });
 
+        // sets searchterm to ''
         this.searchTerm = this.searchForm.get('query').value;
 
         this.searchType = 'Title';
@@ -68,8 +83,9 @@ export class ExplorePage implements OnInit {
         );
     }
 
-    // filters our Array and then sets the services array to the services that are left matching the search
-    // for now only compares on title
+    /**
+     * filters out the services according to inputted title.
+     */
     filterByTitle() {
 
         this.searchTerm = this.searchForm.get('query').value;
@@ -84,7 +100,9 @@ export class ExplorePage implements OnInit {
         this.displayServices();
     }
 
-    // funtction to filter our list by given tags.
+    /**
+     * filters out the services according to inputted tags.
+     */
     filterByTags() {
 
         if (this.chips.length === 0) {
@@ -105,8 +123,10 @@ export class ExplorePage implements OnInit {
         this.displayServices();
     }
 
-    // compares both searched lists (title & tags).
-    // stores the result of the comparison in servicesToDisplay.
+    /**
+     * compares both searched lists (title & tags).
+     * stores the result of the comparison in servicesToDisplay.
+     */
     displayServices() {
         this.servicesToDisplay = this.searchedByTitle.filter(service => {
             return this.searchedByTags.includes(service);
@@ -114,7 +134,9 @@ export class ExplorePage implements OnInit {
         this.updateMasonryLayout = true;
     }
 
-    // parses a tag if a comma "," is found in the tags-searchbar
+    /**
+     * parses a tag if a comma "," is found in the tags-searchbar.
+     */
     tagsParser() {
         const input = this.searchForm.get('tags').value;
         if (input.slice(-1) === ',') {
@@ -123,7 +145,10 @@ export class ExplorePage implements OnInit {
         }
     }
 
-    // adds a chip to the local chips (filtered tags) array.
+    /**
+     * adds a chip to the local chips (filtered tags) array.
+     * @param  chipToAdd string value of the chip to add.
+     */
     createChip(chipToAdd) {
         if (!this.chips.includes(chipToAdd)) {
             this.chips.push(chipToAdd);
@@ -131,7 +156,10 @@ export class ExplorePage implements OnInit {
         }
     }
 
-    // deletes a chip from the local chips (filtered tags) array.
+    /**
+     * deletes a chip from the local chips (filtered tags) array.
+     * @param  chipToDelete the chip to remove.
+     */
     deleteChip(chipToDelete) {
         this.chips = this.chips.filter(chip => {
             return chip !== chipToDelete;
@@ -139,24 +167,36 @@ export class ExplorePage implements OnInit {
         this.filterByTags();
     }
 
-    // clears the local chips (filtered tags) array.
+    /**
+     * clears the local chips (filtered tags) array.
+     * @return [description]
+     */
     clearTags() {
         this.chips = [];
         this.filterByTags();
     }
 
-    // clears the query-searchbar.
+    /**
+     * clears the query-searchbar.
+     * @return [description]
+     */
     clearSearch() {
         this.searchForm.get('query').setValue('');
         this.filterByTitle();
     }
 
-    // switches the search mode and displays the according searchbar.
+    /**
+     * switches the search mode and displays the according searchbar.
+     * @return [description]
+     */
     switchSearch() {
         this.tagsSearch = !this.tagsSearch;
         this.searchType = (this.tagsSearch) ? 'Tags' : 'Title';
     }
 
+    /**
+     * fetches services (again) when view is entered.
+     */
     ionViewDidEnter() {
         this.updateMasonryLayout = true;
         this.getServices();

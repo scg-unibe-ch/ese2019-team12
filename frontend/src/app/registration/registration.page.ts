@@ -16,18 +16,27 @@ import { AsyncValidators } from '../_validators/async-validators';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit {
+
+    /**
+     * registrationForm: FormGroup, the firstname, lastname, email and username input fields.
+     * passwordForm: FormGroup, the password and confirmPassword input fields.
+     * user: User, the new user to be created.
+     * password: string, the password, initialized empty.
+     */
     registrationForm: FormGroup;
     passwordForm: FormGroup;
     user = new User(null, '', '', '', '', '', '', Role.User);
     password = '';
-    event: Event;
 
     constructor(
         public userService: UserService,
         public formBuilder: FormBuilder,
         public router: Router,
         public sessionService: SessionService
-    ) {
+    ) {}
+
+    ngOnInit() {
+        // the patterns to match for email and password.
         const EMAILPATTERN = '^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$';
         const STRGPWPATTERN = '.*'  // Needed (ngPattern surrounds with ^ and $)
             + '(?=^.{8,}$)'       // At least 8 Characters
@@ -58,9 +67,9 @@ export class RegistrationPage implements OnInit {
         });
     }
 
-    ngOnInit() {}
-
-    // Processes the given Inputs to be stored in the Back-End.
+    /**
+     * Processes the given inputs to be sent to the server.
+     */
     processForm(event) {
         this.user.firstname = this.registrationForm.get('firstname').value;
         this.user.lastname = this.registrationForm.get('lastname').value;
@@ -87,6 +96,9 @@ export class RegistrationPage implements OnInit {
         );
     }
 
+    /**
+     * Toggle to see the inputted password and confirmPassword values.
+     */
     showPassword() {
         const pw = document.getElementById('password') as HTMLInputElement;
         const confpw = document.getElementById('confirmpassword') as HTMLInputElement;

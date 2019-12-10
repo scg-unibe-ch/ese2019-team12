@@ -16,6 +16,7 @@ export class EventResolver implements Resolve<Event> {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<Event> {
+        // returns the event to load on the event page.
         return this.eventService.getEvent(route.params.id);
     }
 }

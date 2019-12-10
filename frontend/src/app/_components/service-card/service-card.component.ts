@@ -20,6 +20,9 @@ export class ServiceCardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+      /**
+       * fetches the image attached to the loaded service, if any.
+       */
       this.serviceService.downloadImage(this.service.id).subscribe(
           data => {
               this.serviceHasImage = (data.size > 0);
@@ -29,6 +32,11 @@ export class ServiceCardComponent implements OnInit {
       );
   }
 
+  /**
+   * Emitter to call on parent createChip function.
+   * (See explore.page.ts)
+   * @param  chip the chip to add to the filter.
+   */
   createChip(chip) {
       this.event.emit(chip);
   }

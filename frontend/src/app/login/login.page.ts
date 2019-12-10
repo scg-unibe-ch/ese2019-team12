@@ -9,39 +9,45 @@ import { SessionService } from '../_services/session.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  loginFailed: boolean;
-  loginForm: FormGroup;
-  event: Event;
 
-  constructor(
-      private sessionService: SessionService,
-      public formBuilder: FormBuilder,
-      private router: Router
-  ) {
-      this.loginFailed = false;
-      this.loginForm = new FormGroup({
-          login: new FormControl(''),
-          password: new FormControl('')
-      });
-  }
+    /**
+     * loginFailed: boolean, is true if the response from the server is negative (wrong inputs).
+     * loginForm: FormGroup, the form used to log in.
+     */
+    loginFailed: boolean;
+    loginForm: FormGroup;
 
-  ngOnInit() {}
+    constructor(
+        private sessionService: SessionService,
+        public formBuilder: FormBuilder,
+        private router: Router
+    ) {
+        this.loginFailed = false;
+        this.loginForm = new FormGroup({
+            login: new FormControl(''),
+            password: new FormControl('')
+        });
+    }
 
-  login(event) {
-    const login = this.loginForm.get('login').value;
-    const password = this.loginForm.get('password').value;
+    ngOnInit() {}
 
-    // test user: username 'Jony', password 'hello'
-    this.sessionService.login(login, password).subscribe(
-        data => {
-            this.router.navigate(['/explore']);
-        },
-        (err: any) => {
-            if (err.status === 401) {
-                this.loginFailed = true;
-                console.log('Error message: ' + err.message);
+    /**
+     * logs the user in if he succesfully entered his credentials.
+     */
+    login(event) {
+        const login = this.loginForm.get('login').value;
+        const password = this.loginForm.get('password').value;
+
+        this.sessionService.login(login, password).subscribe(
+            data => {
+                this.router.navigate(['/explore']);
+            },
+            (err: any) => {
+                if (err.status === 401) {
+                    this.loginFailed = true;
+                    console.log('Error message: ' + err.message);
+                }
             }
-        }
-    );
-  }
+        );
+    }
 }
