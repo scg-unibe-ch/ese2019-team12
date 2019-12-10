@@ -3,7 +3,8 @@ import { Sequelize } from 'sequelize'
 import { upload } from '../helpers/upload.helper'
 import 'dotenv/config'
 import { sendNotFoundError, sendInternalError, sendForbiddenError, handleSequelizeErrors } from '../helpers/error.helper'
-var path = require('path')
+import { getUser, deleteUser, updateUser } from '../helpers/user.helper'
+import path from 'path'
 
 const Op = Sequelize.Op
 
@@ -11,10 +12,6 @@ const router = Router()
 
 // Only allow admins to call /users/
 // Allow not authenticated Users to create an account and to view profile pages
-export const userAuthFilter = (req) => {
-  return req.method === 'OPTIONS' || req.method === 'POST' ||
-    (req.method === 'GET' && req.originalUrl !== '/users/')
-}
 
 router.get('/', async (req, res) => {
   const User = getUser(req)
@@ -91,7 +88,7 @@ router.put('/:id', async (req, res) => {
   if (req.user.sub !== req.params.id) {
     User.findByPk(req.user.sub).then(currentUser => {
       if (currentUser.isAdmin()) {
-        updateUser(User, req, res)
+        updateUser(req, res)
       } else {
         sendForbiddenError(res)
       }
@@ -99,7 +96,7 @@ router.put('/:id', async (req, res) => {
       sendInternalError(res, err)
     })
   } else {
-    updateUser(User, req, res)
+    updateUser(req, res)
   }
 })
 
@@ -108,7 +105,7 @@ router.delete('/:id', async (req, res) => {
   if (req.user.sub !== req.params.id) {
     await User.findByPk(req.user.sub).then(user => {
       if (user.isAdmin()) {
-        deleteUser(req.params.id, User, res)
+        deleteUser(req, res)
       } else {
         sendForbiddenError(res)
       }
@@ -116,44 +113,9 @@ router.delete('/:id', async (req, res) => {
       sendInternalError(res, err)
     })
   } else {
-    deleteUser(req.params.id, User, res)
+    deleteUser(req, res)
   }
 })
-
-function updateUser (User, req, res) {
-  User.findByPk(req.params.id).then(user => {
-    if (!user) {
-      sendNotFoundError(res)
-    }
-
-    const keys = Object.keys(req.body) // Find all transmitted attributes
-    keys.forEach((key) => { // For each attribute name,
-      if (key !== 'id' && user[key] !== undefined) {
-        user[key] = req.body[key]
-      }
-    })
-    user.save().then(user => {
-      res.statusCode = 200
-      res.send(user)
-    }).catch(err => {
-      sendInternalError(res, err)
-    })
-  }).catch(err => {
-    sendInternalError(res, err)
-  })
-}
-function deleteUser (id, User, res) {
-  User.findByPk(id).then(user => {
-    if (!user) {
-      sendNotFoundError(res)
-    }
-    user.destroy()
-    res.statusCode = 204
-    res.send()
-  }).catch(err => {
-    sendInternalError(res, err)
-  })
-};
 
 router.get('/search', async (req, res) => {
   const User = getUser(req)
@@ -180,9 +142,5 @@ router.get('/search', async (req, res) => {
     console.log(err)
   })
 })
-
-function getUser (req) {
-  return req.context.models.User
-}
 
 export default router

@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import * as jwt from 'jsonwebtoken'
-var jwtExpress = require('express-jwt')
+import * as jwtExpress from 'express-jwt'
 
 export function getSessionToken (userId) {
   const token = jwt.sign({}, process.env.SECRET, {
@@ -19,7 +19,7 @@ function getTokenFromHeaderOrQuery (req) {
   }
   return null
 }
-export const checkIfAuthenticated = jwtExpress({
+export const checkIfAuthenticated = jwtExpress.default({
   secret: process.env.SECRET,
   getToken: getTokenFromHeaderOrQuery
 })

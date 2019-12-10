@@ -1,6 +1,7 @@
 import 'dotenv/config'
-var path = require('path')
-var multer = require('multer')
+import { path } from 'path'
+import * as multer from 'multer'
+
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     console.log(__dirname)
@@ -11,4 +12,4 @@ var storage = multer.diskStorage({
   }
 })
 
-export var upload = multer({ storage: storage })
+export var upload = multer.default({ storage: storage })
