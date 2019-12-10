@@ -1,6 +1,10 @@
 import { Router } from 'express'
 import { Sequelize } from 'sequelize'
 import { sendNotFoundError, sendInternalError, sendForbiddenError } from '../helpers/error.helper'
+import { getEvent, isAllowedToWrite, jsonFromEvents } from '../helpers/event.helper'
+import { getService, hasServices } from '../helpers/service.helper'
+import { getUser } from '../helpers/user.helper'
+import { getTag } from '../helpers/tag.helper'
 
 const router = Router()
 const Op = Sequelize.Op
@@ -91,7 +95,7 @@ router.put('/:id', async (req, res) => {
       sendNotFoundError(res)
     }
 
-    if (canWrite(req.user.sub, e)) {
+    if (isAllowedToWrite(req.user.sub, e)) {
       const keys = Object.keys(req.body)
       keys.forEach(key => {
         if (e[key] !== undefined) {
@@ -120,7 +124,7 @@ router.delete('/:id', async (req, res) => {
   Event.findByPk(req.params.id).then(e => {
     if (!e) {
       sendNotFoundError(res)
-    } else if (canWrite(req.user.sub, e)) {
+    } else if (isAllowedToWrite(req.user.sub, e)) {
       e.destroy().then(() => {
         res.status(204).send()
       }).catch(err => {
@@ -133,40 +137,5 @@ router.delete('/:id', async (req, res) => {
     sendInternalError(res, err)
   })
 })
-
-function canWrite (userId, event) {
-  return Number(userId) === event.userId
-}
-
-function getEvent (req) {
-  return req.context.models.Event
-}
-
-function getService (req) {
-  return req.context.models.Service
-}
-
-function getTag (req) {
-  return req.context.models.Tag
-}
-
-function getUser (req) {
-  return req.context.models.User
-}
-
-function hasServices (req) {
-  return req.body.services !== undefined
-}
-
-function jsonFromEvents (events) {
-  if (!events) {
-    return []
-  }
-  const result = []
-  for (const event of events) {
-    result.push(event.simplified())
-  }
-  return result
-}
 
 export default router

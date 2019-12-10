@@ -3,8 +3,8 @@ import express from 'express'
 
 import models, { sequelize } from './models'
 import controllers from './controllers'
-import { userAuthFilter } from './controllers/user'
-import { serviceAuthFilter } from './controllers/service'
+import { userAuthFilter } from './helpers/user.helper'
+import { serviceAuthFilter } from './helpers/service.helper'
 import { checkIfAuthenticated, handleAuthError } from './helpers/session.helper'
 import { upload } from './helpers/upload.helper'
 

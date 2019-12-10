@@ -2,13 +2,13 @@ import { Router } from 'express'
 import { upload } from '../helpers/upload.helper'
 import 'dotenv/config'
 import { sendNotFoundError, sendInternalError, sendForbiddenError } from '../helpers/error.helper'
+import { getUser } from '../helpers/user.helper'
+import { getService, updateService, jsonFromServices, isAllowedWrite } from '../helpers/service.helper'
+import { getTag, findOrCreateTags } from '../helpers/tag.helper'
+
 var path = require('path')
 
 const router = Router()
-
-export const serviceAuthFilter = (req) => {
-  return req.method === 'OPTIONS' || req.method === 'GET'
-}
 
 router.get('/', async (req, res) => {
   const Service = getService(req)
@@ -79,14 +79,13 @@ router.get('/user/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const Service = getService(req)
-  const Tag = getTag(req)
 
   var serviceData = req.body
   serviceData.userId = req.user.sub
   const hasTags = serviceData.tags !== undefined
 
   // Tags have to be created prior to usage
-  await findOrCreateTags(Tag, serviceData.tags)
+  await findOrCreateTags(req, serviceData.tags)
 
   // Service creation
   Service.create(serviceData).then(service => {
@@ -152,8 +151,8 @@ router.put('/:id', async (req, res) => {
     if (service == null) {
       sendNotFoundError(res)
     }
-    if (canUpdate(user, service)) {
-      update(service, req.body, res, Tag)
+    if (isAllowedWrite(user, service)) {
+      updateService(service, req.body, req, res)
     } else {
       sendForbiddenError(res)
     }
@@ -162,101 +161,26 @@ router.put('/:id', async (req, res) => {
   })
 })
 
-function update (service, data, res, Tag) {
-  const keys = Object.keys(data)
-  keys.forEach(key => {
-    if (service[key] !== undefined && key !== 'tags' &&
-      key !== 'id' && key !== 'userId') {
-      service[key] = data[key]
-    }
-  })
-  if (data.tags !== undefined) {
-    updateTags(service, data.tags, res, Tag)
-  } else {
-    service.save().then((s) => {
-      res.status(202).send(s)
-    }).catch(err => {
-      sendInternalError(res, err)
-    })
-  }
-}
-
-function updateTags (service, tags, res, Tag) {
-  findOrCreateTags(Tag, tags).then(() => {
-    service.getTags().then(t => {
-      service.removeTags(t)
-      service.setTags(tags)
-      service.save().then((s) => {
-        res.status(202).send(s)
-      }).catch(err => {
-        sendInternalError(res, err)
-      })
-    }).catch(err => {
-      sendInternalError(res, err)
-    })
-  }).catch(err => {
-    sendInternalError(res, err)
-  })
-}
-
-function canUpdate (user, service) {
-  return service.userId === user.id || user.isAdmin()
-}
-
 router.delete('/:id', async (req, res) => {
   const Service = getService(req)
   const User = getUser(req)
-  const serviceId = req.params.id
-  const userId = req.user.sub
 
-  Service.findByPk(serviceId).then(service => {
-    User.findByPk(userId).then(user => {
-      if (isAllowedToDelete(user, service)) {
-        service.destroy()
-        res.statusCode = 204
-        res.send()
-      } else {
-        sendForbiddenError(res)
-      }
-    }).catch(err => {
-      sendInternalError(res, err)
-    })
+  Promise.all([
+    Service.findByPk(req.params.id),
+    User.findByPk(req.user.sub)
+  ]).then(values => {
+    const service = values[0]
+    const user = values[1]
+
+    if (isAllowedWrite(user, service)) {
+      service.destroy()
+      res.status(204).send()
+    } else {
+      sendForbiddenError(res)
+    }
   }).catch(err => {
     sendInternalError(res, err)
   })
 })
-
-function isAllowedToDelete (user, service) {
-  return service.userId === user.id || user.isAdmin()
-}
-
-async function findOrCreateTags (model, tags) {
-  if (!tags || tags === undefined) {
-    return
-  }
-  for (const tag of tags) {
-    await model.findOrCreate({ where: { name: tag } })
-  }
-}
-
-function getService (req) {
-  return req.context.models.Service
-}
-
-function getUser (req) {
-  return req.context.models.User
-}
-
-function getTag (req) {
-  return req.context.models.Tag
-}
-
-function jsonFromServices (services) {
-  const res = []
-  services.forEach((service) => {
-    res.push(service.simplified())
-  })
-  return res
-}
 
 export default router
