@@ -18,7 +18,7 @@ For the installation follow the instructions on the site or from the installer.
 
 After installing node.js  and before running the script to this application you have to install the different modules used. Open your desired Terminal and go to the directory, where you have saved the application. Now you will have to enter the frontend and backend folder, each individually and enter:
 
-### `npm -g install`
+### `npm install`
 
 Wait for the terminal to load the different modules.
 
@@ -28,7 +28,7 @@ Wait for the terminal to load the different modules.
 
 This server uses an sqlite3 database. It is stored in the file `db.sqlite`
 
-To create a new database enter:
+To fill the database with test data enter:
 
 ### `npm run db_init`
 
@@ -54,7 +54,11 @@ for a dev server. Navigate to http://localhost:4200/.
 
 ### Backend
 
+Run
 
+##  `npm start`.
+
+The server will be served on `localhost:3000`
 
 ## Further available scripts
 
