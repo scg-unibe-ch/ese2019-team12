@@ -18,9 +18,7 @@ app.use(function (req, res, next) {
 })
 app.use(express.json())
 app.use(async (req, res, next) => {
-  req.context = {
-    models
-  }
+  req.context = { models }
   next()
 })
 
