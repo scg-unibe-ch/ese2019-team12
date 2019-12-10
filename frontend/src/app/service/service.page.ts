@@ -79,7 +79,7 @@ export class ServicePage implements OnInit {
                 }
 
                 this.editForm = new FormGroup({
-                    title: new FormControl(this.service.title, [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
+                    title: new FormControl(this.service.title, [Validators.required, Validators.maxLength(30)]),
                     description: new FormControl(this.service.description, [Validators.required, Validators.maxLength(200)]),
                     price: new FormControl(this.service.price, [Validators.required]),
                     file: new FormControl(''),
@@ -196,7 +196,7 @@ export class ServicePage implements OnInit {
         const alert = await this.alertController.create({
         header: 'New Service added',
         subHeader: 'You just added the service "' + selectedService.title + '" to your event "' + selectedEvent.name + '".',
-        message: 'Please check your profile to view it and to send the service provider an email.',
+        message: 'Click the user label on the service to send the service provider an email.',
         buttons: ['OK']
     });
         await alert.present();

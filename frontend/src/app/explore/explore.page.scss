@@ -1,3 +1,15 @@
 .masonryGrid {
     margin: 0 auto;
 }
+
+.logo {
+    height: 35px;
+    top: 15px;
+    position: fixed;
+    left: 50%;
+    margin-left: -68px;
+}
+
+.logo:hover {
+    cursor: pointer;
+}

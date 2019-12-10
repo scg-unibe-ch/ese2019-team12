@@ -43,8 +43,8 @@ export class EventCreatorPage implements OnInit {
         this.currentUser = this.sessionService.getCurrentUser();
 
         this.eventForm = new FormGroup({
-            name: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
-            description: new FormControl('', [Validators.required, Validators.maxLength(200), Validators.pattern('[A-zÄ-ü0-9., ]*')]),
+            name: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+            description: new FormControl('', [Validators.required, Validators.maxLength(200)]),
             date: new FormControl('', [Validators.required])
         });
     }
@@ -83,7 +83,7 @@ export class EventCreatorPage implements OnInit {
         const alert = await this.alertController.create({
         header: 'New Service added',
         subHeader: 'You just added a service to your newly created event "' + selectedEvent.name + '".',
-        message: 'Please check your profile to view it and to send the service provider an email.',
+        message: 'Click the user label on the service to send the service provider an email.',
         buttons: ['OK']
     });
         await alert.present();
