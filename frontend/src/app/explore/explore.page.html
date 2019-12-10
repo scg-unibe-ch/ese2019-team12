@@ -48,7 +48,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ngx-masonry class="masonryGrid" [options]="{ gutter: 10, fitWidth: true }">
+    <ngx-masonry class="masonryGrid" [options]="{ gutter: 10, fitWidth: true }" [updateLayout]="updateMasonryLayout">
         <app-service-card [service]="service" (event)="createChip($event)" ngxMasonryItem *ngFor="let service of servicesToDisplay"></app-service-card>
     </ngx-masonry>
 </ion-content>

@@ -31,6 +31,7 @@ export class ProfilePage implements OnInit {
     optimizedServices = [];
     events: Event[] = [];
     event: Event;
+    updateMasonryLayout: boolean;
 
     constructor(
       private route: ActivatedRoute,
@@ -48,6 +49,7 @@ export class ProfilePage implements OnInit {
         if (this.isLoggedIn) {
             this.currentUser = this.sessionService.getCurrentUser();
         }
+        this.updateMasonryLayout = false;
         this.route.data.subscribe(
             (data: {profile: User}) => {
                 this.profile = data.profile;
@@ -94,6 +96,7 @@ export class ProfilePage implements OnInit {
                             } else {
                                 this.optimizedServices.push({hasImage: false, service});
                             }
+                            this.updateMasonryLayout = true;
                         }
                     );
                 });

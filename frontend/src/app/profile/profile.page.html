@@ -65,175 +65,56 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-        <div class="masonryGrids">
-            <ngx-masonry class="masonryGrid" [options]="{ transitionDuration: 0, fitWidth: true }">
-                <ion-card ngxMasonryItem routerLink="/service-creator" *ngIf="isMe" class="custom-ion-card">
-                    <ion-card-header color="primary">
-                        <p class="ion-text-center">
-                            Add a Service<br>
-                            <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                        </p>
-                    </ion-card-header>
-                </ion-card>
-                <ion-card ngxMasonryItem class="custom-ion-card" *ngFor="let serviceCard of optimizedServices">
-                    <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
-                    <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
-                        <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
-                        <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                        {{ serviceCard.service.description }}
-                        <br><br>
-                        Price: {{ serviceCard.service.price }}.-
-                        <br>
-                        <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
-                            <ion-label>{{ tag }}</ion-label>
-                        </ion-chip>
-                    </ion-card-content>
-                </ion-card>
-                <p ngxMasonryItem *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
-            </ngx-masonry>
-        </div>
-        <div class="masonryGrids">
-            <ngx-masonry class="masonryGrid" [options]="{ fitWidth: true }">
-                <ion-card ngxMasonryItem routerLink="/event-creator" class="custom-ion-card masonryGridItem">
-                    <ion-card-header color="primary">
-                        <p class="ion-text-center">
-                            Add an Event<br>
-                            <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                        </p>
-                    </ion-card-header>
-                </ion-card>
-                <ion-card ngxMasonryItem class="custom-ion-card" *ngFor="let event of events">
-                    <ion-card-header routerLink="/event/{{ event.id }}">
-                        <ion-card-title>{{ event.name }}</ion-card-title>
-                        <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <ion-card *ngFor="let service of event.services">
-                            <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
-                        </ion-card>
-                    </ion-card-content>
-                </ion-card>
-            </ngx-masonry>
-        </div>
-
-    <!-- <div class="masonryGrid1">
-        <ion-title *ngIf="isMe">My Services</ion-title>
-        <ion-title *ngIf="!isMe">{{ profile.username }}'s Services</ion-title>
-
-
-    </div> -->
-
-    <!-- <div class="masonryGrid2" *ngIf="isMe">
-        <ion-title class="masonryGridItem">My Events</ion-title>
-        <ion-card routerLink="/event-creator" class="custom-ion-card masonryGridItem">
-            <ion-card-header color="primary">
-                <p class="ion-text-center">
-                    Add an Event<br>
-                    <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                </p>
-            </ion-card-header>
-        </ion-card>
-        <ion-card class="custom-ion-card masonryGridItem" *ngFor="let event of events">
-            <ion-card-header routerLink="/event/{{ event.id }}">
-                <ion-card-title>{{ event.name }}</ion-card-title>
-                <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-                <ion-card *ngFor="let service of event.services">
-                    <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
-                </ion-card>
-            </ion-card-content>
-        </ion-card>
-    </div> -->
-
-    <!-- <ion-grid class="contentGrid">
-        <ion-row>
-            <ion-col>
-                <ion-title *ngIf="isMe">My Services</ion-title>
-                <ion-title *ngIf="!isMe">{{ profile.username }}'s Services</ion-title>
-            </ion-col>
-            <ion-col>
-                <ion-title *ngIf="isMe">My Events</ion-title>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <div class="masonryGrid">
-                    <ion-card routerLink="/service-creator" *ngIf="isMe" class="custom-ion-card masonryGridItem">
-                        <ion-card-header color="primary">
-                            <p class="ion-text-center">
-                                Add a Service<br>
-                                <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                            </p>
-                        </ion-card-header>
+    <div class="masonryGrids">
+        <ngx-masonry class="masonryGrid" [options]="{ transitionDuration: 0, fitWidth: true }" [updateLayout]="updateMasonryLayout">
+            <ion-card ngxMasonryItem routerLink="/service-creator" *ngIf="isMe" class="custom-ion-card">
+                <ion-card-header color="primary">
+                    <p class="ion-text-center">
+                        Add a Service<br>
+                        <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                    </p>
+                </ion-card-header>
+            </ion-card>
+            <ion-card ngxMasonryItem class="custom-ion-card" *ngFor="let serviceCard of optimizedServices">
+                <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
+                <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
+                    <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
+                    <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                    {{ serviceCard.service.description }}
+                    <br><br>
+                    Price: {{ serviceCard.service.price }}.-
+                    <br>
+                    <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
+                        <ion-label>{{ tag }}</ion-label>
+                    </ion-chip>
+                </ion-card-content>
+            </ion-card>
+            <p ngxMasonryItem *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
+        </ngx-masonry>
+    </div>
+    <div class="masonryGrids">
+        <ngx-masonry class="masonryGrid" [options]="{ fitWidth: true }" [updateLayout]="updateMasonryLayout">
+            <ion-card ngxMasonryItem routerLink="/event-creator" class="custom-ion-card masonryGridItem">
+                <ion-card-header color="primary">
+                    <p class="ion-text-center">
+                        Add an Event<br>
+                        <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
+                    </p>
+                </ion-card-header>
+            </ion-card>
+            <ion-card ngxMasonryItem class="custom-ion-card" *ngFor="let event of events">
+                <ion-card-header routerLink="/event/{{ event.id }}">
+                    <ion-card-title>{{ event.name }}</ion-card-title>
+                    <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-card *ngFor="let service of event.services">
+                        <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
                     </ion-card>
-                    <ion-card class="custom-ion-card masonryGridItem" *ngFor="let serviceCard of optimizedServices">
-                        <img [src]="serviceCard.image" *ngIf="serviceCard.hasImage" routerLink="/service/{{ serviceCard.service.id }}">
-                        <ion-card-header routerLink="/service/{{ serviceCard.service.id }}">
-                            <ion-card-title routerLink="/service/{{ serviceCard.service.id }}">{{ serviceCard.service.title }}</ion-card-title>
-                            <ion-card-subtitle class="custiom-ion-card-subtitle"></ion-card-subtitle>
-                        </ion-card-header>
-                        <ion-card-content>
-                            {{ serviceCard.service.description }}
-                            <br><br>
-                            Price: {{ serviceCard.service.price }}.-
-                            <br>
-                            <ion-chip outline color="primary" *ngFor="let tag of serviceCard.service.tags">
-                                <ion-label>{{ tag }}</ion-label>
-                            </ion-chip>
-                        </ion-card-content>
-                    </ion-card>
-                    <p *ngIf="services.length === 0 && !isMe">This user does not currently offer any services.</p>
-                </div>
-                <ion-grid>
-                    <ion-row>
-                    </ion-row>
-                    <ion-row class="ion-justify-content-start">
-                        <ion-col *ngIf="isMe" size="6">
-                        </ion-col>
-                        <ion-col  size="6">
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="ion-justify-content-center">
-
-                    </ion-row>
-                </ion-grid>
-            </ion-col>
-            <ion-col>
-                <div class="masonryGrid" *ngIf="isMe">
-                    <ion-card routerLink="/event-creator" class="custom-ion-card masonryGridItem">
-                        <ion-card-header color="primary">
-                            <p class="ion-text-center">
-                                Add an Event<br>
-                                <ion-icon name="add-circle-outline" class="ion-padding" size="large"></ion-icon>
-                            </p>
-                        </ion-card-header>
-                    </ion-card>
-                    <ion-card class="custom-ion-card masonryGridItem" *ngFor="let event of events">
-                        <ion-card-header routerLink="/event/{{ event.id }}">
-                            <ion-card-title>{{ event.name }}</ion-card-title>
-                            <ion-card-subtitle>{{ event.description }}</ion-card-subtitle>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <ion-card *ngFor="let service of event.services">
-                                <ion-card-header routerLink="/service/{{ service.id }}">{{ service.title }}</ion-card-header>
-                            </ion-card>
-                        </ion-card-content>
-                    </ion-card>
-                </div>
-                <ion-grid *ngIf="isMe">
-
-                    <ion-row class="ion-justify-content-start">
-                        <ion-col size="6">
-                        </ion-col>
-                        <ion-col size="6" >
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-col>
-        </ion-row>
-    </ion-grid> -->
-
+                </ion-card-content>
+            </ion-card>
+        </ngx-masonry>
+    </div>
 </ion-content>

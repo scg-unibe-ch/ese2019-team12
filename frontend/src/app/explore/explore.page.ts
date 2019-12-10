@@ -24,6 +24,7 @@ export class ExplorePage implements OnInit {
     isLoggedIn: boolean;
     currentUser: User;
     event: Event;
+    updateMasonryLayout: boolean;
 
     constructor(
         private sessionService: SessionService,
@@ -37,6 +38,8 @@ export class ExplorePage implements OnInit {
         if (this.isLoggedIn) {
             this.currentUser = this.sessionService.getCurrentUser();
         }
+
+        this.updateMasonryLayout = false;
 
         // initalizing searchbars
         this.searchForm = new FormGroup({
@@ -106,6 +109,7 @@ export class ExplorePage implements OnInit {
         this.servicesToDisplay = this.searchedByTitle.filter(service => {
             return this.searchedByTags.includes(service);
         });
+        this.updateMasonryLayout = true;
     }
 
     // parses a tag if a comma "," is found in the tags-searchbar
